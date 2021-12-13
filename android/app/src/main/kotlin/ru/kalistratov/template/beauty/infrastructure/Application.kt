@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.domain
+package ru.kalistratov.template.beauty.infrastructure
 
 import android.app.Application
 import ru.kalistratov.template.beauty.domain.di.ApplicationModule

@@ -1,14 +1,7 @@
-package ru.kalistratov.template.beauty.domain.service
+package ru.kalistratov.template.beauty.infrastructure.service
 
 import com.russhwolf.settings.Settings
-
-interface AuthSettingsService {
-    fun updateToken(token: String)
-    fun loadToken(): String
-
-    fun getUser(): String?
-    fun updateUser(user: String, token: String)
-}
+import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 
 class AuthSettingsServiceImpl(private val settings: Settings) : AuthSettingsService {
 

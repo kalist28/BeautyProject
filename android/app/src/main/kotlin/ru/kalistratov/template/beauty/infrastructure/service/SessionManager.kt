@@ -1,13 +1,9 @@
-package ru.kalistratov.template.beauty.domain.service
+package ru.kalistratov.template.beauty.infrastructure.service
 
-import ru.kalistratov.template.beauty.domain.Application
+import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.domain.di.UserComponent
 import ru.kalistratov.template.beauty.domain.di.UserModule
-
-interface SessionManager {
-    fun getComponent(): UserComponent
-    fun clearSession()
-}
+import ru.kalistratov.template.beauty.domain.service.SessionManager
 
 class SessionManagerImpl(
     private val application: Application,

@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 import ru.kalistratov.template.beauty.BuildConfig
-import ru.kalistratov.template.beauty.domain.Application
+import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.domain.service.*
 
 @Module

@@ -3,7 +3,7 @@ package ru.kalistratov.template.beauty.infrastructure.base
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import ru.kalistratov.template.beauty.domain.Application
+import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
 
 abstract class AuthBaseFragment : Fragment() {

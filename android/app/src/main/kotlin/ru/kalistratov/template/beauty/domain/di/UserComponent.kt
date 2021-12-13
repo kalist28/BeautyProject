@@ -6,7 +6,7 @@ import com.russhwolf.settings.Settings
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
-import ru.kalistratov.template.beauty.domain.Application
+import ru.kalistratov.template.beauty.infrastructure.Application
 
 @UserScope
 @Subcomponent(

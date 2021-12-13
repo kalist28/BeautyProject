@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import ru.kalistratov.template.beauty.domain.Application
+import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.domain.di.UserComponent
 import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
