@@ -9,6 +9,9 @@ import javax.inject.Singleton
 import ru.kalistratov.template.beauty.BuildConfig
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.domain.service.*
+import ru.kalistratov.template.beauty.infrastructure.service.AuthServiceImpl
+import ru.kalistratov.template.beauty.infrastructure.service.AuthSettingsServiceImpl
+import ru.kalistratov.template.beauty.infrastructure.service.SessionManagerImpl
 
 @Module
 class ServiceModule(val application: Application) {

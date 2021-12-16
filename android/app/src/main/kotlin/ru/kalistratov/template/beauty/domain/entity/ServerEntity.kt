@@ -8,7 +8,6 @@ data class ServerData<T>(val data: T)
 @Serializable
 data class ServerUser(
     val id: Long? = null,
-    val login: String? = null,
     val email: String? = null
 )
 

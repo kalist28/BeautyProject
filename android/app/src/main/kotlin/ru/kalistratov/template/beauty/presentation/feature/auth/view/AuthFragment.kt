@@ -1,7 +1,6 @@
 package ru.kalistratov.template.beauty.presentation.feature.auth.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,7 @@ sealed class AuthIntent : BaseIntent {
     object AuthClick : AuthIntent()
     object RegistrationClick : AuthIntent()
 
-    data class LoginUpdated(val login: String) : AuthIntent()
+    data class EmailUpdated(val email: String) : AuthIntent()
     data class PasswordUpdated(val password: String) : AuthIntent()
 }
 
@@ -48,18 +47,17 @@ class AuthFragment : AuthBaseFragment(), BaseView<AuthIntent, AuthState> {
         ViewModelProvider(this, viewModelFactory)[AuthViewModel::class.java]
     }
 
-    private lateinit var loginEditText: TextInputEditText
-    private lateinit var loginInputLayout: TextInputLayout
+    private lateinit var emailEditText: TextInputEditText
+    private lateinit var emailInputLayout: TextInputLayout
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var passwordInputLayout: TextInputLayout
     private lateinit var authButton: Button
     private lateinit var registrationButton: Button
 
     override fun findViews() {
-        loginEditText = find((R.id.login_edit_text))
+        emailEditText = find((R.id.email_edit_text))
         passwordEditText = find(R.id.password_edit_text)
-        registrationButton = find(R.id.registration_btn)
-        loginInputLayout = find(R.id.login_input_layout)
+        emailInputLayout = find(R.id.email_input_layout)
         passwordInputLayout = find(R.id.password_input_layout)
         authButton = find(R.id.auth_btn)
         registrationButton = find(R.id.registration_btn)
@@ -88,17 +86,16 @@ class AuthFragment : AuthBaseFragment(), BaseView<AuthIntent, AuthState> {
     override fun intents(): Flow<AuthIntent> = merge(
         authButton.clicks().map { AuthIntent.AuthClick },
         registrationButton.clicks().map { AuthIntent.RegistrationClick },
-        loginEditText.textChanges().map { AuthIntent.LoginUpdated(it.toString()) },
+        emailEditText.textChanges().map { AuthIntent.EmailUpdated(it.toString()) },
         passwordEditText.textChanges().map { AuthIntent.PasswordUpdated(it.toString()) },
     )
 
     override fun render(state: AuthState) {
-        Log.e("fdsgsdfgd", "gsdgsdf $state")
         if (state.isAuthFailed) toast("Неверный логин или пароль.")
 
         state.isLoading.let {
             val enable = !it
-            loginInputLayout.isEnabled = enable
+            emailInputLayout.isEnabled = enable
             passwordInputLayout.isEnabled = enable
         }
     }

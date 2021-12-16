@@ -2,22 +2,24 @@ package ru.kalistratov.template.beauty.presentation.feature.auth
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import java.util.*
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.kalistratov.template.beauty.common.checkEmailRegex
 import ru.kalistratov.template.beauty.domain.entity.AuthRequest
 import ru.kalistratov.template.beauty.domain.entity.AuthResult
+import ru.kalistratov.template.beauty.domain.feature.auth.AuthInteractor
 import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
 import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.textDebounce
 import ru.kalistratov.template.beauty.presentation.feature.auth.view.AuthIntent
+import java.util.*
+import javax.inject.Inject
 
 data class AuthState(
-    val login: String? = null,
+    val email: String? = null,
     val password: String? = null,
     val isLoading: Boolean = false,
     val isAuthFailed: Boolean = false,
@@ -27,7 +29,7 @@ sealed class AuthAction : BaseAction {
     object Clear : AuthAction()
     object AuthFailed : AuthAction()
 
-    data class UpdateLogin(val login: String) : AuthAction()
+    data class UpdateEmail(val email: String) : AuthAction()
     data class UpdatePassword(val password: String) : AuthAction()
     data class UpdateShowLoading(val show: Boolean) : AuthAction()
 }
@@ -49,10 +51,15 @@ class AuthViewModel @Inject constructor(
                 .launchIn(this)
                 .addTo(workComposite)
 
-            val updateLoginAction = intentFlow
-                .filterIsInstance<AuthIntent.LoginUpdated>()
+            val updateEmailAction = intentFlow
+                .filterIsInstance<AuthIntent.EmailUpdated>()
                 .textDebounce()
-                .map { AuthAction.UpdateLogin(it.login) }
+                .flatMapConcat {
+                    val email = it.email
+                    val checkEmail = email.matches(Regex.fromLiteral(checkEmailRegex))
+                    if (checkEmail) flowOf(AuthAction.UpdateEmail(email))
+                    else emptyFlow()
+                }
 
             val updatePasswordAction = intentFlow
                 .filterIsInstance<AuthIntent.PasswordUpdated>()
@@ -63,10 +70,10 @@ class AuthViewModel @Inject constructor(
                 .filterIsInstance<AuthIntent.AuthClick>()
                 .flatMapConcat {
                     val state = initialStateFlow.value
-                    val login = state.login
+                    val email = state.email
                     val password = state.password
-                    if (login != null && password != null) flowOf(
-                        AuthRequest(login, password)
+                    if (email != null && password != null) flowOf(
+                        AuthRequest(email, password)
                     ) else emptyFlow()
                 }
 
@@ -104,7 +111,7 @@ class AuthViewModel @Inject constructor(
 
             merge(
                 authRequestAction,
-                updateLoginAction,
+                updateEmailAction,
                 showLoadingAction,
                 updatePasswordAction
             )
@@ -120,7 +127,7 @@ class AuthViewModel @Inject constructor(
     }
 
     override fun reduce(state: AuthState, action: AuthAction): AuthState = when (action) {
-        is AuthAction.UpdateLogin -> state.copy(login = action.login)
+        is AuthAction.UpdateEmail -> state.copy(email = action.email)
         is AuthAction.UpdatePassword -> state.copy(password = action.password)
         is AuthAction.AuthFailed -> state.copy(isAuthFailed = true, isLoading = false)
         is AuthAction.UpdateShowLoading -> state.copy(isLoading = true)

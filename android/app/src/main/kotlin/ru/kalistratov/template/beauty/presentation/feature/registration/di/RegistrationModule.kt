@@ -7,9 +7,9 @@ import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
 import ru.kalistratov.template.beauty.domain.di.ViewModelKey
+import ru.kalistratov.template.beauty.domain.feature.registration.RegistrationInteractor
 import ru.kalistratov.template.beauty.domain.service.AuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationInteractor
 import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationInteractorImpl
 import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationViewModel
 import ru.kalistratov.template.beauty.presentation.feature.registration.view.RegistrationFragment

@@ -26,7 +26,6 @@ data class AuthError(
 ) {
     @Serializable
     data class Errors(
-        val login: Array<String> = emptyArray(),
         val email: Array<String> = emptyArray(),
         val password: Array<String> = emptyArray(),
     ) {
@@ -36,7 +35,6 @@ data class AuthError(
 
             other as Errors
 
-            if (!login.contentEquals(other.login)) return false
             if (!email.contentEquals(other.email)) return false
             if (!password.contentEquals(other.password)) return false
 
@@ -44,8 +42,7 @@ data class AuthError(
         }
 
         override fun hashCode(): Int {
-            var result = login.contentHashCode()
-            result = 31 * result + email.contentHashCode()
+            var result = email.contentHashCode()
             result = 31 * result + password.contentHashCode()
             return result
         }
@@ -60,7 +57,6 @@ data class AuthRequest(
 
 @Serializable
 data class RegistrationRequest(
-    val login: String,
     val email: String,
     val password: String,
     @SerialName("password_confirmation") val passwordConfirmation: String,

@@ -28,8 +28,9 @@ import ru.kalistratov.template.beauty.presentation.feature.registration.di.Regis
 sealed class RegistrationIntent : BaseIntent {
     object RegistrationClick : RegistrationIntent()
 
-    data class LoginUpdated(val login: String) : RegistrationIntent()
+    data class EmailUpdated(val email: String) : RegistrationIntent()
     data class PasswordUpdated(val password: String) : RegistrationIntent()
+    data class ConfirmPasswordUpdated(val password: String) : RegistrationIntent()
 }
 
 class RegistrationFragment : AuthBaseFragment(), BaseView<RegistrationIntent, RegistrationState> {
@@ -41,10 +42,12 @@ class RegistrationFragment : AuthBaseFragment(), BaseView<RegistrationIntent, Re
         ViewModelProvider(this, viewModelFactory)[RegistrationViewModel::class.java]
     }
 
-    private lateinit var loginEditText: TextInputEditText
-    private lateinit var loginInputLayout: TextInputLayout
+    private lateinit var emailEditText: TextInputEditText
+    private lateinit var emailInputLayout: TextInputLayout
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var passwordInputLayout: TextInputLayout
+    private lateinit var confirmPasswordEditText: TextInputEditText
+    private lateinit var confirmPasswordInputLayout: TextInputLayout
     private lateinit var registrationButton: Button
 
     override fun onCreateView(
@@ -69,28 +72,39 @@ class RegistrationFragment : AuthBaseFragment(), BaseView<RegistrationIntent, Re
         appComponent.plus(RegistrationModule(this)).inject(this)
 
     override fun findViews() {
-        loginEditText = find((R.id.login_edit_text))
+        emailEditText = find((R.id.email_edit_text))
         passwordEditText = find(R.id.password_edit_text)
-        registrationButton = find(R.id.registration_btn)
-        loginInputLayout = find(R.id.login_input_layout)
+        confirmPasswordEditText = find(R.id.confirm_password_edit_text)
+        emailInputLayout = find(R.id.email_input_layout)
         passwordInputLayout = find(R.id.password_input_layout)
+        confirmPasswordInputLayout = find(R.id.confirm_password_input_layout)
+        registrationButton = find(R.id.registration_btn)
     }
 
+    override fun intents(): Flow<RegistrationIntent> = merge(
+        emailEditText.textChanges().map { RegistrationIntent.EmailUpdated(it.toString()) },
+        passwordEditText.textChanges()
+            .map { RegistrationIntent.PasswordUpdated(it.toString()) },
+        confirmPasswordEditText.textChanges()
+            .map { RegistrationIntent.ConfirmPasswordUpdated(it.toString()) },
+        registrationButton.clicks().map { RegistrationIntent.RegistrationClick },
+    )
+
     override fun render(state: RegistrationState) {
-        loginInputLayout.error = state.loginError
+        emailInputLayout.error = state.emailError
         passwordInputLayout.error = state.passwordError
 
         state.isLoading.let {
             val enable = !it
-            loginInputLayout.isEnabled = enable
+            emailInputLayout.isEnabled = enable
             passwordInputLayout.isEnabled = enable
+            confirmPasswordInputLayout.isEnabled = enable
         }
-    }
 
-    override fun intents(): Flow<RegistrationIntent> = merge(
-        loginEditText.textChanges().map { RegistrationIntent.LoginUpdated(it.toString()) },
-        passwordEditText.textChanges()
-            .map { RegistrationIntent.PasswordUpdated(it.toString()) },
-        registrationButton.clicks().map { RegistrationIntent.RegistrationClick },
-    )
+        confirmPasswordInputLayout.error = if (!state.confirmPasswordValid)
+            resources.getString(R.string.confirm_password_error)
+        else null
+
+        registrationButton.isEnabled = state.allowRequest
+    }
 }

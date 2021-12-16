@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TemplateBeautyApp</string>
-    <string name="login">Логин</string>
+    <string name="email">Почта</string>
     <string name="password">Пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="confirm_password_error">Пароли не совпадают</string>
     <string name="registration">Регистрация</string>
 </resources>
