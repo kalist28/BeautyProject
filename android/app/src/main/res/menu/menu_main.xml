@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/m1"
+        android:title="Profile" />
+
+    <item
+        android:id="@+id/m2"
+        android:title="1235" />
+
+    <item
+        android:id="@+id/m3"
+        android:title="Timetable" />
+
+    <item
+        android:id="@+id/m4"
+        android:title="settings" />
+
+</menu>

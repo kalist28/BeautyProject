@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import ru.kalistratov.template.beauty.infrastructure.Application
+import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableModule
+import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableSubcomponent
 
 @UserScope
 @Subcomponent(
@@ -21,6 +23,8 @@ interface UserComponent {
         fun sessionModule(userModule: UserModule): Builder
         fun build(): UserComponent
     }
+
+    fun plus(module: TimetableModule): TimetableSubcomponent
 }
 
 @Module

@@ -91,8 +91,6 @@ class RegistrationFragment : AuthBaseFragment(), BaseView<RegistrationIntent, Re
     )
 
     override fun render(state: RegistrationState) {
-        emailInputLayout.error = state.emailError
-        passwordInputLayout.error = state.passwordError
 
         state.isLoading.let {
             val enable = !it
@@ -100,6 +98,9 @@ class RegistrationFragment : AuthBaseFragment(), BaseView<RegistrationIntent, Re
             passwordInputLayout.isEnabled = enable
             confirmPasswordInputLayout.isEnabled = enable
         }
+
+        emailInputLayout.error = state.emailError
+        passwordInputLayout.error = state.passwordError
 
         confirmPasswordInputLayout.error = if (!state.confirmPasswordValid)
             resources.getString(R.string.confirm_password_error)

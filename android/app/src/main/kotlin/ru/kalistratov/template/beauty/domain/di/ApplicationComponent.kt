@@ -3,15 +3,17 @@ package ru.kalistratov.template.beauty.domain.di
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.base.AuthBaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseActivity
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.presentation.feature.auth.di.AuthComponent
 import ru.kalistratov.template.beauty.presentation.feature.auth.di.AuthModule
+import ru.kalistratov.template.beauty.presentation.feature.main.di.MainComponent
+import ru.kalistratov.template.beauty.presentation.feature.main.di.MainModule
 import ru.kalistratov.template.beauty.presentation.feature.registration.di.RegistrationComponent
 import ru.kalistratov.template.beauty.presentation.feature.registration.di.RegistrationModule
+import javax.inject.Singleton
 
 @Singleton
 @Component(
@@ -28,6 +30,7 @@ interface ApplicationComponent {
 
     fun userComponentBuilder(): UserComponent.Builder
 
+    fun plus(module: MainModule): MainComponent
     fun plus(module: RegistrationModule): RegistrationComponent
     fun plus(module: AuthModule): AuthComponent
 }

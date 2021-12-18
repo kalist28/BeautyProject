@@ -9,12 +9,15 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlo
 
 abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : ViewModel() {
 
-    protected val uiComposite = CompositeJob()
+    private val uiComposite = CompositeJob()
     protected val workComposite = CompositeJob()
+
     protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow()
     protected val intentFlow: MutableSharedFlow<I> = mutableSharedFlow()
 
+
     override fun onCleared() {
+        workComposite.cancel()
         uiComposite.cancel()
         super.onCleared()
     }

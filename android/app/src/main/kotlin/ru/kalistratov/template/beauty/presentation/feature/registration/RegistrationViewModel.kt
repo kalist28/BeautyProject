@@ -1,7 +1,8 @@
 package ru.kalistratov.template.beauty.presentation.feature.registration
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
+import java.util.*
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -12,11 +13,9 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
 import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
+import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.infrastructure.coroutines.textDebounce
 import ru.kalistratov.template.beauty.presentation.feature.registration.view.RegistrationIntent
-import timber.log.Timber
-import java.util.*
-import javax.inject.Inject
 
 data class RegistrationState(
     val email: String? = null,
@@ -35,7 +34,7 @@ data class RegistrationState(
 
 sealed class RegistrationAction : BaseAction {
     data class UpdateAllowRequest(val isAllow: Boolean) : RegistrationAction()
-    data class UpdateEmail(val email: String) : RegistrationAction()
+    data class UpdateEmail(val email: String, val matches: Boolean) : RegistrationAction()
     data class UpdatePassword(val password: String) : RegistrationAction()
     data class UpdateConfirmPassword(val password: String) : RegistrationAction()
     data class UpdateShowLoading(val show: Boolean) : RegistrationAction()
@@ -51,6 +50,7 @@ sealed class RegistrationAction : BaseAction {
 
 class RegistrationViewModel @Inject constructor(
     private val interactor: RegistrationInteractor,
+    private val router: RegistrationRouter,
 ) : BaseViewModel<RegistrationIntent, RegistrationAction, RegistrationState>() {
 
     private val initialState = RegistrationState()
@@ -59,18 +59,14 @@ class RegistrationViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val stateUpdates = initialStateFlow
-                .asSharedFlow()
-                .onEach { Timber.e("1111") }
 
             val updateEmailAction = intentFlow
                 .filterIsInstance<RegistrationIntent.EmailUpdated>()
                 .textDebounce()
-                .flatMapConcat {
+                .map {
                     val email = it.email
-                    val checkEmail = email.matches(Regex.fromLiteral(checkEmailRegex))
-                    if (checkEmail) flowOf(RegistrationAction.UpdateEmail(email))
-                    else emptyFlow()
+                    val matches = email matches checkEmailRegex.toRegex()
+                    RegistrationAction.UpdateEmail(email, matches)
                 }
 
             val updatePasswordAction = intentFlow
@@ -100,19 +96,18 @@ class RegistrationViewModel @Inject constructor(
                     RegistrationAction.UpdateConfirmPasswordValid(password == confirmPassword)
                 }
 
-            val updateAllowRequestAction = stateUpdates.flatMapConcat { state ->
-                val emailCheck = state.emailValid
+            val updateAllowRequestAction = stateUpdates().flatMapConcat { state ->
+                val emailCheck = state.emailValid && !state.email.isNullOrBlank()
                 val password = state.password?.isNotBlank() ?: false
                 val confirmPasswordIsValid = state.confirmPasswordValid
                 val oldAllowRequest = state.allowRequest
 
-                Timber.e("$emailCheck & $password & $confirmPasswordIsValid == ${emailCheck && password && confirmPasswordIsValid}")
                 val result = emailCheck && password && confirmPasswordIsValid
                 if (result == oldAllowRequest) emptyFlow()
                 else flowOf(RegistrationAction.UpdateAllowRequest(result))
             }
 
-            val createRegistrationRequest = intentFlow
+            val createRegistrationRequestSharedFlow = intentFlow
                 .filterIsInstance<RegistrationIntent.RegistrationClick>()
                 .flatMapConcat {
                     val state = initialStateFlow.value
@@ -127,42 +122,38 @@ class RegistrationViewModel @Inject constructor(
                         )
                     ) else emptyFlow()
                 }
+                .share(this)
 
-            val showLoadingAction = createRegistrationRequest
+            val showLoadingAction = createRegistrationRequestSharedFlow
                 .map { RegistrationAction.UpdateShowLoading(true) }
 
-            val registrationRequestFlow = createRegistrationRequest
+            val registrationRequestFlow = createRegistrationRequestSharedFlow
                 .map { interactor.registration(it) }
 
             val registrationRequestAction = registrationRequestFlow
+                .filterIsInstance<AuthResult.Error>()
                 .map {
-                    if (it is AuthResult.Error) {
-                        val registrationError = it.authError
-                        val errors = registrationError?.errors
-                        val errorMessage = registrationError?.message
+                    val registrationError = it.authError
+                    val errors = registrationError?.errors
+                    val errorMessage = registrationError?.message
 
-                        if (errors == null) RegistrationAction.RegistrationError(errorMessage)
-                        else RegistrationAction.UpdateRegistrationErrors(
-                            errorMessage,
-                            errors.email.firstOrNull(),
-                            errors.password.firstOrNull(),
-                        )
-                    } else null
+                    if (errors == null) RegistrationAction.RegistrationError(errorMessage)
+                    else RegistrationAction.UpdateRegistrationErrors(
+                        errorMessage,
+                        errors.email.firstOrNull(),
+                        errors.password.firstOrNull(),
+                    )
                 }
-                .filterNotNull()
-
-            stateUpdates
-                .launchIn(this)
-                .addTo(workComposite)
 
             registrationRequestFlow
                 .filterIsInstance<AuthResult.Success>()
                 .onEach {
                     val result = it.authResult
-                    val user = result.user
+                    val user = result.user.email
+                        ?: throw IllegalStateException("In AuthResult user is null")
                     val token = result.token ?: return@onEach
-                    // interactor.saveUser(user, token)
-                    Log.e("SAVED", "Login Succes login $user and $token")
+                    interactor.saveUser(user, token)
+                    router.openRegistration()
                 }
                 .launchIn(this)
                 .addTo(workComposite)
@@ -184,6 +175,10 @@ class RegistrationViewModel @Inject constructor(
                 }
                 .launchIn(this)
                 .addTo(workComposite)
+
+            createRegistrationRequestSharedFlow
+                .launchIn(this)
+                .addTo(workComposite)
         }
     }
 
@@ -193,7 +188,11 @@ class RegistrationViewModel @Inject constructor(
             serverUser = action.serverUser,
         )
         is RegistrationAction.UpdateShowLoading -> state.copy(isLoading = action.show)
-        is RegistrationAction.UpdateEmail -> state.copy(email = action.email, emailError = null)
+        is RegistrationAction.UpdateEmail -> state.copy(
+            emailValid = action.matches,
+            email = action.email,
+            emailError = null
+        )
         is RegistrationAction.UpdatePassword -> state.copy(
             password = action.password,
             passwordError = null
@@ -206,7 +205,7 @@ class RegistrationViewModel @Inject constructor(
             isLoading = false,
         )
         is RegistrationAction.RegistrationError -> state.copy(
-            passwordError = action.message,
+            errorMessage = action.message,
             isLoading = false,
         )
         is RegistrationAction.UpdateConfirmPasswordValid -> state.copy(

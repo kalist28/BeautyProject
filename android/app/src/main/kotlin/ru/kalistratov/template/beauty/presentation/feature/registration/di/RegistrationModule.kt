@@ -1,6 +1,7 @@
 package ru.kalistratov.template.beauty.presentation.feature.registration.di
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -11,6 +12,8 @@ import ru.kalistratov.template.beauty.domain.feature.registration.RegistrationIn
 import ru.kalistratov.template.beauty.domain.service.AuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationInteractorImpl
+import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationRouter
+import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationRouterImpl
 import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationViewModel
 import ru.kalistratov.template.beauty.presentation.feature.registration.view.RegistrationFragment
 
@@ -35,6 +38,10 @@ class RegistrationModule(val fragment: RegistrationFragment) {
         authService,
         authSettingsService
     )
+
+    @Provides
+    fun provideRegistrationRouter(): RegistrationRouter =
+        RegistrationRouterImpl(fragment.findNavController())
 }
 
 @Module
