@@ -34,4 +34,13 @@
         <item name="menu">@menu/menu_main</item>
         <item name="labelVisibilityMode">selected</item>
     </style>
+
+    <style name="ModalBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="behavior_saveFlags">none</item>
+        <item name="behavior_hideable">false</item>
+    </style>
+
+    <style name="ModalBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
+    </style>
 </resources>

@@ -11,14 +11,14 @@ import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
-import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.presentation.extension.setTextColorRes
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import ru.kalistratov.template.beauty.R
+import ru.kalistratov.template.beauty.presentation.extension.setTextColorRes
 
-class SimpleCalendar @JvmOverloads constructor(
+class SimpleCalendarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -31,6 +31,16 @@ class SimpleCalendar @JvmOverloads constructor(
     protected val today = LocalDate.now()
     protected val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
 
+    var selectedDay: CalendarDay? = null
+        set(value) {
+            val lastValue = field
+            field = value
+            lastValue?.let { calendar.notifyDayChanged(it) }
+            field?.let { calendar.notifyDayChanged(it) }
+        }
+
+    var onDayClickAction: ((CalendarDay) -> Unit)? = null
+
     init {
         inflate(context, R.layout.calendar_simple, this)
 
@@ -40,14 +50,29 @@ class SimpleCalendar @JvmOverloads constructor(
     private fun initCalendarBinding() {
 
         calendar.dayBinder = object : DayBinder<SimpleDayViewContainer> {
-            override fun create(view: View) = SimpleDayViewContainer(view)
+            override fun create(view: View) = SimpleDayViewContainer(view) {
+                onDayClickAction?.invoke(it)
+                selectedDay = it
+            }
+
             override fun bind(container: SimpleDayViewContainer, day: CalendarDay) {
                 container.day = day
+
+                val isToday = today == day.date
+                val isThisMonth = day.owner == DayOwner.THIS_MONTH
+                val isSelected = selectedDay != null && selectedDay!!.date == day.date
+
                 val textView = container.dayText
                 textView.text = day.date.dayOfMonth.toString()
-                if (day.owner == DayOwner.THIS_MONTH) {
+                container.clickable = isThisMonth
+
+                if (isThisMonth) {
                     when {
-                        today == day.date -> {
+                        isSelected -> {
+                            textView.setTextColorRes(R.color.white)
+                            textView.setBackgroundResource(R.drawable.calendar_day_selected)
+                        }
+                        isToday -> {
                             textView.setTextColorRes(R.color.black)
                             textView.setBackgroundResource(R.drawable.calendar_day_current)
                         }
@@ -81,20 +106,19 @@ class SimpleCalendar @JvmOverloads constructor(
     }
 }
 
-class SimpleDayViewContainer(view: View) : ViewContainer(view) {
+class SimpleDayViewContainer(
+    view: View,
+    clickAction: (CalendarDay) -> Unit
+) : ViewContainer(view) {
     var day: CalendarDay? = null
-    val dayText = view.findViewById<TextView>(R.id.day_text)
+    val dayText: TextView = view.findViewById(R.id.day_text)
+    var clickable: Boolean = false
 
     init {
         view.setOnClickListener {
-            /*if (day.owner == DayOwner.THIS_MONTH) {
-                if (dayText.contains(day.date)) {
-                    selectedDates.remove(day.date)
-                } else {
-                    selectedDates.add(day.date)
-                }
-                calendar.notifyDayChanged(day)
-            }*/
+            if (clickable) day?.let { day ->
+                clickAction.invoke(day)
+            }
         }
     }
 }

@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.emptyFlow
+import com.kizitonwose.calendarview.model.CalendarDay
+import java.util.*
+import javax.inject.Inject
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.di.UserComponent
@@ -18,15 +19,21 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
+import ru.kalistratov.template.beauty.presentation.extension.clicks
 import ru.kalistratov.template.beauty.presentation.extension.find
+import ru.kalistratov.template.beauty.presentation.extension.onCloses
+import ru.kalistratov.template.beauty.presentation.extension.showBottomSheet
 import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarRouter
 import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarState
 import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarViewModel
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarModule
-import java.util.*
-import javax.inject.Inject
+import ru.kalistratov.template.beauty.presentation.view.DayDetailsBottomSheet
+import ru.kalistratov.template.beauty.presentation.view.SimpleCalendarView
 
-sealed class CalendarIntent : BaseIntent
+sealed class CalendarIntent : BaseIntent {
+    data class DaySelected(val day: CalendarDay) : CalendarIntent()
+    object SelectedDayCloses : CalendarIntent()
+}
 
 class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState> {
 
@@ -40,7 +47,12 @@ class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState>
         ViewModelProvider(this, viewModelFactory)[CalendarViewModel::class.java]
     }
 
+    lateinit var calendarView: SimpleCalendarView
+
+    private val dayDetailsBottomSheet by lazy { DayDetailsBottomSheet() }
+
     override fun findViews() {
+        calendarView = find(R.id.simple_calendar_view)
 
         find<BottomNavigationView>(R.id.bottom_nav_view).apply {
             selectedItemId = R.id.menu_calendar
@@ -74,8 +86,13 @@ class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState>
         }
     }
 
-    override fun intents(): Flow<CalendarIntent> = emptyFlow()
+    override fun intents(): Flow<CalendarIntent> = merge(
+        calendarView.clicks().map { CalendarIntent.DaySelected(it) },
+        dayDetailsBottomSheet.onCloses().map { CalendarIntent.SelectedDayCloses }
+    )
 
     override fun render(state: CalendarState) {
+        calendarView.selectedDay = state.selectedDay
+        if (state.showDayDetails) showBottomSheet(dayDetailsBottomSheet)
     }
 }
