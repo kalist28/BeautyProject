@@ -3,11 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Kalist28/.gradle/caches/transforms-3/d626f75ea723cba8510e9e543fe4e0dc/transformed/jetified-duo-navigation-drawer-3.0.0/res/drawable/duo_shape_rectangled_red.xml" value="0.3646153846153846" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_main_gradient.xml" value="0.3646153846153846" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_white_rounded_panel.xml" value="0.3646153846153846" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/backround_main_gradient.xml" value="0.3646153846153846" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/ic_home.xml" value="0.3646153846153846" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3646153846153846" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/ic_profile.xml" value="0.21145833333333333" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/side_menu_selector.xml" value="0.3646153846153846" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/activity_main.xml" value="0.3541666666666667" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/calendar_day_legend.xml" value="0.3541666666666667" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/calendar_item_round_day.xml" value="0.33" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/calendar_simple.xml" value="0.3541666666666667" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_auth.xml" value="0.3541666666666667" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_calendar.xml" value="0.3541666666666667" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_login.xml" value="0.3541666666666667" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_profile.xml" value="0.3541666666666667" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_registration.xml" value="0.3541666666666667" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_timetable.xml" value="0.34193840579710144" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/main_fragment.xml" value="0.2907608695652174" />

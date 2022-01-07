@@ -2,19 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/m1"
-        android:title="Profile" />
+        android:id="@+id/menu_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_profile" />
 
     <item
-        android:id="@+id/m2"
-        android:title="1235" />
+        android:id="@+id/menu_timetable"
+        android:title="@string/timetable"
+        android:icon="@drawable/ic_list_alt" />
 
     <item
-        android:id="@+id/m3"
-        android:title="Timetable" />
+        android:id="@+id/menu_calendar"
+        android:title="@string/calendar"
+        android:icon="@drawable/ic_home" />
 
     <item
-        android:id="@+id/m4"
-        android:title="settings" />
+        android:id="@+id/menu_list"
+        android:title=""
+        android:icon="@drawable/ic_list_alt" />
 
 </menu>

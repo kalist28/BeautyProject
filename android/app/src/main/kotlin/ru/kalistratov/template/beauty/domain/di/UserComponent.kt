@@ -7,8 +7,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import ru.kalistratov.template.beauty.infrastructure.Application
+import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarComponent
+import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarModule
+import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileComponent
+import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileModule
+import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableComponent
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableModule
-import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableSubcomponent
 
 @UserScope
 @Subcomponent(
@@ -24,7 +28,9 @@ interface UserComponent {
         fun build(): UserComponent
     }
 
-    fun plus(module: TimetableModule): TimetableSubcomponent
+    fun plus(module: ProfileModule): ProfileComponent
+    fun plus(module: TimetableModule): TimetableComponent
+    fun plus(module: CalendarModule): CalendarComponent
 }
 
 @Module

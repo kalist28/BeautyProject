@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.base.BaseActivity
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
@@ -45,6 +46,18 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initNavController()
+
+        with(viewModel) {
+            viewModelScope.launch {
+                stateUpdates()
+                    .collect(::render)
+            }.addTo(jobComposite)
+            processIntent(intents())
+        }
+    }
+
+    private fun initNavController() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -54,14 +67,7 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState> {
         if (user.isNullOrBlank()) navGraph.setStartDestination(R.id.authFragment)
         else navGraph.setStartDestination(R.id.timetableFragment)
         navController.setGraph(navGraph, null)
-
-        with(viewModel) {
-            viewModelScope.launch {
-                stateUpdates()
-                    .collect(::render)
-            }.addTo(jobComposite)
-            processIntent(intents())
-        }
+        (applicationContext as Application).navController = navController
     }
 
     override fun injectComponent() = appComponent.plus(MainModule()).inject(this)

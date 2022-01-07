@@ -4,6 +4,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -37,3 +39,6 @@ fun onBackPressClicks(callback: OnBackPressCallback): Flow<Unit> = callbackFlow 
     }
     awaitClose { }
 }.conflate()
+
+fun TextView.setTextColorRes(@ColorRes color: Int) =
+    setTextColor(ContextCompat.getColor(context, color))

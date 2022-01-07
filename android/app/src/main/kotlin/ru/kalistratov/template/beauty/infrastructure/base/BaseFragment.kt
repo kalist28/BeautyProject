@@ -38,7 +38,7 @@ abstract class BaseFragment : Fragment() {
         findViews()
     }
 
-    private fun injectAppComponent() {
+    protected open fun injectAppComponent() {
         appComponent.inject(this)
         val userComponent = sessionManager.getComponent()
         injectUserComponent(userComponent)
