@@ -1,7 +1,6 @@
 package ru.kalistratov.template.beauty.presentation.feature.main
 
 import androidx.lifecycle.viewModelScope
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -11,6 +10,7 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.presentation.feature.main.view.MainIntent
+import javax.inject.Inject
 
 data class MainState(
     val allowOnBackPress: Boolean = false
@@ -45,7 +45,7 @@ class MainViewModel @Inject constructor() : BaseViewModel<MainIntent, MainAction
             )
                 .flowOn(Dispatchers.IO)
                 .scan(MainState(), ::reduce)
-                .onEach { stateFlow.emit(it) }
+                .onEach { shareStateFlow.emit(it) }
                 .launchIn(this)
                 .addTo(workComposite)
         }

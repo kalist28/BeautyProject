@@ -1,5 +1,5 @@
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/legendLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,74 +7,74 @@
     android:orientation="horizontal"
     tools:ignore="HardcodedText">
 
-        <TextView
-            android:id="@+id/legendText1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="ПН"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/legendText1"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="ПН"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/legendText2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="ВТ"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/legendText2"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="ВТ"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/legendText3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="СР"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/legendText3"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="СР"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/legendText4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="ЧТ"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/legendText4"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="ЧТ"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/legendText5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="ПТ"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/legendText5"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="ПТ"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/legendText6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="СБ"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/legendText6"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="СБ"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/legendText7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="ВС"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+    <TextView
+        android:id="@+id/legendText7"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="ВС"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
-    </LinearLayout>
+</LinearLayout>

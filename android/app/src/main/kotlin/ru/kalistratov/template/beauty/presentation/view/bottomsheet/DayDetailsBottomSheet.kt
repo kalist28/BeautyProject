@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.view
+package ru.kalistratov.template.beauty.presentation.view.bottomsheet
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -9,7 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import ru.kalistratov.template.beauty.R
 
-class DayDetailsBottomSheet : TemplateBottomSheet() {
+class DayDetailsBottomSheet : BaseBottomSheet() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

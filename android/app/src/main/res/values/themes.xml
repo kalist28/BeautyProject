@@ -43,4 +43,34 @@
     <style name="ModalBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
     </style>
+
+
+    <style name="TimeRangePickerStyle"  parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="tint">@color/colorAccept</item>
+        <item name="backgroundTint">@color/colorDarkAccept</item>
+        <item name="trp_sliderWidth">35dp</item>
+        <item name="trp_sliderRangeGradientStart">@color/colorDarkAccept</item>
+        <item name="trp_sliderRangeGradientMiddle">@color/colorAccept</item>
+        <item name="trp_sliderRangeGradientEnd">@color/colorAcceptLight</item>
+        <item name="trp_hourFormat">FORMAT_24</item>
+        <item name="trp_thumbColor">@color/white</item>
+        <item name="trp_clockFace">APPLE</item>
+        <item name="trp_thumbIconEnd">@drawable/ic_work_off</item>
+        <item name="trp_thumbIconColor">@color/colorAccept</item>
+        <item name="trp_thumbIconStart">@drawable/ic_work</item>
+    </style>
+
+
+    <!-- bottom sheet !-->
+
+    <style name="BottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/background_white_rounded_panel</item>
+    </style>
+
 </resources>

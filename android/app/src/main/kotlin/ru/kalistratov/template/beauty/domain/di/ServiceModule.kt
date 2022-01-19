@@ -5,16 +5,27 @@ import com.russhwolf.settings.AndroidSettings
 import com.russhwolf.settings.Settings
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 import ru.kalistratov.template.beauty.BuildConfig
-import ru.kalistratov.template.beauty.infrastructure.Application
+import ru.kalistratov.template.beauty.domain.repository.ApiRepository
 import ru.kalistratov.template.beauty.domain.service.*
+import ru.kalistratov.template.beauty.infrastructure.Application
+import ru.kalistratov.template.beauty.infrastructure.repository.ApiRepositoryImpl
 import ru.kalistratov.template.beauty.infrastructure.service.AuthServiceImpl
 import ru.kalistratov.template.beauty.infrastructure.service.AuthSettingsServiceImpl
 import ru.kalistratov.template.beauty.infrastructure.service.SessionManagerImpl
+import javax.inject.Singleton
 
 @Module
 class ServiceModule(val application: Application) {
+
+    @Provides
+    @Singleton
+    fun provideApiRepository(
+        authSettingsService: AuthSettingsService
+    ): ApiRepository = ApiRepositoryImpl(
+        BuildConfig.SERVER_URI,
+        authSettingsService
+    )
 
     @Provides
     @Singleton
@@ -23,7 +34,9 @@ class ServiceModule(val application: Application) {
 
     @Provides
     @Singleton
-    fun provideRegistrationService(): AuthService = AuthServiceImpl(BuildConfig.SERVER_URI)
+    fun provideRegistrationService(
+        apiRepository: ApiRepository
+    ): AuthService = AuthServiceImpl(apiRepository)
 
     @Provides
     @Singleton

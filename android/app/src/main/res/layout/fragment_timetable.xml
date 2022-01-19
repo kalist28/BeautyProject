@@ -15,7 +15,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/constraint_fill"
         style="@style/BottomNavigation"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"

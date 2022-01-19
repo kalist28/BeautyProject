@@ -53,13 +53,13 @@ class CalendarViewModel @Inject constructor(
             )
                 .flowOn(Dispatchers.IO)
                 .scan(CalendarState(), ::reduce)
-                .onEach { stateFlow.emit(it) }
+                .onEach { shareStateFlow.emit(it) }
                 .launchIn(this)
                 .addTo(workComposite)
         }
     }
 
-    override fun reduce(state: CalendarState, action: CalendarAction) = when(action) {
+    override fun reduce(state: CalendarState, action: CalendarAction) = when (action) {
         is CalendarAction.Clear -> state.copy(
             showDayDetails = false
         )

@@ -7,6 +7,31 @@ import ru.kalistratov.template.beauty.domain.extension.getJson
 import ru.kalistratov.template.beauty.infrastructure.extensions.jsonParser
 
 @Serializable
+data class User(
+    val id: Long? = null,
+    val email: String? = null
+)
+
+@Serializable
+data class AuthRequest(
+    val email: String,
+    val password: String,
+)
+
+@Serializable
+data class RegistrationRequest(
+    val email: String,
+    val password: String,
+    @SerialName("password_confirmation") val passwordConfirmation: String,
+)
+
+@Serializable
+data class ServerAuthResult(
+    val user: User = User(),
+    val token: String? = null
+)
+
+@Serializable
 sealed class AuthResult {
     @Serializable
     data class Success(val authResult: ServerAuthResult) : AuthResult()
@@ -48,16 +73,3 @@ data class AuthError(
         }
     }
 }
-
-@Serializable
-data class AuthRequest(
-    val email: String,
-    val password: String,
-)
-
-@Serializable
-data class RegistrationRequest(
-    val email: String,
-    val password: String,
-    @SerialName("password_confirmation") val passwordConfirmation: String,
-)

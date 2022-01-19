@@ -1,8 +1,6 @@
 package ru.kalistratov.template.beauty.presentation.feature.registration
 
 import androidx.lifecycle.viewModelScope
-import java.util.*
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,6 +14,8 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.infrastructure.coroutines.textDebounce
 import ru.kalistratov.template.beauty.presentation.feature.registration.view.RegistrationIntent
+import java.util.*
+import javax.inject.Inject
 
 data class RegistrationState(
     val email: String? = null,
@@ -25,7 +25,7 @@ data class RegistrationState(
     val confirmPasswordValid: Boolean = true,
     val allowRequest: Boolean = false,
     val isLoading: Boolean = false,
-    val serverUser: ServerUser? = null,
+    val user: User? = null,
     val registrationSuccess: Boolean = false,
     val errorMessage: String? = null,
     val emailError: String? = null,
@@ -39,7 +39,7 @@ sealed class RegistrationAction : BaseAction {
     data class UpdateConfirmPassword(val password: String) : RegistrationAction()
     data class UpdateShowLoading(val show: Boolean) : RegistrationAction()
     data class UpdateConfirmPasswordValid(val isValid: Boolean) : RegistrationAction()
-    data class RegistrationSuccess(val serverUser: ServerUser) : RegistrationAction()
+    data class RegistrationSuccess(val user: User) : RegistrationAction()
     data class RegistrationError(val message: String?) : RegistrationAction()
     data class UpdateRegistrationErrors(
         val message: String?,
@@ -129,6 +129,7 @@ class RegistrationViewModel @Inject constructor(
 
             val registrationRequestFlow = createRegistrationRequestSharedFlow
                 .map { interactor.registration(it) }
+                .share(this)
 
             val registrationRequestAction = registrationRequestFlow
                 .filterIsInstance<AuthResult.Error>()
@@ -170,7 +171,7 @@ class RegistrationViewModel @Inject constructor(
                 .flowOn(Dispatchers.IO)
                 .scan(RegistrationState(), ::reduce)
                 .onEach {
-                    stateFlow.emit(it)
+                    shareStateFlow.emit(it)
                     initialStateFlow.value = it
                 }
                 .launchIn(this)
@@ -185,7 +186,7 @@ class RegistrationViewModel @Inject constructor(
     override fun reduce(state: RegistrationState, action: RegistrationAction) = when (action) {
         is RegistrationAction.RegistrationSuccess -> state.copy(
             registrationSuccess = true,
-            serverUser = action.serverUser,
+            user = action.user,
         )
         is RegistrationAction.UpdateShowLoading -> state.copy(isLoading = action.show)
         is RegistrationAction.UpdateEmail -> state.copy(

@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_timetableFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_timetableFragment_to_personalAreaFragment"
+            app:destination="@id/personalAreaFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -52,6 +55,9 @@
         <action
             android:id="@+id/action_profileFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_personalAreaFragment"
+            app:destination="@id/personalAreaFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
@@ -64,5 +70,22 @@
         <action
             android:id="@+id/action_calendarFragment_to_timetableFragment"
             app:destination="@id/timetableFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_personalAreaFragment"
+            app:destination="@id/personalAreaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalAreaFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.personalarea.view.PersonalAreaFragment"
+        android:label="fragment_personal_area">
+        <action
+            android:id="@+id/action_personalAreaFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_personalAreaFragment_to_timetableFragment"
+            app:destination="@id/timetableFragment" />
+        <action
+            android:id="@+id/action_personalAreaFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

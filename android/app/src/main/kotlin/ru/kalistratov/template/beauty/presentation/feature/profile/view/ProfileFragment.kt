@@ -46,6 +46,7 @@ class ProfileFragment : BaseFragment(), BaseView<ProfileIntent, ProfileState> {
             setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.menu_timetable -> profileRouter.openTimetable()
+                    R.id.menu_personal_area -> profileRouter.openPersonalArea()
                     R.id.menu_calendar -> profileRouter.openCalendar()
                 }
                 return@setOnItemSelectedListener true

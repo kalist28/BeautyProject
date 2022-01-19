@@ -6,7 +6,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/constraint_fill"
         android:background="@color/colorAccept"
         app:layout_constraintBottom_toBottomOf="@id/day_legend"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/constraint_fill"
         android:background="@color/colorDarkAccept"
         app:layout_constraintBottom_toBottomOf="@id/day_legend"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,10 +46,10 @@
 
     <include
         android:id="@+id/day_legend"
-        android:layout_marginTop="@dimen/margin_small"
         layout="@layout/calendar_day_legend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/month_text" />
 
@@ -58,11 +58,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_xsmall"
+        app:cv_dayViewResource="@layout/calendar_item_round_day"
+        app:cv_inDateStyle="allMonths"
         app:cv_orientation="horizontal"
         app:cv_outDateStyle="endOfRow"
-        app:cv_inDateStyle="allMonths"
         app:cv_scrollMode="paged"
-        app:cv_dayViewResource="@layout/calendar_item_round_day"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/day_legend" />

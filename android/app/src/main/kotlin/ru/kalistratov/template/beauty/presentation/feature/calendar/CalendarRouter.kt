@@ -6,6 +6,7 @@ import ru.kalistratov.template.beauty.presentation.feature.calendar.view.Calenda
 interface CalendarRouter {
     fun openProfile()
     fun openTimetable()
+    fun openPersonalArea()
 }
 
 class CalendarRouterImpl(private val navController: NavController) : CalendarRouter {
@@ -15,5 +16,9 @@ class CalendarRouterImpl(private val navController: NavController) : CalendarRou
 
     override fun openTimetable() = navController.navigate(
         CalendarFragmentDirections.actionCalendarFragmentToTimetableFragment()
+    )
+
+    override fun openPersonalArea() = navController.navigate(
+        CalendarFragmentDirections.actionCalendarFragmentToPersonalAreaFragment()
     )
 }

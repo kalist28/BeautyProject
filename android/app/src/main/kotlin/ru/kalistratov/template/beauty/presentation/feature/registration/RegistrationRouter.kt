@@ -8,9 +8,7 @@ interface RegistrationRouter {
 }
 
 class RegistrationRouterImpl(private val navController: NavController) : RegistrationRouter {
-    override fun openRegistration() {
-        navController.navigate(
-            RegistrationFragmentDirections.actionRegistrationFragmentToTimetableFragment()
-        )
-    }
+    override fun openRegistration() = navController.navigate(
+        RegistrationFragmentDirections.actionRegistrationFragmentToTimetableFragment()
+    )
 }

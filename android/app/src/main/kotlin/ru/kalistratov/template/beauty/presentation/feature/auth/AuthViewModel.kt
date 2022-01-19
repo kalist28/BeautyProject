@@ -118,7 +118,7 @@ class AuthViewModel @Inject constructor(
                 .flowOn(Dispatchers.IO)
                 .scan(initialState, ::reduce)
                 .onEach {
-                    stateFlow.emit(it)
+                    shareStateFlow.emit(it)
                     initialStateFlow.value = it
                 }
                 .launchIn(this)

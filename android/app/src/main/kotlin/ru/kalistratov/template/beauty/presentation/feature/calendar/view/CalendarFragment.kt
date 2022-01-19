@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kizitonwose.calendarview.model.CalendarDay
-import java.util.*
-import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
@@ -27,8 +25,10 @@ import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarRout
 import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarState
 import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarViewModel
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarModule
-import ru.kalistratov.template.beauty.presentation.view.DayDetailsBottomSheet
 import ru.kalistratov.template.beauty.presentation.view.SimpleCalendarView
+import ru.kalistratov.template.beauty.presentation.view.bottomsheet.DayDetailsBottomSheet
+import java.util.*
+import javax.inject.Inject
 
 sealed class CalendarIntent : BaseIntent {
     data class DaySelected(val day: CalendarDay) : CalendarIntent()
@@ -60,6 +60,7 @@ class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState>
                 when (it.itemId) {
                     R.id.menu_profile -> calendarRouter.openProfile()
                     R.id.menu_timetable -> calendarRouter.openProfile()
+                    R.id.menu_personal_area -> calendarRouter.openPersonalArea()
                 }
                 return@setOnItemSelectedListener true
             }

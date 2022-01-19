@@ -1,6 +1,9 @@
 package ru.kalistratov.template.beauty.infrastructure.extensions
 
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.contextual
+import ru.kalistratov.template.beauty.domain.entity.WeekDaySerializer
 
 internal val jsonParser = Json {
     ignoreUnknownKeys = true
@@ -11,4 +14,7 @@ internal val jsonParser = Json {
     coerceInputValues = true
     allowStructuredMapKeys = true
     useArrayPolymorphism = true
+    serializersModule = SerializersModule {
+        contextual(WeekDaySerializer)
+    }
 }
