@@ -4,4 +4,10 @@
     <dimen name="margin_small">16dp</dimen>
     <dimen name="margin_medium">32dp</dimen>
     <dimen name="margin_large">64dp</dimen>
+    <dimen name="fragment_horizontal_margin">16dp</dimen>
+    <dimen name="fragment_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="week_sequence_item">40dp</dimen>
+    <dimen name="day_text_size">18sp</dimen>
+    <dimen name="constraint_fill">0dp</dimen>
 </resources>

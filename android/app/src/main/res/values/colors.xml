@@ -2,11 +2,16 @@
 <resources>
     <color name="colorAcceptLight">#d57276</color>
     <color name="colorAccept">#D13B68</color>
+    <color name="colorDarkAccept">#AD1457</color>
     <color name="color1">#d6c2bc</color>
     <color name="teal_200">#c0cccc</color>
     <color name="color2">#65b2c6</color>
-    <color name="color3">#FF000000</color>
+    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="lightDark">#4D000000</color>
+    <color name="lightWhite">#4DFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <color name="authBackgroundGradientEnd">#FFFFFFFF</color>
     <color name="authBackgroundGradientStart">@color/colorAccept</color>

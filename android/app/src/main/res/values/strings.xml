@@ -1,6 +1,31 @@
 <resources>
     <string name="app_name">TemplateBeautyApp</string>
-    <string name="login">Логин</string>
+
+    <string name="email">Почта</string>
     <string name="password">Пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="confirm_password_error">Пароли не совпадают</string>
     <string name="registration">Регистрация</string>
+
+    <string name="profile">Профиль</string>
+    <string name="calendar">Календарь</string>
+    <string name="timetable">Расписание</string>
+    <string name="personal_area">Личный кабинет</string>
+
+
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="sunday">Воскресенье</string>
+
+    <string name="monday_short">ПН</string>
+    <string name="tuesday_short">ВТ</string>
+    <string name="wednesday_short">СР</string>
+    <string name="thursday_short">ЧТ</string>
+    <string name="friday_short">ПТ</string>
+    <string name="saturday_short">СБ</string>
+    <string name="sunday_short">ВС</string>
 </resources>
