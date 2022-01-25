@@ -6,30 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.di.UserComponent
 import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
-import ru.kalistratov.template.beauty.domain.entity.WorkDaySequence
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.find
-import ru.kalistratov.template.beauty.presentation.extension.showBottomSheet
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaRouter
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaState
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaViewModel
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaModule
-import ru.kalistratov.template.beauty.presentation.view.bottomsheet.EditWorkDaySequenceBottomSheet
-import ru.kalistratov.template.beauty.presentation.view.workdaysequence.WeekSequenceView
-import javax.inject.Inject
 
 sealed class PersonalAreaIntent : BaseIntent {
-    data class WorkDaySequenceClick(val dayIndex: Int) : PersonalAreaIntent()
-    data class UpdateWorkDaySequence(val day: WorkDaySequence) : PersonalAreaIntent()
+    data class MenuItemClick(val id: Int) : PersonalAreaIntent()
     object InitData : PersonalAreaIntent()
 }
 
@@ -45,10 +44,12 @@ class PersonalAreaFragment : BaseFragment(), BaseView<PersonalAreaIntent, Person
         ViewModelProvider(this, viewModelFactory)[PersonalAreaViewModel::class.java]
     }
 
-    lateinit var weekSequenceView: WeekSequenceView
+    private lateinit var recyclerView: RecyclerView
+
+    private val menuController = PersonalAreaMenuController()
 
     override fun findViews() {
-        weekSequenceView = find(R.id.week_sequence_view)
+        recyclerView = find(R.id.recycler_view)
         find<BottomNavigationView>(R.id.bottom_nav_view).apply {
             selectedItemId = R.id.menu_personal_area
             setOnItemSelectedListener {
@@ -73,30 +74,28 @@ class PersonalAreaFragment : BaseFragment(), BaseView<PersonalAreaIntent, Person
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loge("sdfsd")
         with(viewModel) {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.Main) {
                 stateUpdates()
                     .collect(::render)
             }.addTo(jobComposite)
             processIntent(intents())
         }
+
+        recyclerView.apply {
+            adapter = menuController.adapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     override fun intents(): Flow<PersonalAreaIntent> = merge(
         flowOf(PersonalAreaIntent.InitData),
-        weekSequenceView.clicks().map { PersonalAreaIntent.WorkDaySequenceClick(it) },
-        EditWorkDaySequenceBottomSheet.savingDay()
-            .map { PersonalAreaIntent.UpdateWorkDaySequence(it) }
+        menuController.clicks().map { PersonalAreaIntent.MenuItemClick(it) }
     )
 
     override fun render(state: PersonalAreaState) {
-        weekSequenceView.setLoading(state.weekSequenceLoading)
-        weekSequenceView.requestModelBuild(state.weekSequence)
-
-        if (state.openEditWorkDaySequenceBottomSheet)
-            EditWorkDaySequenceBottomSheet().let {
-                it.workDaySequence = state.editWorkDaySequence
-                showBottomSheet(it)
-            }
+        menuController.items = state.menuItems
+        menuController.requestModelBuild()
     }
 }

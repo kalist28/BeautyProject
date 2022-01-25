@@ -21,7 +21,7 @@ class ApiRepositoryImpl(
         private const val AUTH_HEADER = "Authorization"
     }
 
-    private fun getBearerToken() = "Bearer ${authSettingsService.loadToken()}"
+    private fun getBearerToken() = "Bearer ${authSettingsService.getToken()}"
 
     override suspend fun registration(
         request: RegistrationRequest

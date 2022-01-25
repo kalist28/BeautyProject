@@ -1,10 +1,15 @@
 package ru.kalistratov.template.beauty.presentation.extension
 
+import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +32,7 @@ fun TextView.textChanges(): Flow<CharSequence> = callbackFlow {
     awaitClose { removeTextChangedListener(listener) }
 }.conflate()
 
-fun Button.clicks(): Flow<Unit> = callbackFlow {
+fun View.clicks(): Flow<Unit> = callbackFlow {
     kotlinx.coroutines.delay(200)
     setOnClickListener { trySend(Unit) }
     awaitClose { setOnClickListener(null) }
@@ -42,3 +47,6 @@ fun onBackPressClicks(callback: OnBackPressCallback): Flow<Unit> = callbackFlow 
 
 fun TextView.setTextColorRes(@ColorRes color: Int) =
     setTextColor(ContextCompat.getColor(context, color))
+
+fun View.getDrawable(@DrawableRes id: Int): Drawable? =
+    AppCompatResources.getDrawable(this.context, id)

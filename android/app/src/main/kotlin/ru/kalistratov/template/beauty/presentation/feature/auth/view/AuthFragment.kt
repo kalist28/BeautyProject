@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.textfield.TextInputEditText
@@ -52,7 +53,7 @@ class AuthFragment : AuthBaseFragment(), BaseView<AuthIntent, AuthState> {
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var passwordInputLayout: TextInputLayout
     private lateinit var authButton: Button
-    private lateinit var registrationButton: Button
+    private lateinit var registrationTextView: TextView
 
     override fun findViews() {
         emailEditText = find((R.id.email_edit_text))
@@ -60,7 +61,7 @@ class AuthFragment : AuthBaseFragment(), BaseView<AuthIntent, AuthState> {
         emailInputLayout = find(R.id.email_input_layout)
         passwordInputLayout = find(R.id.password_input_layout)
         authButton = find(R.id.auth_btn)
-        registrationButton = find(R.id.registration_btn)
+        registrationTextView = find(R.id.registration_btn)
     }
 
     override fun onCreateView(
@@ -85,7 +86,7 @@ class AuthFragment : AuthBaseFragment(), BaseView<AuthIntent, AuthState> {
 
     override fun intents(): Flow<AuthIntent> = merge(
         authButton.clicks().map { AuthIntent.AuthClick },
-        registrationButton.clicks().map { AuthIntent.RegistrationClick },
+        registrationTextView.clicks().map { AuthIntent.RegistrationClick },
         emailEditText.textChanges().map { AuthIntent.EmailUpdated(it.toString()) },
         passwordEditText.textChanges().map { AuthIntent.PasswordUpdated(it.toString()) },
     )

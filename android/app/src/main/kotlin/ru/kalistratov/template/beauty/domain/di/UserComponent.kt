@@ -7,8 +7,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import ru.kalistratov.template.beauty.domain.repository.ApiRepository
+import ru.kalistratov.template.beauty.domain.service.PersonalAreaMenuService
 import ru.kalistratov.template.beauty.domain.service.WorkSequenceService
 import ru.kalistratov.template.beauty.infrastructure.Application
+import ru.kalistratov.template.beauty.infrastructure.service.PersonalAreaMenuServiceImpl
 import ru.kalistratov.template.beauty.infrastructure.service.WorkSequenceServiceImpl
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarComponent
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarModule
@@ -18,6 +20,8 @@ import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileCom
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileModule
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableComponent
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableModule
+import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceComponent
+import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceModule
 
 @UserScope
 @Subcomponent(
@@ -37,6 +41,7 @@ interface UserComponent {
     fun plus(module: CalendarModule): CalendarComponent
     fun plus(module: TimetableModule): TimetableComponent
     fun plus(module: PersonalAreaModule): PersonalAreaComponent
+    fun plus(module: WeekSequenceModule): WeekSequenceComponent
 }
 
 @Module
@@ -53,4 +58,8 @@ class UserModule(private val user: String) {
     fun provideWeekSequenceService(
         apiRepository: ApiRepository
     ): WorkSequenceService = WorkSequenceServiceImpl(apiRepository)
+
+    @Provides
+    @UserScope
+    fun providePersonalAreaMenuService(): PersonalAreaMenuService = PersonalAreaMenuServiceImpl()
 }

@@ -8,7 +8,7 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <TextView
-        android:id="@+id/topic_text"
+        android:id="@+id/topic_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
@@ -30,7 +30,7 @@
         android:layout_marginVertical="@dimen/margin_small"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topic_text" />
+        app:layout_constraintTop_toBottomOf="@+id/topic_text_view" />
 
     <TextView
         android:id="@+id/time_range_text_view"

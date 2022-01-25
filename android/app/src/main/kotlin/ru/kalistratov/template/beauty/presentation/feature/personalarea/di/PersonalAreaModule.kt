@@ -9,6 +9,8 @@ import dagger.Subcomponent
 import dagger.multibindings.IntoMap
 import ru.kalistratov.template.beauty.domain.di.ViewModelKey
 import ru.kalistratov.template.beauty.domain.feature.personalarea.PersonalAreaInteractor
+import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import ru.kalistratov.template.beauty.domain.service.PersonalAreaMenuService
 import ru.kalistratov.template.beauty.domain.service.WorkSequenceService
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaInteractorImpl
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaRouter
@@ -31,9 +33,11 @@ class PersonalAreaModule(private val fragment: PersonalAreaFragment) {
 
     @Provides
     fun provideProfileInteractor(
-        workSequenceService: WorkSequenceService
+        authSettingsService: AuthSettingsService,
+        personalAreaMenuService: PersonalAreaMenuService
     ): PersonalAreaInteractor = PersonalAreaInteractorImpl(
-        workSequenceService
+        personalAreaMenuService,
+        authSettingsService
     )
 
     @Provides

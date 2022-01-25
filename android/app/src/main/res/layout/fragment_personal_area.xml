@@ -6,34 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".presentation.feature.personalarea.view.PersonalAreaFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <include
+        android:id="@+id/user_panel"
+        layout="@layout/personal_area_panel_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="@dimen/constraint_fill"
         android:layout_height="@dimen/constraint_fill"
+        android:layout_marginHorizontal="@dimen/margin_xmedium"
+        android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include layout="@layout/personal_area_panel_user" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_small"
-                android:background="@drawable/background_shadow" />
-
-            <ru.kalistratov.template.beauty.presentation.view.workdaysequence.WeekSequenceView
-                android:id="@+id/week_sequence_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_panel" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view"

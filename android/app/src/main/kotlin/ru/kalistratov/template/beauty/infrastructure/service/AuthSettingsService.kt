@@ -13,12 +13,17 @@ class AuthSettingsServiceImpl(private val settings: Settings) : AuthSettingsServ
     override fun updateToken(token: String) =
         settings.putString(TOKEN_TAG, token)
 
-    override fun loadToken(): String = settings.getString(TOKEN_TAG)
+    override fun getToken(): String = settings.getString(TOKEN_TAG)
 
     override fun getUser(): String? = settings.getStringOrNull(USER_TAG)
 
     override fun updateUser(user: String, token: String) {
         settings.putString(USER_TAG, user)
         updateToken(token)
+    }
+
+    override fun exit() = with(settings) {
+        remove(USER_TAG)
+        remove(TOKEN_TAG)
     }
 }

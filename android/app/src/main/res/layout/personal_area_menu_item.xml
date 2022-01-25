@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_small"
+    android:layout_marginVertical="@dimen/margin_xsmall">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/margin_xmedium"
+        android:layout_height="@dimen/margin_xmedium"
+        android:src="@drawable/ic_list_alt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorDarkAccept" />
+
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        android:text="Рабочая неделя"
+        android:textColor="#1A1C3D"
+        android:textSize="@dimen/text_medium"
+        android:layout_marginStart="@dimen/margin_xsmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintEnd_toStartOf="@id/arrow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="@dimen/margin_small"
+        android:layout_height="@dimen/margin_medium"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.view.workdaysequence
+package ru.kalistratov.template.beauty.presentation.view.weeksequence
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -27,7 +27,7 @@ class WorkDaySequenceView @JvmOverloads constructor(
         weekDayTextView.text = context.getString(day.day.shortTittleResId)
         // TODO replace to REsID
         val text = when {
-            day.isHoliday -> "Выходной"
+            // day.isHoliday -> "Выходной"
             day.from.isNoTime() && day.to.isNoTime() -> "Не указано"
             else -> "${day.from} - ${day.to}"
         }

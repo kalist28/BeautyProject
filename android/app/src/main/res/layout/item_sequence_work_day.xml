@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/margin_xsmall"
     android:layout_marginTop="@dimen/margin_xsmall"
-    tools:context=".presentation.view.workdaysequence.WorkDaySequenceView">
+    tools:context=".presentation.view.weeksequence.WorkDaySequenceView">
 
     <View
         android:id="@+id/week_day_background"

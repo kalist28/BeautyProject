@@ -6,7 +6,7 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/colorAccept</item>
         <item name="colorSecondaryVariant">@color/colorAcceptLight</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
         <item name="windowActionBar">false</item>
@@ -14,11 +14,10 @@
     </style>
 
     <style name="EditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxCornerRadiusTopEnd">@dimen/margin_xsmall</item>
-        <item name="boxCornerRadiusTopStart">@dimen/margin_xsmall</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/margin_xsmall</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/margin_xsmall</item>
-        <item name="boxStrokeColor">@color/authBackgroundGradientStart</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/margin_xmedium</item>
+        <item name="boxCornerRadiusTopStart">@dimen/margin_xmedium</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/margin_xmedium</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/margin_xmedium</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

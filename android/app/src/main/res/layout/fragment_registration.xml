@@ -40,12 +40,13 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/constraint_fill"
         android:layout_marginBottom="@dimen/margin_small"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/horizontal_separator">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,14 +60,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_medium"
+                app:hintEnabled="false"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/main_panel">
+                app:layout_constraintTop_toTopOf="@id/main_panel"
+                app:startIconDrawable="@drawable/ic_email"
+                app:startIconTint="@color/colorAccept">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/background_stroke"
                     android:hint="@string/email"
                     android:inputType="textAutoCorrect"
                     android:maxLines="1"
@@ -82,14 +87,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_small"
+                app:hintEnabled="false"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorAccept"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email_input_layout">
+                app:layout_constraintTop_toBottomOf="@id/email_input_layout"
+                app:startIconDrawable="@drawable/ic_lock"
+                app:startIconTint="@color/colorAccept">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/background_stroke"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:maxLines="2"
@@ -104,14 +115,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_small"
+                app:hintEnabled="false"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorAccept"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email_input_layout">
+                app:layout_constraintTop_toBottomOf="@id/email_input_layout"
+                app:startIconDrawable="@drawable/ic_lock"
+                app:startIconTint="@color/colorAccept">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/confirm_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/background_stroke"
                     android:hint="@string/confirm_password"
                     android:inputType="textPassword"
                     android:maxLines="2"
@@ -124,8 +141,9 @@
                 android:id="@+id/registration_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_large"
+                android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/background_rounded_button"
                 android:maxLines="1"
                 android:text="@string/registration"
                 app:layout_constraintTop_toBottomOf="@id/password_input_layout" />

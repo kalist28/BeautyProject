@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.view.workdaysequence
+package ru.kalistratov.template.beauty.presentation.view.weeksequence
 
 import android.content.Context
 import android.util.AttributeSet
@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.WeekSequence
 import ru.kalistratov.template.beauty.domain.entity.WorkDaySequence
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 fun interface OnDayClickListener {
     fun onDayClick(day: Int)
@@ -68,7 +67,6 @@ class WeekSequenceController : EpoxyController() {
 
     override fun buildModels() {
         weekSequence.days.forEach {
-            loge("bind $it")
             add(WeekSequenceDayModel(it, onDayClickListener))
         }
     }

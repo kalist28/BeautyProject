@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="497dp" />
+        app:layout_constraintGuide_end="462dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontal_logo_center"
@@ -40,12 +40,12 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_height="@dimen/constraint_fill"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/horizontal_separator">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,14 +59,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="60dp"
+                app:hintEnabled="false"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/main_panel">
+                app:layout_constraintTop_toTopOf="@id/main_panel"
+                app:startIconDrawable="@drawable/ic_outline_account_circle"
+                app:startIconTint="@color/colorAccept">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/background_stroke"
                     android:hint="@string/email" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -78,14 +82,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_small"
+                app:hintEnabled="false"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorAccept"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email_input_layout">
+                app:layout_constraintTop_toBottomOf="@id/email_input_layout"
+                app:startIconDrawable="@drawable/ic_lock"
+                app:startIconTint="@color/colorAccept">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/background_stroke"
                     android:hint="@string/password" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -95,21 +105,27 @@
                 android:id="@+id/auth_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@drawable/background_rounded_button"
                 android:text="Авторизоваться"
                 app:layout_constraintTop_toBottomOf="@+id/password_input_layout" />
-
-            <Button
-                android:id="@+id/registration_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_large"
-                android:text="Регистрация"
-                app:layout_constraintTop_toBottomOf="@+id/auth_btn" />
 
         </LinearLayout>
 
     </ScrollView>
+
+    <TextView
+        android:id="@+id/registration_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        android:layout_marginVertical="@dimen/margin_medium"
+        android:alpha="0.4"
+        android:gravity="center"
+        android:text="Нет профиля?"
+        android:textColor="#040415"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

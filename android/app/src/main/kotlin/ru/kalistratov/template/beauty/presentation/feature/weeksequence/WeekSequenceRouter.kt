@@ -1,17 +1,17 @@
-package ru.kalistratov.template.beauty.presentation.feature.personalarea
+package ru.kalistratov.template.beauty.presentation.feature.weeksequence
 
 import androidx.navigation.NavController
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.view.PersonalAreaFragmentDirections
 
-interface PersonalAreaRouter {
+interface WeekSequenceRouter {
     fun openProfile()
     fun openCalendar()
     fun openTimetable()
-    fun openWeekSequence()
-    fun exit()
+    fun back()
 }
 
-class PersonalAreaRouterImpl(private val navController: NavController) : PersonalAreaRouter {
+class WeekSequenceRouterImpl(private val navController: NavController) : WeekSequenceRouter {
+
     override fun openProfile() = navController.navigate(
         PersonalAreaFragmentDirections.actionPersonalAreaFragmentToProfileFragment()
     )
@@ -24,11 +24,7 @@ class PersonalAreaRouterImpl(private val navController: NavController) : Persona
         PersonalAreaFragmentDirections.actionPersonalAreaFragmentToTimetableFragment()
     )
 
-    override fun openWeekSequence() = navController.navigate(
-        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToWeekSequenceFragment()
-    )
-
-    override fun exit() = navController.navigate(
-        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToAuthFragment()
-    )
+    override fun back() {
+        navController.popBackStack()
+    }
 }
