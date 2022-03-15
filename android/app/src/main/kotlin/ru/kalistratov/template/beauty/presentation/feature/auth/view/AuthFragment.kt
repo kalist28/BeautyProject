@@ -98,5 +98,6 @@ class AuthFragment : AuthBaseFragment(), BaseView<AuthIntent, AuthState> {
             emailInputLayout.isEnabled = enable
             passwordInputLayout.isEnabled = enable
         }
+        authButton.isEnabled = state.allowRequest
     }
 }
