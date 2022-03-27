@@ -3,27 +3,24 @@ package ru.kalistratov.template.beauty.presentation.feature.weeksequence
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.domain.entity.WeekSequence
 import ru.kalistratov.template.beauty.domain.entity.WorkDaySequence
-import ru.kalistratov.template.beauty.domain.feature.personalarea.PersonalAreaInteractor
 import ru.kalistratov.template.beauty.domain.feature.weeksequence.WeekSequenceInteractor
 import ru.kalistratov.template.beauty.domain.service.WorkSequenceService
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class WeekSequenceInteractorImpl(
     private val workSequenceService: WorkSequenceService
 ) : WeekSequenceInteractor {
     override suspend fun getWeekSequence(): WeekSequence? =
-        when (val week = workSequenceService.loadWeekSequence()) {
-            is NetworkResult.Success -> week.value
-            is NetworkResult.GenericError -> null
+        when (val response = workSequenceService.loadWeekSequence()) {
+            is NetworkResult.Success -> response.value
             else -> null
         }
 
-    override suspend fun updateWorkDAySequence(workDaySequence: WorkDaySequence): Boolean {
-        val result = workSequenceService.updateWorkDAySequence(workDaySequence)
-        loge(result)
-        return when (result) {
-            is NetworkResult.Success -> true
-            else -> false
-        }
+    override suspend fun updateWorkDaySequence(
+        workDaySequence: WorkDaySequence
+    ): WorkDaySequence? = when (
+        val result = workSequenceService.updateWorkDaySequence(workDaySequence)
+    ) {
+        is NetworkResult.Success -> result.value
+        else -> null
     }
 }

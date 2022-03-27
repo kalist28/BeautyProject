@@ -6,7 +6,7 @@ import com.russhwolf.settings.Settings
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
-import ru.kalistratov.template.beauty.domain.repository.ApiRepository
+import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
 import ru.kalistratov.template.beauty.domain.service.PersonalAreaMenuService
 import ru.kalistratov.template.beauty.domain.service.WorkSequenceService
 import ru.kalistratov.template.beauty.infrastructure.Application

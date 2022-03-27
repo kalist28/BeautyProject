@@ -18,7 +18,6 @@ import nl.joery.timerangepicker.TimeRangePicker
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.WorkDaySequence
 import ru.kalistratov.template.beauty.domain.extension.*
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.find
 
 class EditWorkDaySequenceBottomSheet : BaseBottomSheet() {
@@ -27,10 +26,7 @@ class EditWorkDaySequenceBottomSheet : BaseBottomSheet() {
         private var onSavingButtonClickAction: ((WorkDaySequence?) -> Unit)? = null
 
         fun savingDay() = callbackFlow {
-            onSavingButtonClickAction = {
-                it?.let { trySend(it) }
-                loge("dsfgsdfg")
-            }
+            onSavingButtonClickAction = { it?.let { trySend(it) } }
             awaitClose { onSavingButtonClickAction = null }
         }.conflate()
     }
@@ -70,30 +66,30 @@ class EditWorkDaySequenceBottomSheet : BaseBottomSheet() {
     private fun getUpdatedWorkDaySequence(): WorkDaySequence? {
         val startFormatted = getFormatTime(startTime)
         val endFormatted = getFormatTime(endTime)
-        val isHoliday = holidayCheckBox?.isSelected ?: false
+        val isHoliday = holidayCheckBox?.isChecked ?: false
 
         return workDaySequence?.copy(
-            from = startFormatted,
-            to = endFormatted,
+            startAt = startFormatted,
+            finishAt = endFormatted,
             isHoliday = isHoliday
         )
     }
 
     private fun updateViewsByWorkDay(day: WorkDaySequence) {
-        val fromMinutes = day.from.toCalendar().getTotalMinute()
-        val toMinutes = day.to.toCalendar().getTotalMinute()
+        val fromMinutes = day.startAt.toCalendar().getTotalMinute()
+        val toMinutes = day.finishAt.toCalendar().getTotalMinute()
         timePicker?.apply {
             startTimeMinutes = fromMinutes
             endTimeMinutes = toMinutes
         }
         updateTimeRangeTextView(day)
 
-        holidayCheckBox?.isSelected = day.isHoliday
+        holidayCheckBox?.isChecked = day.isHoliday
     }
 
     private fun updateTimeRangeTextView(day: WorkDaySequence? = null) {
-        val from = day?.from ?: getFormatTime(startTime)
-        val to = day?.to ?: getFormatTime(endTime)
+        val from = day?.startAt ?: getFormatTime(startTime)
+        val to = day?.finishAt ?: getFormatTime(endTime)
         val text = "$from - $to"
         timeRangeTextView?.text = text
     }

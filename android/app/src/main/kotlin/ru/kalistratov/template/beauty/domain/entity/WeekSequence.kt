@@ -8,13 +8,14 @@ import ru.kalistratov.template.beauty.domain.extension.noTime
 
 @Serializable
 data class WeekSequence(
-    val days: List<WorkDaySequence> = emptyList()
+    @SerialName("data") val days: List<WorkDaySequence> = emptyList()
 )
 
-@Serializable()
+@Serializable
 data class WorkDaySequence(
+    val id: Int? = null,
     @Contextual val day: WeekDay,
-    val from: Time = noTime,
-    val to: Time = noTime,
+    @SerialName("start_at") val startAt: Time = noTime,
+    @SerialName("finish_at") val finishAt: Time = noTime,
     @SerialName("is_holiday") val isHoliday: Boolean = false,
 )

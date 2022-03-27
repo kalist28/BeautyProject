@@ -2,15 +2,13 @@ package ru.kalistratov.template.beauty.infrastructure.repository
 
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.serialization.encodeToString
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
+import ru.kalistratov.template.beauty.common.handlingNetworkSafetyWithoutData
 import ru.kalistratov.template.beauty.domain.entity.*
 import ru.kalistratov.template.beauty.domain.extension.getClient
-import ru.kalistratov.template.beauty.domain.repository.ApiRepository
+import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.infrastructure.extensions.jsonParser
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class ApiRepositoryImpl(
     private val url: String,
@@ -21,11 +19,12 @@ class ApiRepositoryImpl(
         private const val AUTH_HEADER = "Authorization"
     }
 
+    private fun getUserId() = "Bearer ${authSettingsService.getUserId()}"
     private fun getBearerToken() = "Bearer ${authSettingsService.getToken()}"
 
     override suspend fun registration(
         request: RegistrationRequest
-    ): NetworkResult<ServerAuthResult> =
+    ): NetworkResult<User> =
         getClient().use {
             handlingNetworkSafety {
                 it.post("$url/register") {
@@ -37,10 +36,10 @@ class ApiRepositoryImpl(
 
     override suspend fun auth(
         request: AuthRequest
-    ): NetworkResult<ServerAuthResult> =
+    ): NetworkResult<ServerToken> =
         getClient().use {
-            handlingNetworkSafety {
-                it.post("$url/login") {
+            handlingNetworkSafetyWithoutData {
+                it.post("$url/clients/web/login") {
                     contentType(ContentType.Application.Json)
                     body = request
                 }
@@ -48,8 +47,8 @@ class ApiRepositoryImpl(
         }
 
     override suspend fun loadWeekSequence(): NetworkResult<WeekSequence> = getClient().use {
-        handlingNetworkSafety {
-            it.get("$url/user-week-sequence/list") {
+        handlingNetworkSafetyWithoutData {
+            it.get("$url/sequences/week") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
             }
@@ -58,13 +57,35 @@ class ApiRepositoryImpl(
 
     override suspend fun updateWorkDaySequence(
         workDaySequence: WorkDaySequence
-    ): NetworkResult<Unit> = getClient().use {
-        loge("ppp - ${jsonParser.encodeToString(workDaySequence)}")
+    ): NetworkResult<WorkDaySequence> = getClient().use {
         handlingNetworkSafety {
-            it.post("$url/user-week-sequence/create/${workDaySequence.day.index}") {
+            it.patch("$url/sequences/days/${workDaySequence.day.index}") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
                 body = workDaySequence
+            }
+        }
+    }
+
+    override suspend fun createWorkDaySequence(
+        workDaySequence: WorkDaySequence
+    ): NetworkResult<WorkDaySequence> = getClient().use {
+        handlingNetworkSafety {
+            it.post("$url/sequences/days") {
+                contentType(ContentType.Application.Json)
+                header(AUTH_HEADER, getBearerToken())
+                body = workDaySequence
+            }
+        }
+    }
+
+    override suspend fun getUser(
+        id: String
+    ): NetworkResult<User> = getClient().use {
+        handlingNetworkSafety {
+            it.post("$url/user-week-sequence/create/$id") {
+                contentType(ContentType.Application.Json)
+                header(AUTH_HEADER, getBearerToken())
             }
         }
     }

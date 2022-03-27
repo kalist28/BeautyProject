@@ -63,7 +63,7 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState> {
         navController = navHostFragment.navController
 
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-        val user = authSettingsService.getUser()
+        val user = authSettingsService.getUserId()
         if (user.isNullOrBlank()) navGraph.setStartDestination(R.id.authFragment)
         else navGraph.setStartDestination(R.id.timetableFragment)
         navController.setGraph(navGraph, null)

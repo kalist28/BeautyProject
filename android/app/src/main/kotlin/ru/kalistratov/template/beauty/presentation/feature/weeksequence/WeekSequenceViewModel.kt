@@ -54,9 +54,9 @@ class WeekSequenceViewModel @Inject constructor(
             val updateWorkDaySequenceAction = intentFlow
                 .filterIsInstance<WeekSequenceIntent.UpdateWorkDaySequence>()
                 .flatMapConcat { intent ->
-                    val updatedDay = intent.day
-                    val updated = interactor.updateWorkDAySequence(updatedDay)
-                    if (!updated) emptyFlow()
+                    val dayToUpdate = intent.day
+                    val updatedDay = interactor.updateWorkDaySequence(dayToUpdate)
+                    if (updatedDay == null) emptyFlow()
                     else {
                         val state = stateFlow.value
                         val days = state.weekSequence.days.toMutableList()
@@ -67,7 +67,6 @@ class WeekSequenceViewModel @Inject constructor(
                         val lastIndex = days.lastIndexOf(oldItem)
                         days.removeAt(lastIndex)
                         days.add(lastIndex, updatedDay)
-
                         flowOf(WeekSequence(days))
                     }
                 }

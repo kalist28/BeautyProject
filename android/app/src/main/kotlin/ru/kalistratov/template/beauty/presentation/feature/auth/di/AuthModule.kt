@@ -10,8 +10,10 @@ import dagger.multibindings.IntoMap
 import ru.kalistratov.template.beauty.domain.di.ViewModelKey
 import ru.kalistratov.template.beauty.domain.feature.auth.AuthInteractor
 import ru.kalistratov.template.beauty.domain.service.AuthService
-import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.presentation.feature.auth.*
+import ru.kalistratov.template.beauty.presentation.feature.auth.AuthInteractorImpl
+import ru.kalistratov.template.beauty.presentation.feature.auth.AuthRouter
+import ru.kalistratov.template.beauty.presentation.feature.auth.AuthRouterImpl
+import ru.kalistratov.template.beauty.presentation.feature.auth.AuthViewModel
 import ru.kalistratov.template.beauty.presentation.feature.auth.view.AuthFragment
 
 @Subcomponent(
@@ -29,11 +31,9 @@ class AuthModule(private val fragment: AuthFragment) {
 
     @Provides
     fun provideAuthInteractor(
-        authService: AuthService,
-        authSettingsService: AuthSettingsService,
+        authService: AuthService
     ): AuthInteractor = AuthInteractorImpl(
-        authService,
-        authSettingsService
+        authService
     )
 
     @Provides

@@ -4,8 +4,8 @@ interface AuthSettingsService {
     fun getToken(): String
     fun updateToken(token: String)
 
-    fun getUser(): String?
-    fun updateUser(user: String, token: String)
+    fun getUserId(): String?
+    fun updateUserId(user: String)
 
     fun exit()
 }

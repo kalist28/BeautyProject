@@ -14,7 +14,6 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.infrastructure.coroutines.textDebounce
 import ru.kalistratov.template.beauty.presentation.feature.registration.view.RegistrationIntent
-import java.util.*
 import javax.inject.Inject
 
 data class RegistrationState(
@@ -148,14 +147,7 @@ class RegistrationViewModel @Inject constructor(
 
             registrationRequestFlow
                 .filterIsInstance<AuthResult.Success>()
-                .onEach {
-                    val result = it.authResult
-                    val user = result.user.email
-                        ?: throw IllegalStateException("In AuthResult user is null")
-                    val token = result.token ?: return@onEach
-                    interactor.saveUser(user, token)
-                    router.openRegistration()
-                }
+                .onEach { router.openTimetable() }
                 .launchIn(this)
                 .addTo(workComposite)
 

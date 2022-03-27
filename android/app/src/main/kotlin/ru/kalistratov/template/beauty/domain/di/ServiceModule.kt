@@ -6,7 +6,7 @@ import com.russhwolf.settings.Settings
 import dagger.Module
 import dagger.Provides
 import ru.kalistratov.template.beauty.BuildConfig
-import ru.kalistratov.template.beauty.domain.repository.ApiRepository
+import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
 import ru.kalistratov.template.beauty.domain.service.*
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.repository.ApiRepositoryImpl
@@ -35,8 +35,12 @@ class ServiceModule(val application: Application) {
     @Provides
     @Singleton
     fun provideRegistrationService(
-        apiRepository: ApiRepository
-    ): AuthService = AuthServiceImpl(apiRepository)
+        apiRepository: ApiRepository,
+        authSettingsService: AuthSettingsService
+    ): AuthService = AuthServiceImpl(
+        apiRepository,
+        authSettingsService
+    )
 
     @Provides
     @Singleton

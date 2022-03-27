@@ -11,6 +11,8 @@ import ru.kalistratov.template.beauty.R
 
 sealed class WeekDay(val index: Int) {
 
+    override fun toString(): String = this.javaClass.simpleName
+
     @StringRes
     val tittleResId = when (index) {
         1 -> R.string.monday
@@ -60,7 +62,7 @@ object WeekDaySerializer : KSerializer<WeekDay> {
         PrimitiveSerialDescriptor("day", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: WeekDay) =
-        encoder.encodeInt(value.index)
+        encoder.encodeString(value.index.toString())
 
     override fun deserialize(decoder: Decoder): WeekDay =
         WeekDay.fromIndex(decoder.decodeInt()) ?: WeekDay.Sunday

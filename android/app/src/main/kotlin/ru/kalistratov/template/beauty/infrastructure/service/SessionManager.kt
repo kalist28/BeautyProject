@@ -21,7 +21,7 @@ class SessionManagerImpl(
     }
 
     private fun createComponent(): UserComponent {
-        val userName = authSettingsService.getUser() ?: throw RuntimeException("User not found.")
+        val userName = authSettingsService.getUserId() ?: throw RuntimeException("User not found.")
         val component = application.applicationComponent
             .userComponentBuilder()
             .sessionModule(UserModule(userName))

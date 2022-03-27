@@ -22,12 +22,12 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String", "SERVER_URI", '"http://example.kalistratov.ru/api/v1"'
+            buildConfigField "String", "SERVER_URI", '"http://example.kalistratov.ru/v1"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "SERVER_URI", "\"http://example.kalistratov.ru/api/v1\""
+            buildConfigField "String", "SERVER_URI", '"http://example.kalistratov.ru/v1"'
         }
     }
 

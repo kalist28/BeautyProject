@@ -96,12 +96,12 @@ class AuthViewModel @Inject constructor(
             authRequestFlow
                 .filterIsInstance<AuthResult.Success>()
                 .onEach {
-                    val result = it.authResult
+                    /*val result = it.authResult
                     val user = result.user.email
                         ?: throw IllegalStateException("In AuthResult user is null")
-                    val token = result.token ?: return@onEach
+                    //val token = result.token ?: return@onEach
                     interactor.saveUser(user, token)
-                    router.openRegistration()
+                    router.openRegistration()*/
                 }
                 .launchIn(this)
                 .addTo(workComposite)

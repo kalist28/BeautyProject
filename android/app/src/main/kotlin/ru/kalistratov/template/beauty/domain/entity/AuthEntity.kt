@@ -8,8 +8,8 @@ import ru.kalistratov.template.beauty.infrastructure.extensions.jsonParser
 
 @Serializable
 data class User(
-    val id: Long? = null,
-    val email: String? = null
+    val id: String,
+    val email: String
 )
 
 @Serializable
@@ -22,19 +22,17 @@ data class AuthRequest(
 data class RegistrationRequest(
     val email: String,
     val password: String,
-    @SerialName("password_confirmation") val passwordConfirmation: String,
+    val name: String = "Test",
 )
 
 @Serializable
-data class ServerAuthResult(
-    val user: User = User(),
-    val token: String? = null
+data class ServerToken(
+    @SerialName("access_token") val token: String
 )
 
 @Serializable
 sealed class AuthResult {
-    @Serializable
-    data class Success(val authResult: ServerAuthResult) : AuthResult()
+    object Success : AuthResult()
     data class Error(val throwable: Throwable) : AuthResult() {
         var authError: AuthError? = null
 

@@ -20,7 +20,6 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.find
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaRouter
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaState
@@ -74,7 +73,6 @@ class PersonalAreaFragment : BaseFragment(), BaseView<PersonalAreaIntent, Person
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loge("sdfsd")
         with(viewModel) {
             viewModelScope.launch(Dispatchers.Main) {
                 stateUpdates()

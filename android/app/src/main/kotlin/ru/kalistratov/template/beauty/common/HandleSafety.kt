@@ -4,7 +4,7 @@ import io.ktor.network.sockets.SocketTimeoutException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.supervisorScope
 import kotlinx.serialization.SerializationException
-import ru.kalistratov.template.beauty.domain.entity.ServerData
+import ru.kalistratov.template.beauty.domain.entity.Data
 
 typealias NetworkException<E> = suspend (Throwable) -> E
 
@@ -21,8 +21,27 @@ suspend inline fun <T> safety(
     }
 }
 
+suspend inline fun <T> handlingNetworkSafetyWithoutData(
+    noinline block: suspend CoroutineScope.() -> T,
+) = safety(
+    { NetworkResult.Success(supervisorScope(block)) },
+    { throwable ->
+        when (throwable) {
+            is SocketTimeoutException -> NetworkResult.GenericError(
+                NetworkRequestException.Timeout(throwable)
+            )
+            is SerializationException -> NetworkResult.GenericError(
+                NetworkRequestException.Serialization(throwable)
+            )
+            else -> NetworkResult.GenericError(
+                NetworkRequestException.IllegalStateException(throwable)
+            )
+        }
+    }
+)
+
 suspend inline fun <T> handlingNetworkSafety(
-    noinline block: suspend CoroutineScope.() -> ServerData<T>,
+    noinline block: suspend CoroutineScope.() -> Data<T>,
 ) = safety(
     { NetworkResult.Success(supervisorScope(block).data) },
     { throwable ->
