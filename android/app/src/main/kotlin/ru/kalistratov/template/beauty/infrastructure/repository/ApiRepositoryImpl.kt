@@ -2,6 +2,7 @@ package ru.kalistratov.template.beauty.infrastructure.repository
 
 import io.ktor.client.request.*
 import io.ktor.http.*
+import ru.kalistratov.template.beauty.common.NetworkRequestException
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.common.handlingNetworkSafetyWithoutData
@@ -21,6 +22,15 @@ class ApiRepositoryImpl(
 
     private fun getUserId() = "Bearer ${authSettingsService.getUserId()}"
     private fun getBearerToken() = "Bearer ${authSettingsService.getToken()}"
+
+    private fun <T> handleUnauthorizedError(obj: T): T = obj.also {
+        if (it is NetworkResult.GenericError) {
+            val error = it.error
+            if (error is NetworkRequestException.RequestException && error.isUnauthorized()) {
+                throw error.exception
+            }
+        }
+    }
 
     override suspend fun registration(
         request: RegistrationRequest

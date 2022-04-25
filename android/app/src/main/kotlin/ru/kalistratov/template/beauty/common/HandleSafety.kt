@@ -1,5 +1,6 @@
 package ru.kalistratov.template.beauty.common
 
+import io.ktor.client.features.*
 import io.ktor.network.sockets.SocketTimeoutException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.supervisorScope
@@ -46,6 +47,18 @@ suspend inline fun <T> handlingNetworkSafety(
     { NetworkResult.Success(supervisorScope(block).data) },
     { throwable ->
         when (throwable) {
+            is ClientRequestException -> {
+                val response = throwable.response
+                val statusCode = response.status.value
+                val errorMessage = throwable.message
+                NetworkResult.GenericError(
+                    NetworkRequestException.RequestException(
+                        statusCode,
+                        errorMessage,
+                        throwable
+                    )
+                )
+            }
             is SocketTimeoutException -> NetworkResult.GenericError(
                 NetworkRequestException.Timeout(throwable)
             )
