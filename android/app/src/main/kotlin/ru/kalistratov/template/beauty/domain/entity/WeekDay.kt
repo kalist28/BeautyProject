@@ -37,6 +37,7 @@ sealed class WeekDay(val index: Int) {
 
     companion object {
         fun fromIndex(index: Int) = when (index) {
+            -1 -> Nothing
             0 -> Sunday
             1 -> Monday
             2 -> Tuesday
@@ -55,6 +56,7 @@ sealed class WeekDay(val index: Int) {
     object Friday : WeekDay(5)
     object Saturday : WeekDay(6)
     object Sunday : WeekDay(0)
+    object Nothing : WeekDay(-1)
 }
 
 object WeekDaySerializer : KSerializer<WeekDay> {

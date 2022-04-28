@@ -13,6 +13,6 @@ class AuthInteractorImpl(
     override suspend fun auth(request: AuthRequest): AuthResult =
         when (val result = authService.auth(request)) {
             is NetworkResult.Success -> AuthResult.Success
-            is NetworkResult.GenericError -> AuthResult.Error(result.value.exception)
+            is NetworkResult.GenericError -> AuthResult.Error(result.error.exception)
         }
 }

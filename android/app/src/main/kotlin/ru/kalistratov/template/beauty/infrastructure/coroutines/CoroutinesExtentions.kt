@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 
 fun <T> mutableSharedFlow() = MutableSharedFlow<T>(
     replay = 1,
+    extraBufferCapacity = 2,
     onBufferOverflow = BufferOverflow.DROP_OLDEST
 )
 

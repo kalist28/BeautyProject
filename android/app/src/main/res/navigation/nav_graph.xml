@@ -102,5 +102,20 @@
         android:id="@+id/weekSequenceFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.weeksequence.view.WeekSequenceFragment"
         android:label="fragment_weeksequence"
-        tools:layout="@layout/fragment_weeksequence" />
+        tools:layout="@layout/fragment_weeksequence">
+        <action
+            android:id="@+id/action_weekSequenceFragment_to_editWorkdayWindowsFragment"
+            app:destination="@id/editWorkdayWindowsFragment"
+            app:popUpTo="@id/weekSequenceFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/editWorkdayWindowsFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.view.EditWorkdayWindowsFragment"
+        android:label="fragment_edit_workday_windows"
+        tools:layout="@layout/fragment_edit_workday_windows">
+
+        <argument
+            android:name="daySequence"
+            app:argType="integer"/>
+    </fragment>
 </navigation>

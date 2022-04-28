@@ -6,25 +6,27 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.domain.entity.WeekSequence
-import ru.kalistratov.template.beauty.domain.entity.WorkDaySequence
+import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
 import ru.kalistratov.template.beauty.domain.feature.weeksequence.WeekSequenceInteractor
 import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
 import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.view.WeekSequenceIntent
+import ru.kalistratov.template.beauty.presentation.view.bottomsheet.EditWorkDaySequenceBottomSheet
 
 data class WeekSequenceState(
     val weekSequence: WeekSequence = WeekSequence(),
     val weekSequenceLoading: Boolean = true,
     val openEditWorkDaySequenceBottomSheet: Boolean = false,
-    val editWorkDaySequence: WorkDaySequence? = null,
+    val editWorkdaySequence: WorkdaySequence? = null,
 ) : BaseState
 
 sealed class WeekSequenceAction : BaseAction {
     data class UpdateWeekSequence(val weekSequence: WeekSequence) : WeekSequenceAction()
-    data class OpenEditWorkDaySequenceBottomSheet(val day: WorkDaySequence) : WeekSequenceAction()
+    data class OpenEditWorkDaySequenceBottomSheet(val day: WorkdaySequence) : WeekSequenceAction()
     object LoadWeekSequence : WeekSequenceAction()
     object Clear : WeekSequenceAction()
 }
@@ -40,6 +42,8 @@ class WeekSequenceViewModel @Inject constructor(
     init {
         viewModelScope.launch {
 
+            intentFlow.onEach { loge(it.javaClass.simpleName) }.launchIn(this)
+
             val initFlow = intentFlow
                 .filterIsInstance<WeekSequenceIntent.InitData>()
                 .share(this)
@@ -50,6 +54,17 @@ class WeekSequenceViewModel @Inject constructor(
 
             val showLoadingWeekSequenceAction = initFlow
                 .map { WeekSequenceAction.LoadWeekSequence }
+
+            intentFlow.filterIsInstance<WeekSequenceIntent.WorkDayBottomSheetClick>()
+                .flatMapConcat {
+                    when (val intent = it.intent) {
+                        is EditWorkDaySequenceBottomSheet.ClickIntent.EditWindows -> flowOf(intent)
+                        else -> emptyFlow()
+                    }
+                }
+                .onEach { router.openEditWorkdayWindows(it.workdaySequence.day.index) }
+                .launchIn(this)
+                .addTo(workComposite)
 
             val updateWorkDaySequenceAction = intentFlow
                 .filterIsInstance<WeekSequenceIntent.UpdateWorkDaySequence>()
@@ -106,28 +121,29 @@ class WeekSequenceViewModel @Inject constructor(
             )
                 .flowOn(Dispatchers.IO)
                 .scan(initialState, ::reduce)
-                .onEach {
-                    stateFlow.value = it
-                }
+                .onEach { stateFlow.value = it }
                 .collect(shareStateFlow)
         }.addTo(workComposite)
     }
 
-    override fun reduce(state: WeekSequenceState, action: WeekSequenceAction) = when (action) {
-        is WeekSequenceAction.Clear -> state.copy(
-            openEditWorkDaySequenceBottomSheet = false,
-            editWorkDaySequence = null
-        )
-        is WeekSequenceAction.UpdateWeekSequence -> {
-            state.copy(
-                weekSequence = action.weekSequence,
-                weekSequenceLoading = false,
+    override fun reduce(state: WeekSequenceState, action: WeekSequenceAction): WeekSequenceState  {
+        loge(action.javaClass.simpleName)
+        return when (action) {
+            is WeekSequenceAction.Clear -> state.copy(
+                openEditWorkDaySequenceBottomSheet = false,
+                editWorkdaySequence = null
+            )
+            is WeekSequenceAction.UpdateWeekSequence -> {
+                state.copy(
+                    weekSequence = action.weekSequence,
+                    weekSequenceLoading = false,
+                )
+            }
+            is WeekSequenceAction.LoadWeekSequence -> state.copy(weekSequenceLoading = true)
+            is WeekSequenceAction.OpenEditWorkDaySequenceBottomSheet -> state.copy(
+                openEditWorkDaySequenceBottomSheet = true,
+                editWorkdaySequence = action.day
             )
         }
-        is WeekSequenceAction.LoadWeekSequence -> state.copy(weekSequenceLoading = true)
-        is WeekSequenceAction.OpenEditWorkDaySequenceBottomSheet -> state.copy(
-            openEditWorkDaySequenceBottomSheet = true,
-            editWorkDaySequence = action.day
-        )
     }
 }

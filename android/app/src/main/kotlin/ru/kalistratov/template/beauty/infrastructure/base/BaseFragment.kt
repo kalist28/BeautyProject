@@ -44,7 +44,7 @@ abstract class BaseFragment : Fragment() {
         injectUserComponent(userComponent)
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         jobComposite.cancel()
         super.onDestroy()
     }

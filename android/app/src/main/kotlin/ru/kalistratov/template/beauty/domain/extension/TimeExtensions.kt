@@ -1,32 +1,24 @@
 package ru.kalistratov.template.beauty.domain.extension
 
-import com.cesarferreira.tempo.toDate
-import com.cesarferreira.tempo.toString
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.Time
+import com.soywiz.klock.TimeFormat
 import java.util.*
-import java.util.Calendar.HOUR_OF_DAY
-import java.util.Calendar.MINUTE
 
-typealias Time = String
+const val clockFormatPattern = "HH:mm"
+val clockTimeFormat = TimeFormat(clockFormatPattern)
+val noTime = Time(0)
 
-const val clockFormat = "HH:mm"
-const val noTime = "00:00"
+fun Time.toClockFormat() = this.format(clockFormatPattern)
 
-fun Time.toCalendar(): Calendar = GregorianCalendar
-    .getInstance()
-    .apply { this.time = toDate(clockFormat) }
+fun Time.getTotalMinute() = hour * 60 + minute
 
-fun Calendar.getHour() = this.get(HOUR_OF_DAY)
+fun Time.isNoTime() = hour == 0 && minute == 0
 
-fun Calendar.getMinute() = this.get(MINUTE)
+fun DateTime.getTotalMinute(): Int = hours * 60 + minutes
 
-fun Calendar.getTotalMinute(): Int {
-    val hour = getHour()
-    val minute = getMinute()
-    return hour * 60 + minute
-}
+fun DateTime.isNoTime() = this == DateTime(0)
 
-fun Time.getClockDate() = this.toDate(clockFormat)
+fun Date.toTime() = DateTime.fromUnix(this.time).time
 
-fun Time.isNoTime() = this == noTime
-
-fun Date.toClockDate() = this.toString(clockFormat)
+fun Date.toDateTime() = DateTime.fromUnix(this.time)

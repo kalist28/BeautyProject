@@ -15,5 +15,8 @@ inline fun <reified T : View> Fragment.find(id: Int) = view?.findViewById(id) as
 fun Fragment.toast(message: String, length: Int = Toast.LENGTH_SHORT) = Toast
     .makeText(requireContext(), message, length).show()
 
-fun Fragment.showBottomSheet(sheet: BottomSheetDialogFragment) =
-    sheet.show(parentFragmentManager, sheet.javaClass.simpleName)
+fun Fragment.showBottomSheet(sheet: BottomSheetDialogFragment) {
+    val tag = sheet.javaClass.simpleName
+    if (childFragmentManager.findFragmentByTag(tag) == null)
+        sheet.show(childFragmentManager, tag)
+}

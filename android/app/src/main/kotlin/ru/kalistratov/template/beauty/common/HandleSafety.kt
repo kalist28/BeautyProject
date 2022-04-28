@@ -34,6 +34,13 @@ suspend inline fun <T> handlingNetworkSafetyWithoutData(
             is SerializationException -> NetworkResult.GenericError(
                 NetworkRequestException.Serialization(throwable)
             )
+            is ClientRequestException -> NetworkResult.GenericError(
+                NetworkRequestException.RequestException(
+                    throwable.response.status.value,
+                    throwable.message,
+                    throwable
+                )
+            )
             else -> NetworkResult.GenericError(
                 NetworkRequestException.IllegalStateException(throwable)
             )

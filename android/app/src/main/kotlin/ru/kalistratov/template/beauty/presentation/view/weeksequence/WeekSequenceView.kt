@@ -8,11 +8,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.EpoxyController
-import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.conflate
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.MutableSharedFlow
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.WeekSequence
 
@@ -28,6 +26,14 @@ class WeekSequenceView @JvmOverloads constructor(
     private val controller by lazy { WeekSequenceController() }
     private val loadingView: View by lazy { findViewById(R.id.loading_view) }
     private val recyclerView: RecyclerView by lazy { findViewById(R.id.recycler_view) }
+
+    companion object {
+        private val clicks = MutableSharedFlow<Int>(
+            replay = 0,
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
+        )
+    }
 
     init {
         inflate(context, R.layout.view_week_sequence, this)
@@ -48,25 +54,15 @@ class WeekSequenceView @JvmOverloads constructor(
         recyclerView.isVisible = !loading
     }
 
-    fun clicks(): Flow<Int> = controller.clicks()
-}
+    fun clicks(): Flow<Int> = clicks
 
-class WeekSequenceController : EpoxyController() {
+    inner class WeekSequenceController : EpoxyController() {
+        var weekSequence: WeekSequence = WeekSequence()
 
-    private val _clicks = callbackFlow {
-        onDayClickListener = OnDayClickListener { trySend(it) }
-        awaitClose { onDayClickListener = null }
-    }.conflate()
-
-    private var onDayClickListener: OnDayClickListener? = null
-
-    var weekSequence: WeekSequence = WeekSequence()
-
-    override fun buildModels() {
-        weekSequence.days.forEach {
-            add(WeekSequenceDayModel(it, onDayClickListener))
+        override fun buildModels() {
+            weekSequence.days.forEach {
+                add(WeekSequenceDayModel(it) { clicks.tryEmit(it) })
+            }
         }
     }
-
-    fun clicks(): Flow<Int> = _clicks.filterNotNull()
 }

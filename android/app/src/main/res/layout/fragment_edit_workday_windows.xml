@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.feature.editworkdaywindows.view.EditWorkdayWindowsFragment">
+
+    <include
+        android:id="@+id/up_bar"
+        layout="@layout/view_up_bar" />
+
+    <ImageView
+        android:id="@+id/add_window_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@id/up_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorAccept" />
+
+    <TextView
+        android:id="@+id/workday_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Рабочий день:"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/margin_xsmall"
+        android:textColor="@color/colorAccept"
+        android:textSize="@dimen/text_xlarge"
+        app:layout_constraintTop_toBottomOf="@id/up_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/workday_windows_view"/>
+
+    <TextView
+        android:id="@+id/workday_time_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8:00 - 15:00"
+        android:layout_margin="@dimen/margin_xsmall"
+        android:textColor="@color/colorAccept"
+        android:textSize="@dimen/text_xlarge"
+        app:layout_constraintTop_toBottomOf="@id/up_bar"
+        app:layout_constraintStart_toEndOf="@id/workday_text"
+        app:layout_constraintBottom_toTopOf="@id/workday_windows_view"/>
+
+    <ru.kalistratov.template.beauty.presentation.view.workdaywindows.WorkdayWindowsView
+        android:id="@+id/workday_windows_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/workday_text"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/create_window_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small"
+        app:cardCornerRadius="@dimen/margin_small"
+        app:cardElevation="@dimen/margin_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_xsmall">
+
+            <TextView
+                android:id="@+id/from_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_xsmall"
+                android:text="00:00"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintBottom_toTopOf="@id/saving_button"
+                app:layout_constraintEnd_toStartOf="@+id/to_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right_alt"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintBottom_toBottomOf="@id/from_text_view"
+                app:layout_constraintEnd_toStartOf="@id/to_text_view"
+                app:layout_constraintStart_toEndOf="@id/from_text_view"
+                app:layout_constraintTop_toTopOf="@id/from_text_view"
+                app:tint="@color/colorAccept" />
+
+            <TextView
+                android:id="@+id/to_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_xsmall"
+                android:text="00:00"
+                android:textSize="@dimen/text_large"
+                app:layout_constraintBottom_toTopOf="@id/saving_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/from_text_view" />
+
+            <Button
+                android:id="@+id/saving_button"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_xsmall"
+                android:background="@drawable/background_rounded_button"
+                android:backgroundTint="@color/colorAccept"
+                android:text="Добавить"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/close_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small"
+                android:src="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="@id/saving_button"
+                app:layout_constraintStart_toEndOf="@id/saving_button"
+                app:layout_constraintTop_toTopOf="@id/saving_button"
+                app:tint="@color/colorAccept" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

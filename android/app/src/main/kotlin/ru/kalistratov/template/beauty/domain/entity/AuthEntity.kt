@@ -19,6 +19,11 @@ data class AuthRequest(
 )
 
 @Serializable
+data class RefreshRequest(
+    @SerialName("refresh_token") val refreshToken: String,
+)
+
+@Serializable
 data class RegistrationRequest(
     val email: String,
     val password: String,
@@ -27,7 +32,8 @@ data class RegistrationRequest(
 
 @Serializable
 data class ServerToken(
-    @SerialName("access_token") val token: String
+    @SerialName("access_token") val token: String,
+    @SerialName("refresh_token") val refreshToken: String,
 )
 
 @Serializable

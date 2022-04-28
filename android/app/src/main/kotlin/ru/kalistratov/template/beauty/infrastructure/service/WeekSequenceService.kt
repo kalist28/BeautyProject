@@ -2,7 +2,8 @@ package ru.kalistratov.template.beauty.infrastructure.service
 
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.domain.entity.WeekSequence
-import ru.kalistratov.template.beauty.domain.entity.WorkDaySequence
+import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
+import ru.kalistratov.template.beauty.domain.entity.exist
 import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
 import ru.kalistratov.template.beauty.domain.service.WorkSequenceService
 
@@ -14,9 +15,9 @@ class WorkSequenceServiceImpl(
         apiRepository.loadWeekSequence()
 
     override suspend fun updateWorkDaySequence(
-        workDaySequence: WorkDaySequence
-    ): NetworkResult<WorkDaySequence> = when (workDaySequence.id == null) {
-        true -> apiRepository.createWorkDaySequence(workDaySequence)
-        else -> apiRepository.updateWorkDaySequence(workDaySequence)
+        workdaySequence: WorkdaySequence
+    ): NetworkResult<WorkdaySequence> = when (workdaySequence.id.exist()) {
+        true -> apiRepository.updateWorkDaySequence(workdaySequence)
+        else -> apiRepository.createWorkDaySequence(workdaySequence)
     }
 }

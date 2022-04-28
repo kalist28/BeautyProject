@@ -19,25 +19,30 @@
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/side_menu_selector.xml" value="0.3646153846153846" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/activity_main.xml" value="0.3541666666666667" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/bottom_sheet_day_details.xml" value="0.3541666666666667" />
-        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/bottom_sheet_edit_day_sequence.xml" value="0.17223910840932116" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/bottom_sheet_edit_day_sequence.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/bottom_sheet_edit_workday_windows.xml" value="0.265625" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/bottom_sheet_time_picker_spinner.xml" value="0.3365036231884058" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/calendar_day_legend.xml" value="0.3541666666666667" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/calendar_item_round_day.xml" value="0.33" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/calendar_simple.xml" value="0.3541666666666667" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/dialog_time_picker_spinner.xml" value="0.265625" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_auth.xml" value="0.25" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_calendar.xml" value="0.3541666666666667" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_edit_workday_windows.xml" value="0.33" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_login.xml" value="0.3541666666666667" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_personal_area.xml" value="0.25" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_profile.xml" value="0.3541666666666667" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_registration.xml" value="0.25" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_timetable.xml" value="0.34193840579710144" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/fragment_weeksequence.xml" value="0.265625" />
-        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/item_sequence_work_day.xml" value="0.17223910840932116" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/item_sequence_work_day.xml" value="1.1" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/main_fragment.xml" value="0.2907608695652174" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/personal_area_menu_item.xml" value="0.25" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/personal_area_panel_user.xml" value="0.33" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/view_menu_separator.xml" value="0.265625" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/view_up_bar.xml" value="0.265625" />
-        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/view_week_sequence.xml" value="0.17223910840932116" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/view_week_sequence.xml" value="0.22" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/layout/view_workday_window.xml" value="0.265625" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/menu/menu_main.xml" value="0.3541666666666667" />
       </map>
     </option>

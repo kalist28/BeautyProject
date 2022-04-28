@@ -6,33 +6,34 @@ import android.widget.TextView
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.entity.WorkDaySequence
+import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
 import ru.kalistratov.template.beauty.domain.extension.isNoTime
+import ru.kalistratov.template.beauty.domain.extension.toClockFormat
 
 class WeekSequenceDayModel(
-    private val workDay: WorkDaySequence,
-    private val clickListener: OnDayClickListener?,
+    private val workday: WorkdaySequence,
+    private val clickListener: (Int) -> Unit = {},
 ) : EpoxyModelWithHolder<WeekSequenceDayModel.WorkDayHolder>() {
 
     init {
-        id(workDay.hashCode())
+        id(workday.hashCode())
     }
 
     override fun getDefaultLayout(): Int = R.layout.item_sequence_work_day
 
     override fun bind(holder: WorkDayHolder) = with(holder) {
-        root?.setOnClickListener { clickListener?.onDayClick(workDay.day.index) }
+        root?.setOnClickListener { clickListener.invoke(workday.day.index) }
 
         weekDayTextView?.apply {
-            text = context?.getString(workDay.day.shortTittleResId)
+            text = context?.getString(workday.day.shortTittleResId)
         }
-        val start = workDay.startAt
-        val finish = workDay.finishAt
+        val start = workday.startAt
+        val finish = workday.finishAt
         // TODO replace to REsID
         timeTextView?.text = when {
-            workDay.isHoliday -> "Выходной"
+            workday.isHoliday -> "Выходной"
             start.isNoTime() && finish.isNoTime() -> "Не указано"
-            else -> "$start - $finish"
+            else -> "${start.toClockFormat()} - ${finish.toClockFormat()}"
         }
     }
 
@@ -45,13 +46,13 @@ class WeekSequenceDayModel(
 
         other as WeekSequenceDayModel
 
-        if (workDay != other.workDay) return false
+        if (workday != other.workday) return false
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + workDay.hashCode()
+        result = 31 * result + workday.hashCode()
         return result
     }
 

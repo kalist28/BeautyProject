@@ -16,30 +16,41 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import nl.joery.timerangepicker.TimeRangePicker
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.entity.WorkDaySequence
+import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
 import ru.kalistratov.template.beauty.domain.extension.*
 import ru.kalistratov.template.beauty.presentation.extension.find
 
-class EditWorkDaySequenceBottomSheet : BaseBottomSheet() {
+class EditWorkDaySequenceBottomSheet(
+    val workdaySequence: WorkdaySequence
+) : BaseBottomSheet() {
+
+    sealed interface ClickIntent {
+        data class EditWindows(val workdaySequence: WorkdaySequence) : ClickIntent
+    }
 
     companion object {
-        private var onSavingButtonClickAction: ((WorkDaySequence?) -> Unit)? = null
+        private var onClickAction: ((ClickIntent) -> Unit)? = null
+        private var onSavingButtonClickAction: ((WorkdaySequence?) -> Unit)? = null
 
         fun savingDay() = callbackFlow {
             onSavingButtonClickAction = { it?.let { trySend(it) } }
             awaitClose { onSavingButtonClickAction = null }
         }.conflate()
+
+        fun clicks() = callbackFlow {
+            onClickAction = { trySend(it) }
+            awaitClose { onClickAction = null }
+        }.conflate()
     }
 
     private var savingButton: Button? = null
+    private var editWindowsButton: Button? = null
     private var holidayCheckBox: CheckBox? = null
     private var timeRangeTextView: TextView? = null
     private var timePicker: TimeRangePicker? = null
 
     private var endTime = TimeRangePicker.Time(0, 0)
     private var startTime = TimeRangePicker.Time(0, 0)
-
-    var workDaySequence: WorkDaySequence? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +62,7 @@ class EditWorkDaySequenceBottomSheet : BaseBottomSheet() {
         timePicker = find(R.id.time_picker)
         savingButton = find(R.id.saving_button)
         holidayCheckBox = find(R.id.holiday_checkbox)
+        editWindowsButton = find(R.id.windows_edit_btn)
         timeRangeTextView = find(R.id.time_range_text_view)
     }
 
@@ -60,24 +72,25 @@ class EditWorkDaySequenceBottomSheet : BaseBottomSheet() {
         initTimePickerListener()
         initBottomSheetBehavior()
         initSavingButtonListener()
-        workDaySequence?.let { updateViewsByWorkDay(it) }
+        initEditWindowsButtonListener()
+        updateViewsByWorkDay(workdaySequence)
     }
 
-    private fun getUpdatedWorkDaySequence(): WorkDaySequence? {
-        val startFormatted = getFormatTime(startTime)
-        val endFormatted = getFormatTime(endTime)
+    private fun getUpdatedWorkDaySequence(): WorkdaySequence {
+        val startFormatted = toLocalTime(startTime)
+        val endFormatted = toLocalTime(endTime)
         val isHoliday = holidayCheckBox?.isChecked ?: false
 
-        return workDaySequence?.copy(
+        return workdaySequence.copy(
             startAt = startFormatted,
             finishAt = endFormatted,
             isHoliday = isHoliday
         )
     }
 
-    private fun updateViewsByWorkDay(day: WorkDaySequence) {
-        val fromMinutes = day.startAt.toCalendar().getTotalMinute()
-        val toMinutes = day.finishAt.toCalendar().getTotalMinute()
+    private fun updateViewsByWorkDay(day: WorkdaySequence) {
+        val fromMinutes = day.startAt.getTotalMinute()
+        val toMinutes = day.finishAt.getTotalMinute()
         timePicker?.apply {
             startTimeMinutes = fromMinutes
             endTimeMinutes = toMinutes
@@ -87,15 +100,15 @@ class EditWorkDaySequenceBottomSheet : BaseBottomSheet() {
         holidayCheckBox?.isChecked = day.isHoliday
     }
 
-    private fun updateTimeRangeTextView(day: WorkDaySequence? = null) {
-        val from = day?.startAt ?: getFormatTime(startTime)
-        val to = day?.finishAt ?: getFormatTime(endTime)
+    private fun updateTimeRangeTextView(day: WorkdaySequence? = null) {
+        val from = (day?.startAt ?: toLocalTime(startTime)).toClockFormat()
+        val to = (day?.finishAt ?: toLocalTime(endTime)).toClockFormat()
         val text = "$from - $to"
         timeRangeTextView?.text = text
     }
 
-    private fun getFormatTime(time: TimeRangePicker.Time) =
-        time.calendar.time.toClockDate()
+    private fun toLocalTime(time: TimeRangePicker.Time) =
+        time.calendar.time.toTime()
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initBottomSheetBehavior() = (dialog as BottomSheetDialog).behavior
@@ -126,9 +139,16 @@ class EditWorkDaySequenceBottomSheet : BaseBottomSheet() {
         }
     )
 
+    private fun initEditWindowsButtonListener() = editWindowsButton
+        ?.setOnClickListener {
+            dismiss()
+            val workdaySequence = workdaySequence
+            onClickAction?.invoke(ClickIntent.EditWindows(workdaySequence))
+        }
+
     private fun initSavingButtonListener() = savingButton
         ?.setOnClickListener {
-            onSavingButtonClickAction?.invoke(getUpdatedWorkDaySequence())
             dismiss()
+            onSavingButtonClickAction?.invoke(getUpdatedWorkDaySequence())
         }
 }

@@ -36,6 +36,9 @@ class AuthServiceImpl(
             request.password
         )
     ).also { response ->
-        response.doIfSuccess { authSettingsService.updateToken(it.token) }
+        response.doIfSuccess {
+            authSettingsService.updateToken(it.token)
+            authSettingsService.updateRefreshToken(it.refreshToken)
+        }
     }
 }

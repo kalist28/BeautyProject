@@ -2,6 +2,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_white_rounded_panel"
@@ -45,6 +46,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/time_picker" />
 
+
     <CheckBox
         android:id="@+id/holiday_checkbox"
         android:layout_width="wrap_content"
@@ -59,16 +61,28 @@
         app:layout_constraintTop_toBottomOf="@id/time_picker" />
 
     <Button
-        android:id="@+id/saving_button"
-        android:layout_width="180dp"
-        android:layout_height="match_parent"
+        android:id="@+id/windows_edit_btn"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_xsmall"
+        android:background="@drawable/background_rounded_button"
+        android:text="Редактировать окна"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/holiday_checkbox" />
+
+    <Button
+        android:id="@+id/saving_button"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_xsmall"
+        android:background="@drawable/background_rounded_button"
         android:backgroundTint="@color/colorAccept"
         android:text="Сохранить"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/holiday_checkbox" />
+        app:layout_constraintTop_toBottomOf="@id/windows_edit_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

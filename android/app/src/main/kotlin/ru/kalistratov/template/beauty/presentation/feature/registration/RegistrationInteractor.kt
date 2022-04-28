@@ -13,6 +13,6 @@ class RegistrationInteractorImpl(
     override suspend fun registration(request: RegistrationRequest): AuthResult =
         when (val result = authService.registration(request)) {
             is NetworkResult.Success -> AuthResult.Success
-            is NetworkResult.GenericError -> AuthResult.Error(result.value.exception)
+            is NetworkResult.GenericError -> AuthResult.Error(result.error.exception)
         }
 }
