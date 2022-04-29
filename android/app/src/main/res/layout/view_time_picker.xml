@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/hours"
+        android:layout_width="@dimen/margin_large"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_time_picker_start"
+        android:ems="2"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:inputType="number"
+
+        android:paddingVertical="@dimen/margin_xsmall"
+        android:theme="@style/TimePickerEditText" />
+
+    <EditText
+        android:id="@+id/minutes"
+        android:layout_width="@dimen/margin_large"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_time_picker_end"
+        android:ems="2"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:inputType="number"
+
+        android:paddingVertical="@dimen/margin_xsmall"
+        android:theme="@style/TimePickerEditText" />
+</LinearLayout>

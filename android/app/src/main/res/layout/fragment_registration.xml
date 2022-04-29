@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_main_gradient"
     android:fitsSystemWindows="true"
     tools:context=".presentation.feature.registration.view.RegistrationFragment">
 
@@ -29,6 +28,29 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="117dp" />
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:tint="@color/colorAccept"
+        android:src="@drawable/ic_outline_account_circle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/horizontal_logo_center"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_logo_center"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_medium"
+        android:text="@string/app_name"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccept"
+        app:layout_constraintTop_toBottomOf="@id/app_logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <View
         android:id="@+id/main_panel"

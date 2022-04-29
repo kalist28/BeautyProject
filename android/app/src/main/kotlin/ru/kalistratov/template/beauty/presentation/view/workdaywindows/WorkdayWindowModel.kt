@@ -18,14 +18,16 @@ class WorkdayWindowModel(
         id(workdayWindow.hashCode())
     }
 
-    override fun getDefaultLayout() = R.layout.view_workday_window
+    override fun getDefaultLayout() = R.layout.item_workday_window
 
     override fun createNewHolder(parent: ViewParent) = Holder()
 
     override fun bind(holder: Holder) {
         with(holder) {
-            to?.text = workdayWindow.finishAt.toClockFormat()
-            from?.text = workdayWindow.startAt.toClockFormat()
+            val formatStart = workdayWindow.startAt.toClockFormat()
+            val formatFinish = workdayWindow.finishAt.toClockFormat()
+            val formatTime = "$formatStart - $formatFinish"
+            time?.text = formatTime
             root?.setOnClickListener { clickAction.invoke(workdayWindow.id) }
         }
     }
@@ -33,13 +35,12 @@ class WorkdayWindowModel(
     class Holder : EpoxyHolder() {
         var root: View? = null
         var from: TextView? = null
-        var to: TextView? = null
+        var time: TextView? = null
 
         // TODO naming
         override fun bindView(itemView: View) {
             root = itemView
-            from = itemView.findViewById(R.id.from_text_view)
-            to = itemView.findViewById(R.id.to_text_view)
+            time = itemView.findViewById(R.id.time_text_view)
         }
     }
 }

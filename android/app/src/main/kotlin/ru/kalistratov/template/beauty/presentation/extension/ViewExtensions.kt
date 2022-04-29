@@ -1,5 +1,6 @@
 package ru.kalistratov.template.beauty.presentation.extension
 
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
@@ -50,3 +51,6 @@ fun TextView.setTextColorRes(@ColorRes color: Int) =
 
 fun View.getDrawable(@DrawableRes id: Int): Drawable? =
     AppCompatResources.getDrawable(this.context, id)
+
+fun View.getColorStateList(@ColorRes id: Int): ColorStateList =
+    AppCompatResources.getColorStateList(this.context, id)

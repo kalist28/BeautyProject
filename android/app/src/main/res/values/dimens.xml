@@ -4,6 +4,7 @@
     <dimen name="margin_small">16dp</dimen>
     <dimen name="margin_xmedium">24dp</dimen>
     <dimen name="margin_medium">32dp</dimen>
+    <dimen name="margin_xlarge">52dp</dimen>
     <dimen name="margin_large">64dp</dimen>
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>

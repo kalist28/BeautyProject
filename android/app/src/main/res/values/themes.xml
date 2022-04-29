@@ -8,7 +8,6 @@
         <item name="colorSecondaryVariant">@color/colorAcceptLight</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -71,6 +70,11 @@
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_white_rounded_panel</item>
+    </style>
+
+
+    <style name="TimePickerEditText" >
+        <item name="colorControlNormal">@color/transparent</item>
     </style>
 
 </resources>

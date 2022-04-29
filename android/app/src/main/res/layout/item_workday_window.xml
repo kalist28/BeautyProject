@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_xsmall"
-    android:layout_marginTop="@dimen/margin_xsmall">
+    android:layout_height="wrap_content">
 
     <View
         android:id="@+id/week_day_background"
         android:layout_width="@dimen/week_sequence_item"
         android:layout_height="@dimen/week_sequence_item"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="@dimen/margin_small"
         android:background="@drawable/calendar_day_current"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_width="@dimen/constraint_fill"
         android:layout_height="@dimen/constraint_fill"
         android:gravity="center"
-        android:text="BT"
+        android:text="1"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -30,28 +30,18 @@
         app:layout_constraintTop_toTopOf="@id/week_day_background" />
 
     <TextView
-        android:id="@+id/time_text_view"
+        android:id="@+id/from_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
-        android:gravity="center"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="4dp"
-        android:text="10:90 - 15:40"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/week_day_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/week_day_background"
-        app:layout_constraintTop_toTopOf="@+id/week_day_background" />
-
-    <View
-        android:layout_width="@dimen/constraint_fill"
-        android:layout_height="2dp"
-        android:layout_marginTop="@dimen/margin_xsmall"
-        android:background="@color/colorSeparator"
+        android:text="08:00 - 16:00"
+        android:textColor="@color/colorDarkAccept"
+        android:textSize="@dimen/text_large"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/week_day_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/week_day_background" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

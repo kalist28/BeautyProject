@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAcceptLight">#FF909A</color>
-    <color name="colorAccept">#ED6672</color>
-    <color name="colorDarkAccept">#E26169</color>
+    <color name="colorAcceptLight">#5b93ff</color>
+    <color name="colorAccept">#377bfe</color>
+    <color name="colorDarkAccept">#377bfe</color>
     <color name="color1">#d6c2bc</color>
     <color name="teal_200">#c0cccc</color>
     <color name="color2">#65b2c6</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="titleText">#09101D</color>
     
     <color name="purple">#8A5082</color>
 
@@ -15,8 +17,13 @@
     <color name="lightWhite">#4DFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
 
-    <color name="colorSeparator">#80E26169</color>
+    <color name="colorSeparator">#EBEEF2</color>
 
     <color name="authBackgroundGradientEnd">#FFFFFFFF</color>
     <color name="authBackgroundGradientStart">@color/colorAccept</color>
+
+    <color name="exitColor">#FF1843</color>
+    <color name="exitColorBackground">#FFE8ED</color>
+
+    <color name="calendar_background">#F4F6F9</color>
 </resources>

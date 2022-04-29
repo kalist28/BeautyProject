@@ -2,49 +2,42 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_xsmall"
-    app:cardCornerRadius="@dimen/margin_small">
+    app:cardCornerRadius="@dimen/margin_small"
+    app:cardElevation="@dimen/margin_xsmall">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_xsmall"
+        android:background="@color/calendar_background">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/constraint_fill"
-            android:background="@color/colorAccept"
             app:layout_constraintBottom_toBottomOf="@id/day_legend"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/year_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:textColor="@color/lightWhite"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/month_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             android:layout_marginStart="@dimen/margin_small"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/white"
-            android:textSize="38sp"
+            android:fontFamily="monospace"
+            android:textSize="@dimen/text_large"
+            android:text="Сентябрь 2021"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/year_text" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/constraint_fill"
-            android:background="@color/colorDarkAccept"
             app:layout_constraintBottom_toBottomOf="@id/day_legend"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +45,7 @@
 
         <include
             android:id="@+id/day_legend"
-            layout="@layout/calendar_day_legend"
+            layout="@layout/view_calendar_day_legend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"

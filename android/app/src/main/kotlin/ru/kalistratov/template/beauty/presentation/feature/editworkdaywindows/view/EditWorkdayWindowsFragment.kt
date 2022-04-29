@@ -79,7 +79,7 @@ class EditWorkdayWindowsFragment :
     override fun findViews() {
         topicTextView = find(R.id.topic_text_view)
         workdayWindows = find(R.id.workday_windows_view)
-        toTimeTextView = find(R.id.to_text_view)
+        toTimeTextView = find(R.id.time_text_view)
         addWindowPanel = find(R.id.create_window_card)
         workTimeTextView = find(R.id.workday_time_text_view)
         fromTimeTextView = find(R.id.from_text_view)

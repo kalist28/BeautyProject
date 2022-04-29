@@ -11,7 +11,9 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.presentation.entity.MenuItem
+import ru.kalistratov.template.beauty.presentation.extension.getColorStateList
 import ru.kalistratov.template.beauty.presentation.extension.getDrawable
+import ru.kalistratov.template.beauty.presentation.feature.personalarea.entity.PersonalAreaMenuItemId
 
 class PersonalAreaMenuController : EpoxyController() {
 
@@ -44,6 +46,13 @@ class PersonalAreaMenuController : EpoxyController() {
             root?.setOnClickListener { clickAction.invoke(item.id) }
             title?.let { it.text = item.title }
             icon?.let { it.setImageDrawable(it.getDrawable(item.iconId)) }
+
+            if (item.id == PersonalAreaMenuItemId.EXIT.id) {
+                icon?.let {
+                    it.imageTintList = it.getColorStateList(R.color.exitColor)
+                    it.background = it.getDrawable(R.drawable.profile_menu_item_exit_background)
+                }
+            }
         }
 
         override fun getDefaultLayout() = R.layout.personal_area_menu_item

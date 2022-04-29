@@ -6,10 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".presentation.feature.timetable.view.TimetableFragment">
 
-    <TextView
+    <ru.kalistratov.template.beauty.presentation.view.timepicker.TimePickerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
