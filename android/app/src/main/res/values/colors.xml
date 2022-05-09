@@ -13,7 +13,13 @@
     
     <color name="purple">#8A5082</color>
 
+    <color name="colorAcceptLightTransparent">#1A5B93FF</color>
+    <color name="colorAcceptTransparent">#1A377BFE</color>
+
+    <color name="bottomSheetUpSelector">#777777</color>
+
     <color name="lightDark">#4D000000</color>
+
     <color name="lightWhite">#4DFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
 

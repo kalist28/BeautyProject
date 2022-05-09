@@ -25,6 +25,10 @@ class EditWorkdayWindowsInteractorImpl(
         workdayWindow: WorkdayWindow
     ) = apiRepository.createWorkdayWindow(workdayWindow)
 
+    override suspend fun updateWindow(
+        workdayWindow: WorkdayWindow
+    ) = apiRepository.updateWorkdayWindow(workdayWindow)
+
     override suspend fun getWorkdaySequence(daySequenceId: Id): WorkdaySequence =
         when (val result = apiRepository.loadWorkdaySequence(daySequenceId)) {
             is NetworkResult.Success -> result.value

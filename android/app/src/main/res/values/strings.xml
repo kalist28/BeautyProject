@@ -11,7 +11,16 @@
     <string name="calendar">Календарь</string>
     <string name="timetable">Расписание</string>
     <string name="personal_area">Личный кабинет</string>
+    <string name="setting">Настройка</string>
+    <string name="settings">Настройки</string>
 
+    <string name="edit_work_window">Изменить рабочее окно</string>
+    <string name="create_work_window">Новое рабочее окно</string>
+    <string name="inside_work_window">Входит в окно: %s</string>
+    <string name="outside_work_time">Выходит за рабочее время: %s</string>
+    <string name="outside_work_window">Выходит за пределы дня: %s</string>
+    <string name="times_equals">Время должно отличаться.</string>
+    <string name="inverse_range">Начало не может быть больше конца.</string>
 
     <string name="monday">Понедельник</string>
     <string name="tuesday">Вторник</string>
@@ -28,4 +37,12 @@
     <string name="friday_short">ПТ</string>
     <string name="saturday_short">СБ</string>
     <string name="sunday_short">ВС</string>
+
+    <string name="blank_string"> </string>
+
+    <string name="add">Добавить</string>
+    <string name="edit">Изменить</string>
+    <string name="save">Сохранить</string>
+
+    <string name="total_minutes">%d мин.</string>
 </resources>

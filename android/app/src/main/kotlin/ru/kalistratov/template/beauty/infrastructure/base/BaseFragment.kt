@@ -2,22 +2,23 @@ package ru.kalistratov.template.beauty.infrastructure.base
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import ru.kalistratov.template.beauty.domain.di.UserComponent
 import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
-import javax.inject.Inject
 
 interface BaseView<I : BaseIntent, S : BaseState> {
     fun intents(): Flow<I>
     fun render(state: S)
 }
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment(@LayoutRes layoutId: Int = 0) : Fragment(layoutId) {
 
     private val appComponent by lazy {
         (activity?.applicationContext as Application).applicationComponent
@@ -33,7 +34,6 @@ abstract class BaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         injectAppComponent()
-        //toolbar = activity?.findViewById(R.id.toolbar) as? Toolbar?
         setSupportToolbar(toolbar)
         findViews()
     }
@@ -46,7 +46,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onDestroyView() {
         jobComposite.cancel()
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     private fun setSupportToolbar(toolbar: Toolbar?) =

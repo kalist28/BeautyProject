@@ -15,6 +15,7 @@ sealed class WeekDay(val index: Int) {
 
     @StringRes
     val tittleResId = when (index) {
+        -1 -> R.string.blank_string
         1 -> R.string.monday
         2 -> R.string.tuesday
         3 -> R.string.wednesday
@@ -26,6 +27,7 @@ sealed class WeekDay(val index: Int) {
 
     @StringRes
     val shortTittleResId = when (index) {
+        -1 -> R.string.blank_string
         1 -> R.string.monday_short
         2 -> R.string.tuesday_short
         3 -> R.string.wednesday_short

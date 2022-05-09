@@ -137,6 +137,18 @@ class ApiRepositoryImpl(
         }
     }
 
+    override suspend fun updateWorkdayWindow(
+        workdayWindow: WorkdayWindow
+    ): NetworkResult<WorkdayWindow> = getClient().use {
+        handlingNetworkSafety {
+            it.patch("$url/workday-windows/${workdayWindow.id}") {
+                contentType(ContentType.Application.Json)
+                header(AUTH_HEADER, getBearerToken())
+                body = workdayWindow
+            }
+        }
+    }
+
     override suspend fun getUser(
         id: String
     ): NetworkResult<User> = getClient().use {

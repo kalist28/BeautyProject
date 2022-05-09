@@ -20,7 +20,6 @@
         android:layout_width="@dimen/constraint_fill"
         android:layout_height="@dimen/constraint_fill"
         android:gravity="center"
-        android:text="1"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -30,16 +29,26 @@
         app:layout_constraintTop_toTopOf="@id/week_day_background" />
 
     <TextView
-        android:id="@+id/from_text_view"
+        android:id="@+id/time_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
-        android:text="08:00 - 16:00"
         android:textColor="@color/colorDarkAccept"
-        android:textSize="@dimen/text_large"
+        android:textSize="@dimen/text_xlarge"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/week_day_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/minutes_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:text="90 мин."
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

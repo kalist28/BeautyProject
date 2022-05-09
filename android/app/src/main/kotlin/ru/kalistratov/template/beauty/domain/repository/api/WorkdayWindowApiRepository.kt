@@ -6,4 +6,5 @@ import ru.kalistratov.template.beauty.domain.entity.WorkdayWindow
 interface WorkdayWindowApiRepository {
     suspend fun getWindows(): NetworkResult<List<WorkdayWindow>>
     suspend fun createWorkdayWindow(workdayWindow: WorkdayWindow): NetworkResult<WorkdayWindow>
+    suspend fun updateWorkdayWindow(workdayWindow: WorkdayWindow): NetworkResult<WorkdayWindow>
 }

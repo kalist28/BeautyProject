@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/hours"
@@ -10,12 +9,12 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_time_picker_start"
         android:ems="2"
+        android:text="00"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center"
         android:inputType="number"
-
-        android:paddingVertical="@dimen/margin_xsmall"
+        android:paddingVertical="5dp"
         android:theme="@style/TimePickerEditText" />
 
     <EditText
@@ -24,11 +23,11 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_time_picker_end"
         android:ems="2"
+        android:text="00"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center"
         android:inputType="number"
-
-        android:paddingVertical="@dimen/margin_xsmall"
+        android:paddingVertical="5dp"
         android:theme="@style/TimePickerEditText" />
 </LinearLayout>
