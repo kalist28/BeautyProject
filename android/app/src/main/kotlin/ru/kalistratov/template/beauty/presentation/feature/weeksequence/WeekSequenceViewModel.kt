@@ -15,7 +15,7 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.view.WeekSequenceIntent
-import ru.kalistratov.template.beauty.presentation.view.bottomsheet.EditWorkDaySequenceBottomSheet
+import ru.kalistratov.template.beauty.presentation.view.weeksequence.EditWorkDaySequenceBottomSheet
 
 data class WeekSequenceState(
     val weekSequence: WeekSequence = WeekSequence(),

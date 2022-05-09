@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.view.bottomsheet
+package ru.kalistratov.template.beauty.presentation.view.weeksequence
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.channels.awaitClose
@@ -18,6 +19,7 @@ import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
 import ru.kalistratov.template.beauty.domain.extension.noTime
 import ru.kalistratov.template.beauty.presentation.extension.find
+import ru.kalistratov.template.beauty.presentation.view.bottomsheet.BaseBottomSheet
 import ru.kalistratov.template.beauty.presentation.view.time.EditTimeView
 
 class EditWorkDaySequenceBottomSheet(
@@ -67,6 +69,8 @@ class EditWorkDaySequenceBottomSheet(
         super.onViewCreated(view, savedInstanceState)
 
         find<TextView>(R.id.topic_text_view).setText(workdaySequence.day.tittleResId)
+
+        if (workdaySequence.id < 0) editWindowsButton?.isVisible = false
 
         initBottomSheetBehavior()
         initSavingButtonListener()

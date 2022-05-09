@@ -18,8 +18,6 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.infrastructure.extensions.log
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.clicks
 import ru.kalistratov.template.beauty.presentation.extension.find
 import ru.kalistratov.template.beauty.presentation.extension.showBottomSheet
@@ -27,7 +25,7 @@ import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequ
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceState
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceViewModel
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceModule
-import ru.kalistratov.template.beauty.presentation.view.bottomsheet.EditWorkDaySequenceBottomSheet
+import ru.kalistratov.template.beauty.presentation.view.weeksequence.EditWorkDaySequenceBottomSheet
 import ru.kalistratov.template.beauty.presentation.view.weeksequence.WeekSequenceView
 
 sealed class WeekSequenceIntent : BaseIntent {
