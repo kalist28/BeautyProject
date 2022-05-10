@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.View.OnKeyListener
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import com.soywiz.klock.Time
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,6 +41,29 @@ class EditTimeView @JvmOverloads constructor(
         false
     }
 
+    var editable: Boolean = false
+        set(editable) {
+            field = editable
+            hoursTextView.isEnabled = editable
+            minutesTextView.isEnabled = editable
+            setBackgroundOrDefault(
+                !editable,
+                R.drawable.background_time_picker_start_uneditable,
+                R.drawable.background_time_picker_end_uneditable
+            )
+        }
+
+    var error: Boolean = false
+        set(error) {
+            field = error
+            if (!editable) return
+            setBackgroundOrDefault(
+                error,
+                R.drawable.background_time_picker_start_error,
+                R.drawable.background_time_picker_end_error
+            )
+        }
+
     var time: Time
         set(value) {
             hoursTextView.setText(value.hour.toString())
@@ -67,15 +91,19 @@ class EditTimeView @JvmOverloads constructor(
 
     fun timeUpdates() = updatesFlow.asSharedFlow()
 
-    fun updateBackground(error: Boolean) {
+    private fun setBackgroundOrDefault(
+        error: Boolean,
+        @DrawableRes start: Int,
+        @DrawableRes end: Int,
+    ) {
         hoursTextView.background = AppCompatResources.getDrawable(
             context,
-            if (error) R.drawable.background_time_picker_start_error
+            if (error) start
             else R.drawable.background_time_picker_start
         )
         minutesTextView.background = AppCompatResources.getDrawable(
             context,
-            if (error) R.drawable.background_time_picker_end_error
+            if (error) end
             else R.drawable.background_time_picker_end
         )
     }

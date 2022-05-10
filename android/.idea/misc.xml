@@ -11,8 +11,10 @@
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_stroke.xml" value="0.3703125" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_time_picker_end.xml" value="0.3703125" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_time_picker_end_error.xml" value="0.3703125" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_time_picker_end_uneditable.xml" value="0.24270833333333333" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_time_picker_start.xml" value="0.3703125" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_time_picker_start_error.xml" value="0.3703125" />
+        <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_time_picker_start_uneditable.xml" value="0.24270833333333333" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/background_white_rounded_panel.xml" value="0.3646153846153846" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/backround_main_gradient.xml" value="0.3646153846153846" />
         <entry key="..\:/Users/Kalist28/Documents/GitHubRepositories/BeautyProject/android/app/src/main/res/drawable/calendar_day_current.xml" value="0.3646153846153846" />

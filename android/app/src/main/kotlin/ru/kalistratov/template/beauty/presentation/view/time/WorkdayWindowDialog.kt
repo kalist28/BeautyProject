@@ -133,12 +133,12 @@ class WorkdayWindowDialog(
 
         timeRanges.find { finishTime.insideWithoutCorners(it) }.let {
             updateInsideError(finishError, it)
-            finishEditTime?.updateBackground((it == null).not())
+            finishEditTime?.error = (it == null).not()
         }
 
         timeRanges.find { startTime.insideWithoutCorners(it) }.let {
             updateInsideError(startError, it)
-            startEditTime?.updateBackground((it == null).not())
+            startEditTime?.error = (it == null).not()
         }
 
         var contains = false

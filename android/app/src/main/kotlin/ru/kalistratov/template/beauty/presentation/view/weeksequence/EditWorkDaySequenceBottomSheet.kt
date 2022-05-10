@@ -74,6 +74,7 @@ class EditWorkDaySequenceBottomSheet(
 
         initBottomSheetBehavior()
         initSavingButtonListener()
+        initHolidaySwitchListener()
         initEditWindowsButtonListener()
         updateViewsByWorkDay(workdaySequence)
     }
@@ -123,5 +124,12 @@ class EditWorkDaySequenceBottomSheet(
         ?.setOnClickListener {
             dismiss()
             onSavingButtonClickAction?.invoke(getUpdatedWorkDaySequence())
+        }
+
+    private fun initHolidaySwitchListener() = holidaySwitch
+        ?.setOnCheckedChangeListener { _, checked ->
+            val editableEditTime = checked.not()
+            endEditTime?.editable = editableEditTime
+            startEditTime?.editable = editableEditTime
         }
 }
