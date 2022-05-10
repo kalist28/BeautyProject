@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.auth.view.AuthFragment"
-        android:label="fragment_auth"
+        android:label="AuthFragment"
         tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_authFragment_to_registrationFragment"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.registration.view.RegistrationFragment"
-        android:label="fragment_registration"
+        android:label="RegistrationFragment"
         tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registrationFragment_to_timetableFragment"
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/timetableFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.timetable.view.TimetableFragment"
-        android:label="fragment_timetable"
+        android:label="TimetableFragment"
         tools:layout="@layout/fragment_timetable">
         <action
             android:id="@+id/action_timetableFragment_to_profileFragment"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.profile.view.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_timetableFragment"
@@ -62,7 +62,7 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.calendar.view.CalendarFragment"
-        android:label="fragment_calendar"
+        android:label="CalendarFragment"
         tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_profileFragment"
@@ -77,7 +77,7 @@
     <fragment
         android:id="@+id/personalAreaFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.personalarea.view.PersonalAreaFragment"
-        android:label="fragment_personal_area"
+        android:label="PersonalAreaFragment"
         tools:layout="@layout/fragment_personal_area">
         <action
             android:id="@+id/action_personalAreaFragment_to_calendarFragment"
@@ -101,7 +101,7 @@
     <fragment
         android:id="@+id/weekSequenceFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.weeksequence.view.WeekSequenceFragment"
-        android:label="fragment_weeksequence"
+        android:label="WeekSequenceFragment"
         tools:layout="@layout/fragment_weeksequence">
         <action
             android:id="@+id/action_weekSequenceFragment_to_editWorkdayWindowsFragment"
@@ -111,7 +111,7 @@
     <fragment
         android:id="@+id/editWorkdayWindowsFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.view.EditWorkdayWindowsFragment"
-        android:label="fragment_edit_workday_windows"
+        android:label="EditWorkdayWindowsFragment"
         tools:layout="@layout/fragment_edit_workday_windows">
 
         <argument

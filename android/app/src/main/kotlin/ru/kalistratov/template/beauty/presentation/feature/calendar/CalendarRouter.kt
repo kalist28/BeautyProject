@@ -1,6 +1,7 @@
 package ru.kalistratov.template.beauty.presentation.feature.calendar
 
 import androidx.navigation.NavController
+import ru.kalistratov.template.beauty.infrastructure.base.BaseRouter
 import ru.kalistratov.template.beauty.presentation.feature.calendar.view.CalendarFragmentDirections
 
 interface CalendarRouter {
@@ -9,16 +10,19 @@ interface CalendarRouter {
     fun openPersonalArea()
 }
 
-class CalendarRouterImpl(private val navController: NavController) : CalendarRouter {
-    override fun openProfile() = navController.navigate(
+class CalendarRouterImpl(
+    private val navController: NavController,
+    fragment: String
+) : BaseRouter(fragment), CalendarRouter {
+    override fun openProfile() = navController.safetyNavigate(
         CalendarFragmentDirections.actionCalendarFragmentToProfileFragment()
     )
 
-    override fun openTimetable() = navController.navigate(
+    override fun openTimetable() = navController.safetyNavigate(
         CalendarFragmentDirections.actionCalendarFragmentToTimetableFragment()
     )
 
-    override fun openPersonalArea() = navController.navigate(
+    override fun openPersonalArea() = navController.safetyNavigate(
         CalendarFragmentDirections.actionCalendarFragmentToPersonalAreaFragment()
     )
 }

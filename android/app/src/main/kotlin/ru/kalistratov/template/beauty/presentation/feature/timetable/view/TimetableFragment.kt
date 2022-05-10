@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emptyFlow
@@ -23,7 +24,6 @@ import ru.kalistratov.template.beauty.presentation.feature.timetable.TimetableRo
 import ru.kalistratov.template.beauty.presentation.feature.timetable.TimetableState
 import ru.kalistratov.template.beauty.presentation.feature.timetable.TimetableViewModel
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableModule
-import javax.inject.Inject
 
 sealed class TimetableIntent : BaseIntent
 
@@ -47,6 +47,7 @@ class TimetableFragment : BaseFragment(), BaseView<TimetableIntent, TimetableSta
                 when (it.itemId) {
                     R.id.menu_profile -> timetableRouter.openProfile()
                     R.id.menu_calendar -> timetableRouter.openCalendar()
+                    R.id.menu_personal_area -> timetableRouter.toPersonalArea()
                 }
                 return@setOnItemSelectedListener true
             }

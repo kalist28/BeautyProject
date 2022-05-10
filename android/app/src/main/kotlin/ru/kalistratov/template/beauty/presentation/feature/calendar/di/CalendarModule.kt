@@ -33,7 +33,10 @@ class CalendarModule(private val fragment: CalendarFragment) {
 
     @Provides
     fun provideCalendarRouter(): CalendarRouter =
-        CalendarRouterImpl(fragment.findNavController())
+        CalendarRouterImpl(
+            fragment.findNavController(),
+            fragment.javaClass.simpleName
+        )
 }
 
 @Module

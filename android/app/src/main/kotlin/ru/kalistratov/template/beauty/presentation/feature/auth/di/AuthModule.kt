@@ -37,7 +37,10 @@ class AuthModule(private val fragment: AuthFragment) {
     )
 
     @Provides
-    fun provideAuthRouter(): AuthRouter = AuthRouterImpl(fragment.findNavController())
+    fun provideAuthRouter(): AuthRouter = AuthRouterImpl(
+        fragment.findNavController(),
+        fragment.javaClass.simpleName
+    )
 }
 
 @Module

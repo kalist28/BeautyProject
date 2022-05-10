@@ -32,8 +32,10 @@ class TimetableModule(private val fragment: TimetableFragment) {
     fun provideTimetableInteractor(): TimetableInteractor = TimetableInteractorImpl()
 
     @Provides
-    fun provideTimetableRouter(): TimetableRouter =
-        TimetableRouterImpl(fragment.findNavController())
+    fun provideTimetableRouter(): TimetableRouter = TimetableRouterImpl(
+        fragment.findNavController(),
+        fragment.javaClass.simpleName
+    )
 }
 
 @Module

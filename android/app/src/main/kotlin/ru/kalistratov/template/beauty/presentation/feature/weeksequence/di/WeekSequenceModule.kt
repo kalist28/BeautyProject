@@ -37,8 +37,10 @@ class WeekSequenceModule(private val fragment: WeekSequenceFragment) {
     )
 
     @Provides
-    fun provideWeekSequenceRouter(): WeekSequenceRouter =
-        WeekSequenceRouterImpl(fragment.findNavController())
+    fun provideWeekSequenceRouter(): WeekSequenceRouter = WeekSequenceRouterImpl(
+        fragment.findNavController(),
+        fragment.javaClass.simpleName
+    )
 }
 
 @Module

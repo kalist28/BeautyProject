@@ -32,8 +32,10 @@ class ProfileModule(private val fragment: ProfileFragment) {
     fun provideProfileInteractor(): ProfileInteractor = ProfileInteractorImpl()
 
     @Provides
-    fun provideProfileRouter(): ProfileRouter =
-        ProfileRouterImpl(fragment.findNavController())
+    fun provideProfileRouter(): ProfileRouter = ProfileRouterImpl(
+        fragment.findNavController(),
+        fragment.javaClass.simpleName
+    )
 }
 
 @Module

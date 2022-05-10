@@ -37,8 +37,10 @@ class RegistrationModule(val fragment: RegistrationFragment) {
     )
 
     @Provides
-    fun provideRegistrationRouter(): RegistrationRouter =
-        RegistrationRouterImpl(fragment.findNavController())
+    fun provideRegistrationRouter(): RegistrationRouter = RegistrationRouterImpl(
+        fragment.findNavController(),
+        fragment.javaClass.simpleName
+    )
 }
 
 @Module

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -36,6 +37,7 @@ sealed class EditWorkdayWindowsIntent : BaseIntent {
     data class UpdateWindow(val window: WorkdayWindow) : EditWorkdayWindowsIntent()
     data class WindowClick(val id: Id) : EditWorkdayWindowsIntent()
 
+    object BackPressed : EditWorkdayWindowsIntent()
     object AddWindowDialogClick : EditWorkdayWindowsIntent()
 }
 
@@ -55,11 +57,13 @@ class EditWorkdayWindowsFragment :
     private val binding: FragmentEditWorkdayWindowsBinding by viewBinding()
 
     private var topicTextView: TextView? = null
+    private lateinit var backButton: FloatingActionButton
 
     override fun injectUserComponent(userComponent: UserComponent) =
         userComponent.plus(EditWorkdayWindowsModule(this)).inject(this)
 
     override fun findViews() {
+        backButton = find(R.id.back_button)
         topicTextView = find(R.id.topic_text_view)
     }
 
@@ -77,6 +81,7 @@ class EditWorkdayWindowsFragment :
 
     override fun intents(): Flow<EditWorkdayWindowsIntent> = merge(
         flowOf(EditWorkdayWindowsIntent.InitData(args.daySequence)),
+        backButton.clicks().map { EditWorkdayWindowsIntent.BackPressed },
         binding.addWindowButton.clicks().map { EditWorkdayWindowsIntent.AddWindowDialogClick },
         WorkdayWindowDialog.saves.map {
             when (it) {

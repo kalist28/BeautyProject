@@ -41,8 +41,10 @@ class PersonalAreaModule(private val fragment: PersonalAreaFragment) {
     )
 
     @Provides
-    fun provideProfileRouter(): PersonalAreaRouter =
-        PersonalAreaRouterImpl(fragment.findNavController())
+    fun provideProfileRouter(): PersonalAreaRouter = PersonalAreaRouterImpl(
+        fragment.findNavController(),
+        fragment.javaClass.simpleName
+    )
 }
 
 @Module

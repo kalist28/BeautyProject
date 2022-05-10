@@ -1,6 +1,7 @@
 package ru.kalistratov.template.beauty.presentation.feature.profile
 
 import androidx.navigation.NavController
+import ru.kalistratov.template.beauty.infrastructure.base.BaseRouter
 import ru.kalistratov.template.beauty.presentation.feature.profile.view.ProfileFragmentDirections
 
 interface ProfileRouter {
@@ -9,16 +10,19 @@ interface ProfileRouter {
     fun openPersonalArea()
 }
 
-class ProfileRouterImpl(private val navController: NavController) : ProfileRouter {
-    override fun openTimetable() = navController.navigate(
+class ProfileRouterImpl(
+    private val navController: NavController,
+    fragment: String
+) : BaseRouter(fragment), ProfileRouter {
+    override fun openTimetable() = navController.safetyNavigate(
         ProfileFragmentDirections.actionProfileFragmentToTimetableFragment()
     )
 
-    override fun openPersonalArea() = navController.navigate(
+    override fun openPersonalArea() = navController.safetyNavigate(
         ProfileFragmentDirections.actionProfileFragmentToPersonalAreaFragment()
     )
 
-    override fun openCalendar() = navController.navigate(
+    override fun openCalendar() = navController.safetyNavigate(
         ProfileFragmentDirections.actionProfileFragmentToCalendarFragment()
     )
 }

@@ -44,6 +44,7 @@ sealed class EditWorkdayWindowsAction : BaseAction {
 }
 
 class EditWorkdayWindowsViewModel @Inject constructor(
+    private val router: EditWorkdayWindowsRouter,
     private val interactor: EditWorkdayWindowsInteractor,
 ) : BaseViewModel<EditWorkdayWindowsIntent, EditWorkdayWindowsAction, EditWorkdayWindowsState>() {
 
@@ -141,6 +142,11 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                         EditWorkdayWindowsAction.Clear
                     )
                 }
+
+            intentFlow.filterIsInstance<EditWorkdayWindowsIntent.BackPressed>()
+                .onEach { router.back() }
+                .launchIn(this)
+                .addTo(workComposite)
 
             merge(
                 loadUserAction,

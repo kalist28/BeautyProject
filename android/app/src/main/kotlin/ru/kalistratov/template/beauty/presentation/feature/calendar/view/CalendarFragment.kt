@@ -59,7 +59,7 @@ class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState>
             setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.menu_profile -> calendarRouter.openProfile()
-                    R.id.menu_timetable -> calendarRouter.openProfile()
+                    R.id.menu_timetable -> calendarRouter.openTimetable()
                     R.id.menu_personal_area -> calendarRouter.openPersonalArea()
                 }
                 return@setOnItemSelectedListener true
