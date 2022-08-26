@@ -37,7 +37,7 @@ class WeekSequenceViewModel @Inject constructor(
 ) : BaseViewModel<WeekSequenceIntent, WeekSequenceAction, WeekSequenceState>() {
 
     private val initialState = WeekSequenceState()
-    private val stateFlow = MutableStateFlow(initialState)
+    private val _stateFlow = MutableStateFlow(initialState)
 
     init {
         viewModelScope.launch {
@@ -73,7 +73,7 @@ class WeekSequenceViewModel @Inject constructor(
                     val updatedDay = interactor.updateWorkDaySequence(dayToUpdate)
                     if (updatedDay == null) emptyFlow()
                     else {
-                        val state = stateFlow.value
+                        val state = _stateFlow.value
                         val days = state.weekSequence.days.toMutableList()
                         val oldItem = days.find {
                             it.day == updatedDay.day
@@ -98,7 +98,7 @@ class WeekSequenceViewModel @Inject constructor(
             val openWorkDaySequenceEditBottomSheetAction = intentFlow
                 .filterIsInstance<WeekSequenceIntent.WorkDaySequenceClick>()
                 .flatMapConcat { intent ->
-                    val lastState = stateFlow.value
+                    val lastState = _stateFlow.value
                     val day = lastState.weekSequence.days
                         .find { it.day.index == intent.dayIndex }
 
@@ -121,8 +121,8 @@ class WeekSequenceViewModel @Inject constructor(
             )
                 .flowOn(Dispatchers.IO)
                 .scan(initialState, ::reduce)
-                .onEach { stateFlow.value = it }
-                .collect(shareStateFlow)
+                .onEach { _stateFlow.value = it }
+                .collect(stateFlow)
         }.addTo(workComposite)
     }
 

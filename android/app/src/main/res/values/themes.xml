@@ -12,11 +12,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="EditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxCornerRadiusTopEnd">@dimen/margin_xmedium</item>
-        <item name="boxCornerRadiusTopStart">@dimen/margin_xmedium</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/margin_xmedium</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/margin_xmedium</item>
+    <style name="EditTextStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorAccept</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/margin_small</item>
+        <item name="boxCornerRadiusTopStart">@dimen/margin_small</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/margin_small</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/margin_small</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

@@ -3,8 +3,6 @@ package ru.kalistratov.template.beauty.infrastructure.base
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -29,12 +27,9 @@ abstract class BaseFragment(@LayoutRes layoutId: Int = 0) : Fragment(layoutId) {
 
     protected val jobComposite = CompositeJob()
 
-    protected var toolbar: Toolbar? = null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         injectAppComponent()
-        setSupportToolbar(toolbar)
         findViews()
     }
 
@@ -48,10 +43,6 @@ abstract class BaseFragment(@LayoutRes layoutId: Int = 0) : Fragment(layoutId) {
         jobComposite.cancel()
         super.onDestroyView()
     }
-
-    private fun setSupportToolbar(toolbar: Toolbar?) =
-        (activity as AppCompatActivity?)
-            ?.setSupportActionBar(toolbar)
 
     open fun injectUserComponent(userComponent: UserComponent) = Unit
 

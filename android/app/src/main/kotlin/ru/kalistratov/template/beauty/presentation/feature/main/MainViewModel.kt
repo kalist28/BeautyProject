@@ -45,7 +45,7 @@ class MainViewModel @Inject constructor() : BaseViewModel<MainIntent, MainAction
             )
                 .flowOn(Dispatchers.IO)
                 .scan(MainState(), ::reduce)
-                .onEach { shareStateFlow.emit(it) }
+                .onEach { stateFlow.emit(it) }
                 .launchIn(this)
                 .addTo(workComposite)
         }

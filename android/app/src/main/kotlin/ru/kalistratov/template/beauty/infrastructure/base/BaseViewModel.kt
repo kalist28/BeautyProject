@@ -3,7 +3,6 @@ package ru.kalistratov.template.beauty.infrastructure.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
@@ -13,7 +12,7 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
     private val uiComposite = CompositeJob()
     protected val workComposite = CompositeJob()
 
-    protected val shareStateFlow: MutableSharedFlow<S> = mutableSharedFlow()
+    protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow()
     protected val intentFlow: MutableSharedFlow<I> = mutableSharedFlow()
 
     override fun onCleared() {
@@ -24,7 +23,7 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
 
     abstract fun reduce(state: S, action: A): S
 
-    open fun stateUpdates(): Flow<S> = shareStateFlow
+    open fun stateUpdates(): Flow<S> = stateFlow
 
     fun processIntent(intents: Flow<I>) {
         uiComposite.cancel()

@@ -5,4 +5,5 @@ import ru.kalistratov.template.beauty.domain.entity.User
 
 interface ApiUserRepository {
     suspend fun getUser(id: String): NetworkResult<User>
+    suspend fun getData(): NetworkResult<User>
 }

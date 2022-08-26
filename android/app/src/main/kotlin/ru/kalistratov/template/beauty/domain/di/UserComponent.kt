@@ -14,6 +14,8 @@ import ru.kalistratov.template.beauty.infrastructure.service.PersonalAreaMenuSer
 import ru.kalistratov.template.beauty.infrastructure.service.WorkSequenceServiceImpl
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarComponent
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarModule
+import ru.kalistratov.template.beauty.presentation.feature.edituser.di.EditUserComponent
+import ru.kalistratov.template.beauty.presentation.feature.edituser.di.EditUserModule
 import ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.di.EditWorkdayWindowsComponent
 import ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.di.EditWorkdayWindowsModule
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaComponent
@@ -41,6 +43,7 @@ interface UserComponent {
 
     fun plus(module: ProfileModule): ProfileComponent
     fun plus(module: CalendarModule): CalendarComponent
+    fun plus(module: EditUserModule): EditUserComponent
     fun plus(module: TimetableModule): TimetableComponent
     fun plus(module: PersonalAreaModule): PersonalAreaComponent
     fun plus(module: WeekSequenceModule): WeekSequenceComponent

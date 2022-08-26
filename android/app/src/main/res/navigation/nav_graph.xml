@@ -97,6 +97,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_personalAreaFragment_to_editUserFragment"
+            app:destination="@id/editUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/weekSequenceFragment"
@@ -118,4 +121,9 @@
             android:name="daySequence"
             app:argType="integer"/>
     </fragment>
+    <fragment
+        android:id="@+id/editUserFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.edituser.view.EditUserFragment"
+        android:label="EditUserFragment"
+        tools:layout="@layout/fragment_edit_user"/>
 </navigation>

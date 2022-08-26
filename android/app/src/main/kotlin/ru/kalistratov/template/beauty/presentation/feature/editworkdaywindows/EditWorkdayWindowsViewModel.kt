@@ -49,7 +49,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
 ) : BaseViewModel<EditWorkdayWindowsIntent, EditWorkdayWindowsAction, EditWorkdayWindowsState>() {
 
     private val initialState = EditWorkdayWindowsState()
-    private val stateFlow = MutableStateFlow(initialState)
+    private val _stateFlow = MutableStateFlow(initialState)
 
     private val sortWindowsComparator = Comparator<WorkdayWindow> { day1, day2 ->
         day1.startAt.compareTo(day2.startAt)
@@ -82,7 +82,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
             val saveWindowAction = intentFlow
                 .filterIsInstance<EditWorkdayWindowsIntent.AddWindow>()
                 .flatMapConcat {
-                    val state = stateFlow.value
+                    val state = _stateFlow.value
                     val request = it.window.copy(sequence_day = state.workdaySequence.day.index)
                     val result = interactor.createWindow(request)
                     if (result is NetworkResult.Success) flowOf(result.value)
@@ -90,7 +90,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                 }
                 .flowOn(Dispatchers.IO)
                 .map { window ->
-                    val windows = stateFlow.value.windows
+                    val windows = _stateFlow.value.windows
                         .toMutableList()
                         .also {
                             it.add(window)
@@ -110,7 +110,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                 }
                 .flowOn(Dispatchers.IO)
                 .map { window ->
-                    val windows = stateFlow.value.windows
+                    val windows = _stateFlow.value.windows
                         .toMutableList()
                         .also { list ->
                             list.indexOfFirst { it.id == window.id }.let {
@@ -124,7 +124,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
             val updateSelectedWindowAction = intentFlow
                 .filterIsInstance<EditWorkdayWindowsIntent.WindowClick>()
                 .flatMapConcat { intent ->
-                    notNullFlow(stateFlow.value.windows.find { it.id == intent.id })
+                    notNullFlow(_stateFlow.value.windows.find { it.id == intent.id })
                 }
                 .flatMapConcat {
                     flowOf(
@@ -159,8 +159,8 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                 .flowOn(Dispatchers.IO)
                 .scan(initialState, ::reduce)
                 .onEach {
-                    stateFlow.value = it
-                    shareStateFlow.emit(it)
+                    _stateFlow.value = it
+                    _stateFlow.emit(it)
                 }
                 .launchIn(this)
                 .addTo(workComposite)

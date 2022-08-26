@@ -162,12 +162,8 @@ class RegistrationViewModel @Inject constructor(
             )
                 .flowOn(Dispatchers.IO)
                 .scan(RegistrationState(), ::reduce)
-                .onEach {
-                    shareStateFlow.emit(it)
-                    initialStateFlow.value = it
-                }
-                .launchIn(this)
-                .addTo(workComposite)
+                .onEach { initialStateFlow.value = it }
+                .collect(stateFlow)
 
             createRegistrationRequestSharedFlow
                 .launchIn(this)

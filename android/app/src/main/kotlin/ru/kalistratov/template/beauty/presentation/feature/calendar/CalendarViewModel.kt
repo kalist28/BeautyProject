@@ -53,7 +53,7 @@ class CalendarViewModel @Inject constructor(
             )
                 .flowOn(Dispatchers.IO)
                 .scan(CalendarState(), ::reduce)
-                .onEach { shareStateFlow.emit(it) }
+                .onEach { stateFlow.emit(it) }
                 .launchIn(this)
                 .addTo(workComposite)
         }

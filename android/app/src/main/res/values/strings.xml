@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">TemplateBeautyApp</string>
 
+    <string name="name">Имя</string>
+    <string name="lastname">Фамилия</string>
+    <string name="gender">Пол</string>
+
     <string name="email">Почта</string>
     <string name="password">Пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>

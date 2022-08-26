@@ -15,7 +15,6 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.textDebounce
 import ru.kalistratov.template.beauty.presentation.feature.auth.view.AuthIntent
-import java.util.*
 import javax.inject.Inject
 
 data class AuthState(
@@ -119,7 +118,7 @@ class AuthViewModel @Inject constructor(
                 .flowOn(Dispatchers.IO)
                 .scan(initialState, ::reduce)
                 .onEach {
-                    shareStateFlow.emit(it)
+                    stateFlow.emit(it)
                     initialStateFlow.value = it
                 }
                 .launchIn(this)

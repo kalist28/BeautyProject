@@ -6,6 +6,7 @@ import ru.kalistratov.template.beauty.presentation.feature.personalarea.view.Per
 
 interface PersonalAreaRouter {
     fun openProfile()
+    fun openEditUser()
     fun openCalendar()
     fun openTimetable()
     fun openWeekSequence()
@@ -18,6 +19,10 @@ class PersonalAreaRouterImpl(
 ) : BaseRouter(fragment), PersonalAreaRouter {
     override fun openProfile() = navController.safetyNavigate(
         PersonalAreaFragmentDirections.actionPersonalAreaFragmentToProfileFragment()
+    )
+
+    override fun openEditUser() = navController.safetyNavigate(
+        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToEditUserFragment()
     )
 
     override fun openCalendar() = navController.safetyNavigate(

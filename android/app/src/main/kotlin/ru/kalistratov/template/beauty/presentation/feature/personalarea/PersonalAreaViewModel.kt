@@ -2,9 +2,7 @@ package ru.kalistratov.template.beauty.presentation.feature.personalarea
 
 import androidx.lifecycle.viewModelScope
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.domain.feature.personalarea.PersonalAreaInteractor
@@ -30,16 +28,11 @@ class PersonalAreaViewModel @Inject constructor(
     private val interactor: PersonalAreaInteractor
 ) : BaseViewModel<PersonalAreaIntent, PersonalAreaAction, PersonalAreaState>() {
 
-    companion object {
-        val scope = CoroutineScope(Dispatchers.IO)
-    }
-
     private val initialState = PersonalAreaState()
-    private val stateFlow = MutableStateFlow(initialState)
-    lateinit var sdfsdf: Job
+    private val _stateFlow = MutableStateFlow(initialState)
 
     init {
-        sdfsdf = viewModelScope.launch {
+        viewModelScope.launch {
 
             val initFlow = intentFlow
                 .filterIsInstance<PersonalAreaIntent.InitData>()
@@ -49,6 +42,12 @@ class PersonalAreaViewModel @Inject constructor(
                 val items = interactor.loadMenuItems()
                 PersonalAreaAction.UpdateMenuItems(items)
             }
+
+            intentFlow.filterIsInstance<PersonalAreaIntent.UserPanelClick>()
+                .debounce(300)
+                .onEach { router.openEditUser() }
+                .launchIn(this)
+                .addTo(workComposite)
 
             intentFlow.filterIsInstance<PersonalAreaIntent.MenuItemClick>()
                 .onEach {
@@ -67,13 +66,9 @@ class PersonalAreaViewModel @Inject constructor(
             merge(updateMenuItemsAction)
                 .flowOn(Dispatchers.IO)
                 .scan(initialState, ::reduce)
-                .onEach {
-                    stateFlow.value = it
-                    shareStateFlow.emit(it)
-                }
-                .launchIn(this)
-                .addTo(workComposite)
-        }
+                .onEach { _stateFlow.value = it }
+                .collect(stateFlow)
+        }.addTo(workComposite)
     }
 
     override fun reduce(state: PersonalAreaState, action: PersonalAreaAction) = when (action) {

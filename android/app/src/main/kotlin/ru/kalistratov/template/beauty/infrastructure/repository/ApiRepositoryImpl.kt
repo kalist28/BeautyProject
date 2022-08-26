@@ -160,6 +160,15 @@ class ApiRepositoryImpl(
         }
     }
 
+    override suspend fun getData(): NetworkResult<User> = getClient().use {
+        handlingNetworkSafety {
+            it.get("$url/me") {
+                contentType(ContentType.Application.Json)
+                header(AUTH_HEADER, getBearerToken())
+            }
+        }
+    }
+
     override suspend fun getWindows(): NetworkResult<List<WorkdayWindow>> = getClient().use {
         handlingNetworkSafety {
             it.get("$url/workday-windows") {
