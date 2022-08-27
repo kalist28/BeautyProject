@@ -18,7 +18,6 @@ class AuthServiceImpl(
         .registration(request)
         .also { response ->
             response.doIfSuccess {
-                authSettingsService.updateUserId(it.id)
                 auth(
                     AuthRequest(
                         request.email,
@@ -39,6 +38,10 @@ class AuthServiceImpl(
         response.doIfSuccess {
             authSettingsService.updateToken(it.token)
             authSettingsService.updateRefreshToken(it.refreshToken)
+
+            apiRepository.getData().doIfSuccess { user ->
+                authSettingsService.updateUserId(user.id)
+            }
         }
     }
 }

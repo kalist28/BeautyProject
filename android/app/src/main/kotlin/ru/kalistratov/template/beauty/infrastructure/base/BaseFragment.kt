@@ -16,7 +16,7 @@ interface BaseView<I : BaseIntent, S : BaseState> {
     fun render(state: S)
 }
 
-abstract class BaseFragment(@LayoutRes layoutId: Int = 0) : Fragment(layoutId) {
+abstract class BaseFragment : Fragment() {
 
     private val appComponent by lazy {
         (activity?.applicationContext as Application).applicationComponent

@@ -34,7 +34,8 @@ sealed class PersonalAreaIntent : BaseIntent {
     object UserPanelClick : PersonalAreaIntent()
 }
 
-class PersonalAreaFragment : BaseFragment(), BaseView<PersonalAreaIntent, PersonalAreaState> {
+class PersonalAreaFragment : BaseFragment(),
+    BaseView<PersonalAreaIntent, PersonalAreaState> {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

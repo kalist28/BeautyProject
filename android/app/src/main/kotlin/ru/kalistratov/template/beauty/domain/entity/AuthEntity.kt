@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import ru.kalistratov.template.beauty.domain.extension.getJson
 import ru.kalistratov.template.beauty.infrastructure.extensions.jsonParser
+import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationAction
 
 @Serializable
 data class User(
@@ -28,7 +29,10 @@ data class RefreshRequest(
 data class RegistrationRequest(
     val email: String,
     val password: String,
-    val name: String = "Test",
+    val name: String,
+    val surname: String,
+    val patronymic: String,
+    val role: String = "specialist"
 )
 
 @Serializable

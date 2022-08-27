@@ -2,15 +2,12 @@ package ru.kalistratov.template.beauty.presentation.feature.main.view
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import javax.inject.Inject
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
@@ -19,17 +16,23 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseActivity
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.presentation.entity.OnBackPressCallback
+import ru.kalistratov.template.beauty.presentation.entity.OnBackPressedCallbackWrapper
 import ru.kalistratov.template.beauty.presentation.extension.onBackPressClicks
 import ru.kalistratov.template.beauty.presentation.feature.main.MainState
 import ru.kalistratov.template.beauty.presentation.feature.main.MainViewModel
 import ru.kalistratov.template.beauty.presentation.feature.main.di.MainModule
+import javax.inject.Inject
+
+interface AdditionalBackPressCallBackOwner {
+    fun addAdditionalCallback(callback: OnBackPressedCallback)
+    fun removeAdditionalCallback()
+}
 
 sealed class MainIntent : BaseIntent {
     object OnBackPressed : MainIntent()
 }
 
-class MainActivity : BaseActivity(), BaseView<MainIntent, MainState> {
+class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>, AdditionalBackPressCallBackOwner {
     private lateinit var navController: NavController
 
     private var confirmBackPress: Boolean = false
@@ -41,7 +44,10 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState> {
         ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
     }
 
-    private val onBackPressCallback = OnBackPressCallback()
+    private var additionalCallback: OnBackPressedCallback? = null
+    private val onBackPressedCallbackWrapper = OnBackPressedCallbackWrapper()
+
+    private val backPressUpdates = MutableSharedFlow<Unit>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +61,9 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState> {
             }.addTo(jobComposite)
             processIntent(intents())
         }
+
+        onBackPressedCallbackWrapper.callback
+            ?.let { onBackPressedDispatcher.addCallback(this, it) }
     }
 
     private fun initNavController() {
@@ -74,6 +83,7 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState> {
 
     override fun onBackPressed() {
         if (confirmBackPress) return super.onBackPressed()
+        if (additionalCallback?.isEnabled == true) return additionalCallback!!.handleOnBackPressed()
         val popBackStackResult = navController.popBackStack()
         if (!popBackStackResult) {
             Toast.makeText(
@@ -81,15 +91,23 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState> {
                 "Нажмите повторно для выхода.",
                 Toast.LENGTH_SHORT
             ).show()
-            onBackPressCallback.listener?.OnBackPressed()
+            onBackPressedCallbackWrapper.callback?.handleOnBackPressed()
         }
     }
 
     override fun intents(): Flow<MainIntent> = merge(
-        onBackPressClicks(onBackPressCallback).map { MainIntent.OnBackPressed }
+        onBackPressClicks(onBackPressedCallbackWrapper).map { MainIntent.OnBackPressed }
     )
 
     override fun render(state: MainState) {
         confirmBackPress = state.allowOnBackPress
+    }
+
+    override fun addAdditionalCallback(callback: OnBackPressedCallback) {
+        additionalCallback = callback
+    }
+
+    override fun removeAdditionalCallback() {
+        additionalCallback = null
     }
 }

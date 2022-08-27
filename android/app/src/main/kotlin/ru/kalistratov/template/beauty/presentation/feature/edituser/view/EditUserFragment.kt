@@ -26,8 +26,7 @@ sealed interface EditUserIntent : BaseIntent {
     object InitData : EditUserIntent
 }
 
-class EditUserFragment :
-    BaseFragment(R.layout.fragment_edit_user),
+class EditUserFragment : BaseFragment(),
     BaseView<EditUserIntent, EditUserState> {
 
     @Inject

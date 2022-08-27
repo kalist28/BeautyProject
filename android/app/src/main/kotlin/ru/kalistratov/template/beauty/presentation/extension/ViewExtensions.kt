@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
@@ -16,8 +17,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
-import ru.kalistratov.template.beauty.presentation.entity.OnBackPressCallback
-import ru.kalistratov.template.beauty.presentation.entity.OnBackPressListener
+import ru.kalistratov.template.beauty.presentation.entity.OnBackPressedCallbackWrapper
 
 fun TextView.textChanges(): Flow<CharSequence> = callbackFlow {
     val listener = object : TextWatcher {
@@ -39,11 +39,11 @@ fun View.clicks(): Flow<Unit> = callbackFlow {
     awaitClose { setOnClickListener(null) }
 }.conflate()
 
-fun onBackPressClicks(callback: OnBackPressCallback): Flow<Unit> = callbackFlow {
-    callback.listener = object : OnBackPressListener {
-        override fun OnBackPressed() { trySend(Unit) }
+fun onBackPressClicks(callback: OnBackPressedCallbackWrapper): Flow<Unit> = callbackFlow {
+    callback.callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed()  { trySend(Unit) }
     }
-    awaitClose { }
+    awaitClose { callback.callback = null }
 }.conflate()
 
 fun TextView.setTextColorRes(@ColorRes color: Int) =

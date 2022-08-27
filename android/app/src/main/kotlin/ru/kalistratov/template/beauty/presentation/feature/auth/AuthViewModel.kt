@@ -13,6 +13,7 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
 import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
+import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.infrastructure.coroutines.textDebounce
 import ru.kalistratov.template.beauty.presentation.feature.auth.view.AuthIntent
 import javax.inject.Inject
@@ -55,7 +56,7 @@ class AuthViewModel @Inject constructor(
                 .textDebounce()
                 .flatMapConcat {
                     val email = it.email
-                    val checkEmail = email.matches(Regex.fromLiteral(checkEmailRegex))
+                    val checkEmail = email matches checkEmailRegex.toRegex()
                     if (checkEmail) flowOf(AuthAction.UpdateEmail(email))
                     else emptyFlow()
                 }
@@ -75,13 +76,14 @@ class AuthViewModel @Inject constructor(
                         AuthRequest(email, password)
                     ) else emptyFlow()
                 }
+                .share(this)
 
             val showLoadingAction = createAuthRequest
                 .map { AuthAction.UpdateShowLoading(true) }
 
             val authRequestFlow = createAuthRequest
                 .map { interactor.auth(it) }
-                .onEach { Log.e("EEE", "$it") }
+                .share(this)
 
             val authRequestAction = authRequestFlow
                 .flatMapConcat {
@@ -94,14 +96,7 @@ class AuthViewModel @Inject constructor(
 
             authRequestFlow
                 .filterIsInstance<AuthResult.Success>()
-                .onEach {
-                    /*val result = it.authResult
-                    val user = result.user.email
-                        ?: throw IllegalStateException("In AuthResult user is null")
-                    //val token = result.token ?: return@onEach
-                    interactor.saveUser(user, token)
-                    router.openRegistration()*/
-                }
+                .onEach { router.openTimetable() }
                 .launchIn(this)
                 .addTo(workComposite)
 

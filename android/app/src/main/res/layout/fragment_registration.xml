@@ -20,37 +20,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="497dp" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontal_logo_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="117dp" />
+        app:layout_constraintGuide_percent="0.12" />
 
     <ImageView
         android:id="@+id/app_logo"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:tint="@color/colorAccept"
         android:src="@drawable/ic_outline_account_circle"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_logo_center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/horizontal_logo_center"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_logo_center"
-        />
+        app:tint="@color/colorAccept" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_medium"
-        android:text="@string/app_name"
-        android:textStyle="bold"
+        android:text="@string/registration"
         android:textColor="@color/colorAccept"
-        app:layout_constraintTop_toBottomOf="@id/app_logo"
+        android:textSize="@dimen/text_medium"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
     <View
         android:id="@+id/main_panel"
@@ -62,114 +61,52 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/horizontal_separator">
 
-        <LinearLayout
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_input_layout"
-                style="@style/EditTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                app:hintEnabled="false"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/main_panel"
-                app:startIconDrawable="@drawable/ic_email"
-                app:startIconTint="@color/colorAccept">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background_stroke"
-                    android:hint="@string/email"
-                    android:inputType="textAutoCorrect"
-                    android:maxLines="1"
-                    android:nextFocusForward="@id/password_edit_text"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_input_layout"
-                style="@style/EditTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_small"
-                app:hintEnabled="false"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorAccept"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email_input_layout"
-                app:startIconDrawable="@drawable/ic_lock"
-                app:startIconTint="@color/colorAccept">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background_stroke"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:maxLines="2"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/confirm_password_input_layout"
-                style="@style/EditTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_small"
-                app:hintEnabled="false"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorAccept"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email_input_layout"
-                app:startIconDrawable="@drawable/ic_lock"
-                app:startIconTint="@color/colorAccept">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/confirm_password_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/background_stroke"
-                    android:hint="@string/confirm_password"
-                    android:inputType="textPassword"
-                    android:maxLines="2"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <Button
-                android:id="@+id/registration_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:background="@drawable/background_rounded_button"
-                android:maxLines="1"
-                android:text="@string/registration"
-                app:layout_constraintTop_toBottomOf="@id/password_input_layout" />
-
-        </LinearLayout>
+            app:defaultNavHost="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/horizontal_separator"
+            app:navGraph="@navigation/reg_steps_graph" />
     </ScrollView>
+
+    <Button
+        android:id="@+id/next_step_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:background="@drawable/background_rounded_button"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:drawableTint="@color/white"
+        android:maxLines="1"
+        android:text="@string/registration"
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+
+    <FrameLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent50"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <ProgressBar
+            android:layout_gravity="center"
+            android:layout_width="@dimen/margin_large"
+            android:layout_height="@dimen/margin_large"/>
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

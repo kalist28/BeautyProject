@@ -22,6 +22,7 @@
 
     <color name="lightWhite">#4DFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="transparent50">#80FFFFFF</color>
 
     <color name="colorSeparator">#EBEEF2</color>
 

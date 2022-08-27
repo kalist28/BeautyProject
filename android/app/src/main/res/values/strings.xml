@@ -3,6 +3,7 @@
 
     <string name="name">Имя</string>
     <string name="lastname">Фамилия</string>
+    <string name="patronymic">Отчество</string>
     <string name="gender">Пол</string>
 
     <string name="email">Почта</string>
@@ -49,4 +50,5 @@
     <string name="save">Сохранить</string>
 
     <string name="total_minutes">%d мин.</string>
+    <string name="next">Далее</string>
 </resources>

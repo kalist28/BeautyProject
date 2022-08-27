@@ -41,8 +41,7 @@ sealed class EditWorkdayWindowsIntent : BaseIntent {
     object AddWindowDialogClick : EditWorkdayWindowsIntent()
 }
 
-class EditWorkdayWindowsFragment :
-    BaseFragment(R.layout.fragment_edit_workday_windows),
+class EditWorkdayWindowsFragment : BaseFragment(),
     BaseView<EditWorkdayWindowsIntent, EditWorkdayWindowsState> {
 
     @Inject

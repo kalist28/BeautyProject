@@ -8,9 +8,9 @@ import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.common.handlingNetworkSafetyWithoutData
 import ru.kalistratov.template.beauty.domain.entity.*
 import ru.kalistratov.template.beauty.domain.extension.getClient
+import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class ApiRepositoryImpl(
     private val url: String,
@@ -71,24 +71,25 @@ class ApiRepositoryImpl(
 
     override suspend fun auth(
         request: AuthRequest
-    ): NetworkResult<ServerToken> =
-        getClient().use {
-            handlingNetworkSafetyWithoutData {
+    ): NetworkResult<ServerToken> = getClient()
+        .use {
+            handlingNetworkSafetyWithoutData<ServerToken> {
                 it.post("$url/clients/web/login") {
                     contentType(ContentType.Application.Json)
                     body = request
                 }
             }
         }
+        .logIfError()
 
     private suspend fun refreshToken(): NetworkResult<ServerToken> = getClient().use {
-        handlingNetworkSafetyWithoutData {
+        handlingNetworkSafetyWithoutData<ServerToken> {
             it.post("$url/clients/web/refresh") {
                 contentType(ContentType.Application.Json)
                 body = RefreshRequest(getRefreshToken())
             }
         }
-    }
+    }.logIfError()
 
     override suspend fun loadWeekSequence(): NetworkResult<WeekSequence> = handleUnauthorizedError {
         getClient().use {
@@ -161,13 +162,13 @@ class ApiRepositoryImpl(
     }
 
     override suspend fun getData(): NetworkResult<User> = getClient().use {
-        handlingNetworkSafety {
-            it.get("$url/me") {
+        handlingNetworkSafety<User> {
+            it.get("$url/user/profile") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
             }
         }
-    }
+    }.logIfError()
 
     override suspend fun getWindows(): NetworkResult<List<WorkdayWindow>> = getClient().use {
         handlingNetworkSafety {

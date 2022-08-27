@@ -10,6 +10,7 @@ import dagger.multibindings.IntoMap
 import ru.kalistratov.template.beauty.domain.di.ViewModelKey
 import ru.kalistratov.template.beauty.domain.feature.registration.RegistrationInteractor
 import ru.kalistratov.template.beauty.domain.service.AuthService
+import ru.kalistratov.template.beauty.domain.service.RegistrationStepService
 import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationInteractorImpl
 import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationRouter
 import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationRouterImpl
@@ -31,9 +32,10 @@ class RegistrationModule(val fragment: RegistrationFragment) {
 
     @Provides
     fun provideRegistrationInteractor(
-        authService: AuthService
+        authService: AuthService,
+        registrationStepService: RegistrationStepService
     ): RegistrationInteractor = RegistrationInteractorImpl(
-        authService
+        authService, registrationStepService
     )
 
     @Provides

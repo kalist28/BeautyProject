@@ -27,7 +27,8 @@ import javax.inject.Inject
 
 sealed class ProfileIntent : BaseIntent
 
-class ProfileFragment : BaseFragment(), BaseView<ProfileIntent, ProfileState> {
+class ProfileFragment : BaseFragment(),
+    BaseView<ProfileIntent, ProfileState> {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory

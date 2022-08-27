@@ -11,7 +11,8 @@
         tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_authFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
+            app:destination="@id/registrationFragment"
+            app:popUpTo="@id/authFragment" />
         <action
             android:id="@+id/action_authFragment_to_timetableFragment"
             app:destination="@id/timetableFragment"
@@ -109,7 +110,7 @@
         <action
             android:id="@+id/action_weekSequenceFragment_to_editWorkdayWindowsFragment"
             app:destination="@id/editWorkdayWindowsFragment"
-            app:popUpTo="@id/weekSequenceFragment"/>
+            app:popUpTo="@id/weekSequenceFragment" />
     </fragment>
     <fragment
         android:id="@+id/editWorkdayWindowsFragment"
@@ -119,11 +120,11 @@
 
         <argument
             android:name="daySequence"
-            app:argType="integer"/>
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/editUserFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.edituser.view.EditUserFragment"
         android:label="EditUserFragment"
-        tools:layout="@layout/fragment_edit_user"/>
+        tools:layout="@layout/fragment_edit_user" />
 </navigation>
