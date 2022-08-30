@@ -8,7 +8,12 @@
 
     <string name="email">Почта</string>
     <string name="password">Пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="update_password">Обновить пароль</string>
+    <string name="current_password">Текущий пароль</string>
+    <string name="new_password_error">Новый пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
+    <string name="short_password_error">Коротки пароль</string>
     <string name="confirm_password_error">Пароли не совпадают</string>
     <string name="registration">Регистрация</string>
 
@@ -48,6 +53,7 @@
     <string name="add">Добавить</string>
     <string name="edit">Изменить</string>
     <string name="save">Сохранить</string>
+    <string name="update">Обновить</string>
 
     <string name="total_minutes">%d мин.</string>
     <string name="next">Далее</string>

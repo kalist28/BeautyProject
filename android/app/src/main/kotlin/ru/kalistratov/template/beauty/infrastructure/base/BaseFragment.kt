@@ -31,6 +31,7 @@ abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         injectAppComponent()
         findViews()
+        initViews()
     }
 
     protected open fun injectAppComponent() {
@@ -47,4 +48,6 @@ abstract class BaseFragment : Fragment() {
     open fun injectUserComponent(userComponent: UserComponent) = Unit
 
     open fun findViews() = Unit
+
+    open fun initViews() = Unit
 }

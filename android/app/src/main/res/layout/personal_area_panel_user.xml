@@ -6,6 +6,24 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_small">
 
+    <FrameLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="@dimen/constraint_fill"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        android:translationZ="10dp">
+
+        <ProgressBar
+            android:layout_width="@dimen/margin_large"
+            android:layout_height="@dimen/margin_large"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"
@@ -26,7 +44,7 @@
 
 
         <TextView
-            android:id="@+id/user_firstname"
+            android:id="@+id/user_fullname"
             android:layout_width="@dimen/constraint_fill"
             android:layout_height="match_parent"
             android:fontFamily="sans-serif"
@@ -39,14 +57,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/user_lastname"
+            android:id="@+id/user_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_xsmall"
             android:text="chernicova@gmail.com"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_firstname" />
+            app:layout_constraintTop_toBottomOf="@id/user_fullname" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

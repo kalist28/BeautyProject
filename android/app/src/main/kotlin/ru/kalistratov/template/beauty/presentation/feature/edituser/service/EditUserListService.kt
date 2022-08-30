@@ -22,6 +22,13 @@ class EditUserListServiceImpl : EditUserListService {
             R.string.email,
             EditUserListItemType.EMAIL
         ),
-        EditUserItem.Button(R.string.save)
+        EditUserItem.Button(
+            R.string.update_password,
+            EditUserListItemType.CHANGE_PASSWORD_BUTTON
+        ),
+        EditUserItem.Button(
+            R.string.save,
+            EditUserListItemType.SAVE_BUTTON
+        ),
     )
 }

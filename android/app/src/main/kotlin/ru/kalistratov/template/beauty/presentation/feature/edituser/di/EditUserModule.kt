@@ -1,6 +1,7 @@
 package ru.kalistratov.template.beauty.presentation.feature.edituser.di
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -39,10 +40,9 @@ class EditUserModule(private val fragment: EditUserFragment) {
     )
 
     @Provides
-    fun provideUserRepository(api: ApiRepository): UserRepository = UserRepositoryImpl(api)
-
-    @Provides
-    fun provideEditUserRouter(): EditUserRouter = EditUserRouterImpl()
+    fun provideEditUserRouter(): EditUserRouter = EditUserRouterImpl(
+        fragment.findNavController()
+    )
 
     @Provides
     fun provideEditUserListService(): EditUserListService = EditUserListServiceImpl()

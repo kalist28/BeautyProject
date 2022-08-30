@@ -126,5 +126,15 @@
         android:id="@+id/editUserFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.edituser.view.EditUserFragment"
         android:label="EditUserFragment"
-        tools:layout="@layout/fragment_edit_user" />
+        tools:layout="@layout/fragment_edit_user" >
+        <action
+            android:id="@+id/action_editUserFragment_to_changePasswordFragment"
+            app:popUpTo="@id/editUserFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.changepassword.view.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password"/>
 </navigation>

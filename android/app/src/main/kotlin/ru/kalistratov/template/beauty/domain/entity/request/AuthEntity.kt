@@ -1,18 +1,10 @@
-package ru.kalistratov.template.beauty.domain.entity
+package ru.kalistratov.template.beauty.domain.entity.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import ru.kalistratov.template.beauty.domain.extension.getJson
 import ru.kalistratov.template.beauty.infrastructure.extensions.jsonParser
-import ru.kalistratov.template.beauty.presentation.feature.registration.RegistrationAction
-
-@Serializable
-data class User(
-    val id: String,
-    val name: String,
-    val email: String,
-)
 
 @Serializable
 data class AuthRequest(
@@ -21,7 +13,7 @@ data class AuthRequest(
 )
 
 @Serializable
-data class RefreshRequest(
+data class RefreshTokenRequest(
     @SerialName("refresh_token") val refreshToken: String,
 )
 

@@ -1,0 +1,5 @@
+package ru.kalistratov.template.beauty.presentation.feature.changepassword
+
+import ru.kalistratov.template.beauty.domain.feature.changepassword.ChangePasswordInteractor
+
+class ChangePasswordInteractorImpl : ChangePasswordInteractor

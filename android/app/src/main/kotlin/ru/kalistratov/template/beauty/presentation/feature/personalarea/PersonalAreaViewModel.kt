@@ -5,6 +5,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.kalistratov.template.beauty.domain.entity.User
 import ru.kalistratov.template.beauty.domain.feature.personalarea.PersonalAreaInteractor
 import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
 import ru.kalistratov.template.beauty.infrastructure.base.BaseState
@@ -16,10 +17,12 @@ import ru.kalistratov.template.beauty.presentation.feature.personalarea.entity.P
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.view.PersonalAreaIntent
 
 data class PersonalAreaState(
+    val user: User? = null,
     val menuItems: List<MenuItem> = emptyList(),
 ) : BaseState
 
 sealed class PersonalAreaAction : BaseAction {
+    data class UpdateUser(val user: User) : PersonalAreaAction()
     data class UpdateMenuItems(val items: List<MenuItem>) : PersonalAreaAction()
 }
 
@@ -43,6 +46,14 @@ class PersonalAreaViewModel @Inject constructor(
                 PersonalAreaAction.UpdateMenuItems(items)
             }
 
+            val updateUserActon = initFlow
+                .flatMapConcat {
+                    interactor.loadUser().let {
+                        if (it == null) emptyFlow()
+                        else flowOf(PersonalAreaAction.UpdateUser(it))
+                    }
+                }
+
             intentFlow.filterIsInstance<PersonalAreaIntent.UserPanelClick>()
                 .debounce(300)
                 .onEach { router.openEditUser() }
@@ -63,7 +74,10 @@ class PersonalAreaViewModel @Inject constructor(
                 .launchIn(this)
                 .addTo(workComposite)
 
-            merge(updateMenuItemsAction)
+            merge(
+                updateUserActon,
+                updateMenuItemsAction,
+            )
                 .flowOn(Dispatchers.IO)
                 .scan(initialState, ::reduce)
                 .onEach { _stateFlow.value = it }
@@ -72,6 +86,11 @@ class PersonalAreaViewModel @Inject constructor(
     }
 
     override fun reduce(state: PersonalAreaState, action: PersonalAreaAction) = when (action) {
-        is PersonalAreaAction.UpdateMenuItems -> state.copy(menuItems = action.items)
+        is PersonalAreaAction.UpdateMenuItems -> state.copy(
+            menuItems = action.items
+        )
+        is PersonalAreaAction.UpdateUser -> state.copy(
+            user = action.user
+        )
     }
 }

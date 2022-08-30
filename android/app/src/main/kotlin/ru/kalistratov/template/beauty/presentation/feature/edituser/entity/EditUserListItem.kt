@@ -8,18 +8,22 @@ enum class EditUserListItemType {
 
     // USER_LOGIN,
     GENDER,
-    EMAIL
+    EMAIL,
+
+    SAVE_BUTTON,
+    CHANGE_PASSWORD_BUTTON
 }
 
-sealed interface EditUserItem {
+sealed class EditUserItem(open val type: EditUserListItemType) {
     data class EditText(
         @StringRes val titleId: Int,
-        val type: EditUserListItemType
-    ) : EditUserItem
+        override val type: EditUserListItemType
+    ) : EditUserItem(type)
 
     data class Button(
-        @StringRes val resTitle: Int,
-    ) : EditUserItem
+        @StringRes val titleId: Int,
+        override val type: EditUserListItemType
+    ) : EditUserItem(type)
 }
 
 data class EditUserItemData(

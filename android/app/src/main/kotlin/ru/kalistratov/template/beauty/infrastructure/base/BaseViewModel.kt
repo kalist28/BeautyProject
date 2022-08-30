@@ -32,4 +32,8 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
             .launchIn(viewModelScope)
             .addTo(uiComposite)
     }
+
+    protected fun <T> Flow<T>.launchHere() = this
+        .launchIn(viewModelScope)
+        .addTo(workComposite)
 }

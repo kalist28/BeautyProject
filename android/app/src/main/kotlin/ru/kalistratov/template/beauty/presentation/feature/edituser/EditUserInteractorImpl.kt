@@ -17,7 +17,7 @@ class EditUserInteractorImpl(
 ) : EditUserInteractor {
 
     override suspend fun getSettingData(): List<EditUserItemData> {
-        val user = userRepository.getData() ?: return emptyList()
+        val user = userRepository.get() ?: return emptyList()
         return mutableListOf(
             EditUserItemData(
                 EditUserListItemType.EMAIL,
@@ -29,7 +29,7 @@ class EditUserInteractorImpl(
             ),
             EditUserItemData(
                 EditUserListItemType.LASTNAME,
-                user.name
+                user.surname
             )
         )
     }

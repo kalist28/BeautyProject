@@ -12,6 +12,7 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserItemData
+import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 import ru.kalistratov.template.beauty.presentation.feature.edituser.view.EditUserIntent
 
 data class EditUserState(
@@ -42,9 +43,20 @@ class EditUserViewModel @Inject constructor(
             val updateSettingItemAction = initFlow
                 .map { EditUserAction.UpdateSettingItems(interactor.getSettingItems()) }
 
-
             val updateSettingDataAction = initFlow
                 .map { EditUserAction.UpdateSettingData(interactor.getSettingData()) }
+
+            intentFlow.filterIsInstance<EditUserIntent.ButtonClick>()
+                .onEach {
+                    when(it.type) {
+                        EditUserListItemType.CHANGE_PASSWORD_BUTTON -> router.openChangePassword()
+                    }
+                }
+                .launchHere()
+
+            intentFlow.filterIsInstance<EditUserIntent.BackPressed>()
+                .onEach { router.exit() }
+                .launchHere()
 
             merge(
                 updateSettingItemAction,

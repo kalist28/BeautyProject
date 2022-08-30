@@ -6,8 +6,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.common.checkEmailRegex
-import ru.kalistratov.template.beauty.domain.entity.AuthResult
-import ru.kalistratov.template.beauty.domain.entity.RegistrationRequest
+import ru.kalistratov.template.beauty.domain.entity.request.AuthResult
+import ru.kalistratov.template.beauty.domain.entity.request.RegistrationRequest
 import ru.kalistratov.template.beauty.domain.entity.User
 import ru.kalistratov.template.beauty.domain.feature.registration.RegistrationInteractor
 import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
@@ -196,7 +196,10 @@ class RegistrationViewModel @Inject constructor(
 
             registrationRequestFlow
                 .filterIsInstance<AuthResult.Success>()
-                .onEach { router.openTimetable() }
+                .onEach {
+                    interactor.requestLoadUser()
+                    router.openTimetable()
+                }
                 .launchIn(this)
                 .addTo(workComposite)
 

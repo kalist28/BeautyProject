@@ -7,6 +7,10 @@ import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.common.handlingNetworkSafetyWithoutData
 import ru.kalistratov.template.beauty.domain.entity.*
+import ru.kalistratov.template.beauty.domain.entity.request.AuthRequest
+import ru.kalistratov.template.beauty.domain.entity.request.RefreshTokenRequest
+import ru.kalistratov.template.beauty.domain.entity.request.RegistrationRequest
+import ru.kalistratov.template.beauty.domain.entity.request.ServerToken
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
@@ -86,7 +90,7 @@ class ApiRepositoryImpl(
         handlingNetworkSafetyWithoutData<ServerToken> {
             it.post("$url/clients/web/refresh") {
                 contentType(ContentType.Application.Json)
-                body = RefreshRequest(getRefreshToken())
+                body = RefreshTokenRequest(getRefreshToken())
             }
         }
     }.logIfError()

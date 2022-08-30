@@ -3,11 +3,14 @@ package ru.kalistratov.template.beauty.domain.di
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import ru.kalistratov.template.beauty.domain.repository.UserRepository
+import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
 import ru.kalistratov.template.beauty.domain.service.RegistrationStepService
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.base.AuthBaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseActivity
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
+import ru.kalistratov.template.beauty.infrastructure.repository.UserRepositoryImpl
 import ru.kalistratov.template.beauty.infrastructure.service.RegistrationStepServiceImpl
 import ru.kalistratov.template.beauty.presentation.feature.auth.di.AuthComponent
 import ru.kalistratov.template.beauty.presentation.feature.auth.di.AuthModule
@@ -49,4 +52,8 @@ class ApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideRegistrationStepService(): RegistrationStepService = RegistrationStepServiceImpl()
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(api: ApiRepository): UserRepository = UserRepositoryImpl(api)
 }
