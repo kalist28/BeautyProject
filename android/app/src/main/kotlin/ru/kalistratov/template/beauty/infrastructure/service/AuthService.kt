@@ -39,7 +39,7 @@ class AuthServiceImpl(
                 authSettingsService.updateToken(it.token)
                 authSettingsService.updateRefreshToken(it.refreshToken)
 
-                apiRepository.getData().doIfSuccess { user ->
+                apiRepository.getUser().doIfSuccess { user ->
                     authSettingsService.updateUserId(user.id)
                 }
             }

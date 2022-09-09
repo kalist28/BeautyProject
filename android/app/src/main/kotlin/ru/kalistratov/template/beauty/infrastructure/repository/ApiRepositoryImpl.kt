@@ -65,13 +65,13 @@ class ApiRepositoryImpl(
 
     override suspend fun loadWorkdaySequence(id: Id): NetworkResult<WorkdaySequence> =
         getClient().use {
-            handlingNetworkSafety {
+            handlingNetworkSafety<WorkdaySequence> {
                 it.get("$url/sequences/days/$id") {
                     contentType(ContentType.Application.Json)
                     header(AUTH_HEADER, getBearerToken())
                 }
             }
-        }
+        }.logIfError()
 
     override suspend fun auth(
         request: AuthRequest
@@ -97,77 +97,69 @@ class ApiRepositoryImpl(
 
     override suspend fun loadWeekSequence(): NetworkResult<WeekSequence> = handleUnauthorizedError {
         getClient().use {
-            handlingNetworkSafetyWithoutData {
+            handlingNetworkSafetyWithoutData<WeekSequence> {
                 it.get("$url/sequences/week") {
                     contentType(ContentType.Application.Json)
                     header(AUTH_HEADER, getBearerToken())
                 }
             }
         }
-    }
+    }.logIfError()
 
     override suspend fun updateWorkDaySequence(
         workdaySequence: WorkdaySequence
     ): NetworkResult<WorkdaySequence> = getClient().use {
-        handlingNetworkSafety {
+        handlingNetworkSafety<WorkdaySequence> {
             it.patch("$url/sequences/days/${workdaySequence.day.index}") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
                 body = workdaySequence
             }
         }
-    }
+    }.logIfError()
 
     override suspend fun createWorkDaySequence(
         workdaySequence: WorkdaySequence
     ): NetworkResult<WorkdaySequence> = getClient().use {
-        handlingNetworkSafety {
+        handlingNetworkSafety<WorkdaySequence> {
             it.post("$url/sequences/days") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
                 body = workdaySequence
             }
         }
-    }
+    }.logIfError()
 
     override suspend fun createWorkdayWindow(
         workdayWindow: WorkdayWindow
     ): NetworkResult<WorkdayWindow> = getClient().use {
-        handlingNetworkSafety {
+        handlingNetworkSafety<WorkdayWindow> {
             it.post("$url/workday-windows") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
                 body = workdayWindow
             }
         }
-    }
+    }.logIfError()
 
     override suspend fun updateWorkdayWindow(
         workdayWindow: WorkdayWindow
     ): NetworkResult<WorkdayWindow> = getClient().use {
-        handlingNetworkSafety {
+        handlingNetworkSafety<WorkdayWindow> {
             it.patch("$url/workday-windows/${workdayWindow.id}") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
                 body = workdayWindow
             }
         }
-    }
+    }.logIfError()
 
     override suspend fun getUser(
-        id: String
+        id: String?
     ): NetworkResult<User> = getClient().use {
-        handlingNetworkSafety {
-            it.post("$url/user-week-sequence/create/$id") {
-                contentType(ContentType.Application.Json)
-                header(AUTH_HEADER, getBearerToken())
-            }
-        }
-    }
-
-    override suspend fun getData(): NetworkResult<User> = getClient().use {
         handlingNetworkSafety<User> {
-            it.get("$url/user/profile") {
+            val path = if (id == null) "$url/user/profile" else "$url/users/$id"
+            it.get(path) {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
             }
@@ -175,11 +167,11 @@ class ApiRepositoryImpl(
     }.logIfError()
 
     override suspend fun getWindows(): NetworkResult<List<WorkdayWindow>> = getClient().use {
-        handlingNetworkSafety {
+        handlingNetworkSafety<List<WorkdayWindow>> {
             it.get("$url/workday-windows") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())
             }
         }
-    }
+    }.logIfError()
 }

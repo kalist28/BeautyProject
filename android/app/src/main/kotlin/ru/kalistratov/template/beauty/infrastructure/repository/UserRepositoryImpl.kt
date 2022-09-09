@@ -39,7 +39,7 @@ class UserRepositoryImpl(
         mutableSharedFlow.tryEmit(Unit)
     }
 
-    private suspend fun loadData() = when (val response = api.getData()) {
+    private suspend fun loadData() = when (val response = api.getUser()) {
         is NetworkResult.Success -> {
             response.value
         }
