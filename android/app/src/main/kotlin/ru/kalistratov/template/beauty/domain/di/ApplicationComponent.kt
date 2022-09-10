@@ -4,7 +4,7 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import ru.kalistratov.template.beauty.domain.repository.UserRepository
-import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
+import ru.kalistratov.template.beauty.domain.repository.api.ApiUserRepository
 import ru.kalistratov.template.beauty.domain.service.RegistrationStepService
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.base.AuthBaseFragment
@@ -23,6 +23,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
+        ApiModule::class,
         ServiceModule::class,
         ApplicationModule::class,
         PresentationModule::class,
@@ -55,5 +56,9 @@ class ApplicationModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideUserRepository(api: ApiRepository): UserRepository = UserRepositoryImpl(api)
+    fun provideUserRepository(
+        apiUserRepository: ApiUserRepository
+    ): UserRepository = UserRepositoryImpl(
+        apiUserRepository
+    )
 }

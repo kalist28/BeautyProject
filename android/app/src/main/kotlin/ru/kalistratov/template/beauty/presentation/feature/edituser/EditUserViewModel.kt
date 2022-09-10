@@ -1,28 +1,38 @@
 package ru.kalistratov.template.beauty.presentation.feature.edituser
 
 import androidx.lifecycle.viewModelScope
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.kalistratov.template.beauty.domain.entity.User
+import ru.kalistratov.template.beauty.domain.entity.UserData
+import ru.kalistratov.template.beauty.domain.feature.edituser.EditUserInteractor
 import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
 import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserItem
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserItemData
+import ru.kalistratov.template.beauty.infrastructure.coroutines.textDebounce
+import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserData
+import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 import ru.kalistratov.template.beauty.presentation.feature.edituser.view.EditUserIntent
+import javax.inject.Inject
 
 data class EditUserState(
-    val settingData: List<EditUserItemData> = emptyList(),
-    val settingItems: List<EditUserItem> = emptyList(),
+    val user: User? = null,
+    var userData: UserData = UserData(),
+    val allowSaveChanges: Boolean = false,
+    val settingData: List<EditUserData> = emptyList(),
+    val settingItems: List<EditUserListItem> = emptyList(),
 ) : BaseState
 
 sealed interface EditUserAction : BaseAction {
-    data class UpdateSettingData(val data: List<EditUserItemData>) : EditUserAction
-    data class UpdateSettingItems(val items: List<EditUserItem>) : EditUserAction
+    data class UpdateUser(val user: User?) : EditUserAction
+    data class UpdateUserData(val userData: UserData) : EditUserAction
+    data class UpdateAllowSave(val allow: Boolean) : EditUserAction
+    data class UpdateSettingData(val data: List<EditUserData>) : EditUserAction
+    data class UpdateSettingItems(val items: List<EditUserListItem>) : EditUserAction
 }
 
 class EditUserViewModel @Inject constructor(
@@ -37,19 +47,83 @@ class EditUserViewModel @Inject constructor(
     init {
         viewModelScope.launch {
 
-            val initFlow = intentFlow.filterIsInstance<EditUserIntent.InitData>()
+            val initFlow = intentFlow
+                .filterIsInstance<EditUserIntent.InitData>()
+                .take(1)
+                .flatMapConcat {
+                    interactor.getUser()
+                        ?.let { flowOf(it) }
+                        ?: emptyFlow()
+                }
+                .flowOn(Dispatchers.IO)
                 .share(this)
 
-            val updateSettingItemAction = initFlow
-                .map { EditUserAction.UpdateSettingItems(interactor.getSettingItems()) }
+            val updateUserAction = initFlow
+                .flatMapConcat { user ->
+                    flowOf(
+                        EditUserAction.UpdateUser(user),
+                        EditUserAction.UpdateUserData(
+                            UserData(
+                                user.name,
+                                user.surname,
+                                user.patronymic,
+                            )
+                        ),
+                    )
+                }
+
+            val userDataUpdateFlow = intentFlow
+                .filterIsInstance<EditUserIntent.DataChanges>()
+                .textDebounce()
+                .map { intent ->
+                    val state = _stateFlow.value
+                    val userData = state.userData
+
+                    val data = intent.data
+                    val value = data.value
+
+                    val changedUserData = when (data.type) {
+                        EditUserListItemType.NAME -> userData.copy(name = value)
+                        EditUserListItemType.SURNAME -> userData.copy(surname = value)
+                        EditUserListItemType.PATRONYMIC -> userData.copy(patronymic = value)
+                        else -> userData
+                    }
+
+                    changedUserData to state.user
+                }
+                .share(this)
+
+            val updateUserDataAction = userDataUpdateFlow
+                .flatMapConcat {
+                    val user = it.second
+                    val userData = it.first
+                    val contentChanged = userData.contentChanged(user)
+                    if (!contentChanged) emptyFlow()
+                    else flowOf(EditUserAction.UpdateUserData(userData))
+                }
+
+            val updateAllowSaveAction = userDataUpdateFlow
+                .map {
+                    val user = it.second
+                    val userData = it.first
+                    val isAllowToSave = userData.equalsChangeableUserContent(user).not()
+                    EditUserAction.UpdateAllowSave(isAllowToSave)
+                }
 
             val updateSettingDataAction = initFlow
-                .map { EditUserAction.UpdateSettingData(interactor.getSettingData()) }
+                .flatMapConcat {
+                    flowOf(
+                        EditUserAction.UpdateSettingData(interactor.getSettingData(it)),
+                        EditUserAction.UpdateSettingItems(interactor.getSettingItems())
+                    ).flowOn(Dispatchers.IO)
+                }
 
             intentFlow.filterIsInstance<EditUserIntent.ButtonClick>()
                 .onEach {
-                    when(it.type) {
+                    when (it.type) {
+                        EditUserListItemType.SAVE_BUTTON -> updateUser()
                         EditUserListItemType.CHANGE_PASSWORD_BUTTON -> router.openChangePassword()
+                        else -> Unit
                     }
                 }
                 .launchHere()
@@ -59,7 +133,9 @@ class EditUserViewModel @Inject constructor(
                 .launchHere()
 
             merge(
-                updateSettingItemAction,
+                updateUserAction,
+                updateUserDataAction,
+                updateAllowSaveAction,
                 updateSettingDataAction
             )
                 .flowOn(Dispatchers.IO)
@@ -79,5 +155,17 @@ class EditUserViewModel @Inject constructor(
         is EditUserAction.UpdateSettingItems -> state.copy(
             settingItems = action.items
         )
+        is EditUserAction.UpdateAllowSave -> state.copy(
+            allowSaveChanges = action.allow
+        )
+        is EditUserAction.UpdateUser -> state.copy(
+            user = action.user
+        )
+        is EditUserAction.UpdateUserData -> state.copy(
+            userData = action.userData
+        )
     }
+
+    private suspend fun updateUser() =
+        interactor.updateUser(_stateFlow.value.userData)
 }

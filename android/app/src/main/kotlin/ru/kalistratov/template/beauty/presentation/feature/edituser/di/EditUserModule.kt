@@ -8,11 +8,12 @@ import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
 import ru.kalistratov.template.beauty.domain.di.ViewModelKey
+import ru.kalistratov.template.beauty.domain.feature.edituser.EditUserInteractor
 import ru.kalistratov.template.beauty.domain.repository.UserRepository
-import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
-import ru.kalistratov.template.beauty.domain.repository.api.ApiUserRepository
-import ru.kalistratov.template.beauty.infrastructure.repository.UserRepositoryImpl
-import ru.kalistratov.template.beauty.presentation.feature.edituser.*
+import ru.kalistratov.template.beauty.presentation.feature.edituser.EditUserInteractorImpl
+import ru.kalistratov.template.beauty.presentation.feature.edituser.EditUserRouter
+import ru.kalistratov.template.beauty.presentation.feature.edituser.EditUserRouterImpl
+import ru.kalistratov.template.beauty.presentation.feature.edituser.EditUserViewModel
 import ru.kalistratov.template.beauty.presentation.feature.edituser.service.EditUserListService
 import ru.kalistratov.template.beauty.presentation.feature.edituser.service.EditUserListServiceImpl
 import ru.kalistratov.template.beauty.presentation.feature.edituser.view.EditUserFragment

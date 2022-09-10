@@ -1,12 +1,12 @@
 package ru.kalistratov.template.beauty.domain.service
 
 import ru.kalistratov.template.beauty.common.NetworkResult
-import ru.kalistratov.template.beauty.domain.entity.WeekSequence
-import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
+import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
+import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 
 interface WorkSequenceService {
-    suspend fun loadWeekSequence(): NetworkResult<WeekSequence>
+    suspend fun loadWeekSequence(): NetworkResult<SequenceWeek>
     suspend fun updateWorkDaySequence(
-        workdaySequence: WorkdaySequence
-    ): NetworkResult<WorkdaySequence>
+        workdaySequence: SequenceDay
+    ): NetworkResult<SequenceDay>
 }

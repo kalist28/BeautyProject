@@ -7,13 +7,16 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.domain.entity.User
+import ru.kalistratov.template.beauty.domain.entity.UserData
+import ru.kalistratov.template.beauty.domain.entity.request.UpdateUserRequest
+import ru.kalistratov.template.beauty.domain.extension.doIfSuccess
 import ru.kalistratov.template.beauty.domain.repository.UserRepository
 import ru.kalistratov.template.beauty.domain.repository.api.ApiUserRepository
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class UserRepositoryImpl(
-    private val api: ApiUserRepository
+    private val apiUserRepository: ApiUserRepository
 ) : UserRepository {
 
     private var data: User? = null
@@ -26,7 +29,7 @@ class UserRepositoryImpl(
 
     init {
         mutableSharedFlow
-            .onEach { loadData() }
+            .onEach { get() }
             .launchIn(scope)
     }
 
@@ -35,14 +38,22 @@ class UserRepositoryImpl(
         return data
     }
 
+    override suspend fun update(data: UserData) {
+        apiUserRepository.updateUser(
+            data.run { UpdateUserRequest(name, surname, patronymic) }
+        ).doIfSuccess { this.data = it }
+    }
+
     override fun requestLoad() {
         mutableSharedFlow.tryEmit(Unit)
     }
 
-    private suspend fun loadData() = when (val response = api.getUser()) {
+    private suspend fun loadData() = when (val response = apiUserRepository.getUser()) {
         is NetworkResult.Success -> {
             response.value
         }
-        else -> { loge(response); null }
+        else -> {
+            loge(response); null
+        }
     }
 }

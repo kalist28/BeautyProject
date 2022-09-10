@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.common.NetworkResult
-import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
+import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.WorkdayWindow
 import ru.kalistratov.template.beauty.domain.extension.noTime
 import ru.kalistratov.template.beauty.domain.feature.editworkdaywindows.EditWorkdayWindowsInteractor
@@ -17,11 +17,10 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.notNullFlow
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.view.EditWorkdayWindowsIntent
 
 data class EditWorkdayWindowsState(
-    val workdaySequence: WorkdaySequence = WorkdaySequence(),
+    val workdaySequence: SequenceDay = SequenceDay(),
     val windows: List<WorkdayWindow> = emptyList(),
     val toTime: Time = noTime,
     val fromTime: Time = noTime,
@@ -37,7 +36,7 @@ sealed class EditWorkdayWindowsAction : BaseAction {
     data class UpdateSelectedWindow(val window: WorkdayWindow) : EditWorkdayWindowsAction()
     data class UpdateCanAddWindow(val can: Boolean) : EditWorkdayWindowsAction()
     data class UpdateWorkdayWindows(val windows: List<WorkdayWindow>) : EditWorkdayWindowsAction()
-    data class UpdateWorkdaySequence(val sequence: WorkdaySequence) : EditWorkdayWindowsAction()
+    data class UpdateWorkdaySequence(val sequence: SequenceDay) : EditWorkdayWindowsAction()
 
     object ShowAddWindowDialog : EditWorkdayWindowsAction()
     object Clear : EditWorkdayWindowsAction()
@@ -63,10 +62,10 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                 .take(1)
                 .share(this)
 
-            val loadUserAction = initDataFlow
+            val updateUserAction = initDataFlow
                 .map {
                     EditWorkdayWindowsAction.UpdateWorkdayWindows(
-                        interactor.getWindows().also { loge(it) }
+                        interactor.getWindows()
                     )
                 }
                 .flowOn(Dispatchers.IO)
@@ -74,7 +73,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
             val updateDaySequenceIdAction = initDataFlow
                 .map {
                     EditWorkdayWindowsAction.UpdateWorkdaySequence(
-                        interactor.getWorkdaySequence(it.daySequenceId.toLong())
+                        interactor.getSequenceDay(it.dayNumber)
                     )
                 }
                 .flowOn(Dispatchers.IO)
@@ -102,9 +101,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
             val updateWindowAction = intentFlow
                 .filterIsInstance<EditWorkdayWindowsIntent.UpdateWindow>()
                 .flatMapConcat {
-                    loge(it.window)
                     val result = interactor.updateWindow(it.window)
-                    loge(result)
                     if (result is NetworkResult.Success) flowOf(result.value)
                     else emptyFlow()
                 }
@@ -149,7 +146,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                 .addTo(workComposite)
 
             merge(
-                loadUserAction,
+                updateUserAction,
                 saveWindowAction,
                 updateWindowAction,
                 showAddWindowDialogAction,
@@ -164,7 +161,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                 }
                 .launchIn(this)
                 .addTo(workComposite)
-        }
+        }.addTo(workComposite)
     }
 
     override fun reduce(

@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.di.UserComponent
 import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
-import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
+import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
@@ -30,7 +30,7 @@ import ru.kalistratov.template.beauty.presentation.view.weeksequence.WeekSequenc
 
 sealed class WeekSequenceIntent : BaseIntent {
     data class WorkDaySequenceClick(val dayIndex: Int) : WeekSequenceIntent()
-    data class UpdateWorkDaySequence(val day: WorkdaySequence) : WeekSequenceIntent()
+    data class UpdateWorkDaySequence(val day: SequenceDay) : WeekSequenceIntent()
 
     data class WorkDayBottomSheetClick(
         val intent: EditWorkDaySequenceBottomSheet.ClickIntent

@@ -1,32 +1,36 @@
 package ru.kalistratov.template.beauty.presentation.feature.edituser.service
 
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserItem
+import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 
 interface EditUserListService {
-    suspend fun getItems(): List<EditUserItem>
+    suspend fun getItems(): List<EditUserListItem>
 }
 
 class EditUserListServiceImpl : EditUserListService {
-    override suspend fun getItems(): List<EditUserItem> = mutableListOf(
-        EditUserItem.EditText(
+    override suspend fun getItems(): List<EditUserListItem> = mutableListOf(
+        EditUserListItem.EditText(
             R.string.name,
             EditUserListItemType.NAME
         ),
-        EditUserItem.EditText(
+        EditUserListItem.EditText(
             R.string.lastname,
-            EditUserListItemType.LASTNAME
+            EditUserListItemType.SURNAME
         ),
-        EditUserItem.EditText(
+        EditUserListItem.EditText(
+            R.string.patronymic,
+            EditUserListItemType.PATRONYMIC
+        ),
+        EditUserListItem.EditText(
             R.string.email,
             EditUserListItemType.EMAIL
         ),
-        EditUserItem.Button(
+        EditUserListItem.Button(
             R.string.update_password,
             EditUserListItemType.CHANGE_PASSWORD_BUTTON
         ),
-        EditUserItem.Button(
+        EditUserListItem.Button(
             R.string.save,
             EditUserListItemType.SAVE_BUTTON
         ),

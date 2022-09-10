@@ -1,11 +1,11 @@
 package ru.kalistratov.template.beauty.domain.feature.weeksequence
 
-import ru.kalistratov.template.beauty.domain.entity.WeekSequence
-import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
+import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
+import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 
 interface WeekSequenceInteractor {
-    suspend fun getWeekSequence(): WeekSequence?
+    suspend fun getWeekSequence(): SequenceWeek?
     suspend fun updateWorkDaySequence(
-        workdaySequence: WorkdaySequence
-    ): WorkdaySequence?
+        workdaySequence: SequenceDay
+    ): SequenceDay?
 }

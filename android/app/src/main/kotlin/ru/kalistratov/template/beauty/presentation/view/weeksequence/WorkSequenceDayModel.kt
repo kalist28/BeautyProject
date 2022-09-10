@@ -6,12 +6,12 @@ import android.widget.TextView
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
+import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.extension.isNoTime
 import ru.kalistratov.template.beauty.domain.extension.toClockFormat
 
 class WeekSequenceDayModel(
-    private val workday: WorkdaySequence,
+    private val workday: SequenceDay,
     private val clickListener: (Int) -> Unit = {},
 ) : EpoxyModelWithHolder<WeekSequenceDayModel.WorkDayHolder>() {
 

@@ -12,7 +12,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.entity.WeekSequence
+import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
 
 fun interface OnDayClickListener {
     fun onDayClick(day: Int)
@@ -44,8 +44,8 @@ class WeekSequenceView @JvmOverloads constructor(
         }
     }
 
-    fun requestModelBuild(weekSequence: WeekSequence) = with(controller) {
-        this.weekSequence = weekSequence
+    fun requestModelBuild(weekSequence: SequenceWeek) = with(controller) {
+        this.sequenceWeek = weekSequence
         requestModelBuild()
     }
 
@@ -57,10 +57,10 @@ class WeekSequenceView @JvmOverloads constructor(
     fun clicks(): Flow<Int> = clicks
 
     inner class WeekSequenceController : EpoxyController() {
-        var weekSequence: WeekSequence = WeekSequence()
+        var sequenceWeek: SequenceWeek = SequenceWeek()
 
         override fun buildModels() {
-            weekSequence.days.forEach {
+            sequenceWeek.days.forEach {
                 add(WeekSequenceDayModel(it) { clicks.tryEmit(it) })
             }
         }

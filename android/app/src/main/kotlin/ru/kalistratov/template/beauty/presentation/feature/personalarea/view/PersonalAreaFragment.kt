@@ -20,7 +20,6 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.clicks
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaRouter
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaState
@@ -108,7 +107,6 @@ class PersonalAreaFragment : BaseFragment(),
         menuController.requestModelBuild()
         binding.userPanel.run {
             val user = state.user
-            loge(user == null)
             progressBar.isVisible = user == null
 
             if (user == null) return@run

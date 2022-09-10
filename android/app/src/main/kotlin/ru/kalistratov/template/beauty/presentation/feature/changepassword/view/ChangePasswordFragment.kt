@@ -18,7 +18,6 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.textChanges
 import ru.kalistratov.template.beauty.presentation.feature.changepassword.ChangePasswordState
 import ru.kalistratov.template.beauty.presentation.feature.changepassword.ChangePasswordViewModel
@@ -78,7 +77,6 @@ class ChangePasswordFragment : BaseFragment(), BaseView<ChangePasswordIntent, Ch
     )
 
     override fun render(state: ChangePasswordState) {
-        loge(state)
         with(binding) {
             val newPasswordErrorId = state.newPasswordErrorResId
             button.isEnabled = state.passwordsAreEquals && newPasswordErrorId == null

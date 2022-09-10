@@ -16,23 +16,23 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.entity.WorkdaySequence
+import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.extension.noTime
 import ru.kalistratov.template.beauty.presentation.extension.find
 import ru.kalistratov.template.beauty.presentation.view.bottomsheet.BaseBottomSheet
 import ru.kalistratov.template.beauty.presentation.view.time.EditTimeView
 
 class EditWorkDaySequenceBottomSheet(
-    val workdaySequence: WorkdaySequence
+    val workdaySequence: SequenceDay
 ) : BaseBottomSheet() {
 
     sealed interface ClickIntent {
-        data class EditWindows(val workdaySequence: WorkdaySequence) : ClickIntent
+        data class EditWindows(val workdaySequence: SequenceDay) : ClickIntent
     }
 
     companion object {
         private var onClickAction: ((ClickIntent) -> Unit)? = null
-        private var onSavingButtonClickAction: ((WorkdaySequence?) -> Unit)? = null
+        private var onSavingButtonClickAction: ((SequenceDay?) -> Unit)? = null
 
         fun savingDay() = callbackFlow {
             onSavingButtonClickAction = { it?.let { trySend(it) } }
@@ -70,7 +70,7 @@ class EditWorkDaySequenceBottomSheet(
 
         find<TextView>(R.id.topic_text_view).setText(workdaySequence.day.tittleResId)
 
-        if (workdaySequence.id < 0) editWindowsButton?.isVisible = false
+        if (workdaySequence.id.isBlank()) editWindowsButton?.isVisible = false
 
         initBottomSheetBehavior()
         initSavingButtonListener()
@@ -79,7 +79,7 @@ class EditWorkDaySequenceBottomSheet(
         updateViewsByWorkDay(workdaySequence)
     }
 
-    private fun getUpdatedWorkDaySequence(): WorkdaySequence {
+    private fun getUpdatedWorkDaySequence(): SequenceDay {
         val startFormatted = startEditTime?.time ?: noTime
         val endFormatted = endEditTime?.time ?: noTime
         val isHoliday = holidaySwitch?.isChecked ?: false
@@ -91,7 +91,7 @@ class EditWorkDaySequenceBottomSheet(
         )
     }
 
-    private fun updateViewsByWorkDay(day: WorkdaySequence) {
+    private fun updateViewsByWorkDay(day: SequenceDay) {
         startEditTime?.time = day.startAt
         endEditTime?.time = day.finishAt
 

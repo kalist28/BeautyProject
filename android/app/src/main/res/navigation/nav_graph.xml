@@ -119,7 +119,7 @@
         tools:layout="@layout/fragment_edit_workday_windows">
 
         <argument
-            android:name="daySequence"
+            android:name="dayNumber"
             app:argType="integer" />
     </fragment>
     <fragment

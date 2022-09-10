@@ -19,11 +19,11 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.clicks
 import ru.kalistratov.template.beauty.presentation.feature.edituser.EditUserState
 import ru.kalistratov.template.beauty.presentation.feature.edituser.EditUserViewModel
 import ru.kalistratov.template.beauty.presentation.feature.edituser.di.EditUserModule
+import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserData
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 import javax.inject.Inject
 
@@ -31,6 +31,7 @@ sealed interface EditUserIntent : BaseIntent {
     object InitData : EditUserIntent
     object BackPressed : EditUserIntent
 
+    data class DataChanges(val data: EditUserData) : EditUserIntent
     data class ButtonClick(val type: EditUserListItemType) : EditUserIntent
 }
 
@@ -55,7 +56,7 @@ class EditUserFragment : BaseFragment(),
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentEditUserBinding
+    ) = FragmentEditUserBinding
         .inflate(inflater, container, false)
         .let {
             binding = it
@@ -81,15 +82,16 @@ class EditUserFragment : BaseFragment(),
 
     override fun intents(): Flow<EditUserIntent> = merge(
         flowOf(EditUserIntent.InitData),
+        controller.dataUpdates.map { EditUserIntent.DataChanges(it) },
         controller.buttonClicks.map { EditUserIntent.ButtonClick(it) },
         binding.upBar.backButton.clicks().map { EditUserIntent.BackPressed }
     )
 
     override fun render(state: EditUserState) {
-        loge(state)
         with(controller) {
             items = state.settingItems
             itemsData = state.settingData
+            allowSaveChanges = state.allowSaveChanges
             requestModelBuild()
         }
     }

@@ -32,7 +32,7 @@ import ru.kalistratov.template.beauty.presentation.view.time.WorkdayWindowDialog
 import ru.kalistratov.template.beauty.presentation.view.time.WorkdayWindowDialog.Callback
 
 sealed class EditWorkdayWindowsIntent : BaseIntent {
-    data class InitData(val daySequenceId: Int) : EditWorkdayWindowsIntent()
+    data class InitData(val dayNumber: Int) : EditWorkdayWindowsIntent()
     data class AddWindow(val window: WorkdayWindow) : EditWorkdayWindowsIntent()
     data class UpdateWindow(val window: WorkdayWindow) : EditWorkdayWindowsIntent()
     data class WindowClick(val id: Id) : EditWorkdayWindowsIntent()
@@ -79,7 +79,7 @@ class EditWorkdayWindowsFragment : BaseFragment(),
     }
 
     override fun intents(): Flow<EditWorkdayWindowsIntent> = merge(
-        flowOf(EditWorkdayWindowsIntent.InitData(args.daySequence)),
+        flowOf(EditWorkdayWindowsIntent.InitData(args.dayNumber)),
         backButton.clicks().map { EditWorkdayWindowsIntent.BackPressed },
         binding.addWindowButton.clicks().map { EditWorkdayWindowsIntent.AddWindowDialogClick },
         WorkdayWindowDialog.saves.map {

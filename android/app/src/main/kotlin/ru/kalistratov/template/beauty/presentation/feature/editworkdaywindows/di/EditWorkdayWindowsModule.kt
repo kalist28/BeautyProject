@@ -10,7 +10,7 @@ import dagger.multibindings.IntoMap
 import ru.kalistratov.template.beauty.domain.di.ViewModelKey
 import ru.kalistratov.template.beauty.domain.feature.editworkdaywindows.EditWorkdayWindowsInteractor
 import ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.EditWorkdayWindowsRouter
-import ru.kalistratov.template.beauty.domain.repository.api.ApiRepository
+import ru.kalistratov.template.beauty.domain.repository.api.ApiWorkdayWindowRepository
 import ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.EditWorkdayWindowsInteractorImpl
 import ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.EditWorkdayWindowsRouterImpl
 import ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.EditWorkdayWindowsViewModel
@@ -31,17 +31,14 @@ class EditWorkdayWindowsModule(val fragment: EditWorkdayWindowsFragment) {
 
     @Provides
     fun provideEditWorkdayWindowsInteractor(
-        apiRepository: ApiRepository
+        apiRepository: ApiWorkdayWindowRepository
     ): EditWorkdayWindowsInteractor = EditWorkdayWindowsInteractorImpl(
         apiRepository
     )
 
     @Provides
-    fun provideEditWorkdayWindowsRouter(
-        apiRepository: ApiRepository
-    ): EditWorkdayWindowsRouter = EditWorkdayWindowsRouterImpl(
-        fragment.findNavController()
-    )
+    fun provideEditWorkdayWindowsRouter(): EditWorkdayWindowsRouter =
+        EditWorkdayWindowsRouterImpl(fragment.findNavController())
 }
 
 @Module

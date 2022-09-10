@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewParent
 import android.widget.Button
 import androidx.annotation.StringRes
+import androidx.core.widget.addTextChangedListener
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -11,29 +12,42 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserItem
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserItemData
+import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItem
+import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserData
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 
 class EditUserItemsController : EpoxyController() {
 
-    var items: List<EditUserItem> = emptyList()
-    var itemsData: List<EditUserItemData> = emptyList()
+    var items: List<EditUserListItem> = emptyList()
+    var itemsData: List<EditUserData> = emptyList()
 
     val buttonClicks = mutableSharedFlow<EditUserListItemType>()
+    val dataUpdates = mutableSharedFlow<EditUserData>()
+
+    var allowSaveChanges: Boolean = false
 
     override fun buildModels() {
         items.forEach { item ->
             when (item) {
-                is EditUserItem.Button -> ButtonItemModel(
-                    item.titleId
+                is EditUserListItem.Button -> ButtonItemModel(
+                    item.titleId,
+                    when (item.type != EditUserListItemType.CHANGE_PASSWORD_BUTTON) {
+                        true -> allowSaveChanges
+                        false -> false
+                    }
                 ) { buttonClicks.tryEmit(item.type) }
-                is EditUserItem.EditText -> EditTextItemModel(
+
+                is EditUserListItem.EditText -> EditTextItemModel(
                     item.titleId,
                     itemsData.find { it.type == item.type }?.value,
                     when (item.type) {
                         EditUserListItemType.EMAIL -> false
                         else -> true
+                    },
+                    textUpdatedAction = {
+                        dataUpdates.tryEmit(
+                            EditUserData(item.type, it)
+                        )
                     }
                 )
             }.addTo(this)
@@ -41,10 +55,11 @@ class EditUserItemsController : EpoxyController() {
     }
 }
 
-data class EditTextItemModel(
+class EditTextItemModel(
     @StringRes val titleId: Int,
     val value: String?,
     val enable: Boolean,
+    val textUpdatedAction: (String) -> Unit = { }
 ) : EpoxyModelWithHolder<EditTextItemModel.Holder>() {
 
     init {
@@ -58,6 +73,9 @@ data class EditTextItemModel(
             editText?.apply {
                 isEnabled = enable
                 setText(value ?: "")
+                addTextChangedListener {
+                    textUpdatedAction.invoke(it?.toString() ?: "")
+                }
             }
         }
     }
@@ -65,6 +83,28 @@ data class EditTextItemModel(
     override fun getDefaultLayout() = R.layout.list_item_edit_user_edit_text
 
     override fun createNewHolder(parent: ViewParent) = Holder()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        if (!super.equals(other)) return false
+
+        other as EditTextItemModel
+
+        if (titleId != other.titleId) return false
+        if (value != other.value) return false
+        if (enable != other.enable) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + titleId
+        result = 31 * result + (value?.hashCode() ?: 0)
+        result = 31 * result + enable.hashCode()
+        return result
+    }
 
     inner class Holder : EpoxyHolder() {
         lateinit var rootView: View
@@ -81,8 +121,9 @@ data class EditTextItemModel(
 }
 
 data class ButtonItemModel(
-    @StringRes val titleId: Int,
-    val clickAction: () -> Unit
+    @StringRes private val titleId: Int,
+    private val isEnable: Boolean,
+    private val clickAction: () -> Unit
 ) : EpoxyModelWithHolder<ButtonItemModel.Holder>() {
 
     init {
@@ -92,6 +133,7 @@ data class ButtonItemModel(
     override fun bind(holder: Holder) {
         with(holder) {
             button.apply {
+                isEnabled = isEnable
                 text = context.getString(titleId)
                 setOnClickListener { clickAction.invoke() }
             }

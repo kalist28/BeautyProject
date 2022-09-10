@@ -9,7 +9,7 @@ interface WeekSequenceRouter {
     fun openProfile()
     fun openCalendar()
     fun openTimetable()
-    fun openEditWorkdayWindows(daySequence: Int)
+    fun openEditWorkdayWindows(dayNumber: Int)
     fun back()
 }
 
@@ -30,9 +30,9 @@ class WeekSequenceRouterImpl(
         PersonalAreaFragmentDirections.actionPersonalAreaFragmentToTimetableFragment()
     )
 
-    override fun openEditWorkdayWindows(daySequence: Int) = navController.safetyNavigate(
+    override fun openEditWorkdayWindows(dayNumber: Int) = navController.safetyNavigate(
         WeekSequenceFragmentDirections.actionWeekSequenceFragmentToEditWorkdayWindowsFragment(
-            daySequence
+            dayNumber
         )
     )
 
