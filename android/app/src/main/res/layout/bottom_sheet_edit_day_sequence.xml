@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -42,8 +41,8 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/text_medium"
         android:gravity="center"
-        android:text="Начало :"
-        android:textColor="@color/colorAccept"
+        android:text="@string/start"
+        android:textColor="@color/titleText"
         android:textSize="@dimen/text_medium"
         app:layout_constraintBottom_toTopOf="@id/end_time_text_view"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -65,8 +64,8 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:gravity="center"
-        android:text="Конец :"
-        android:textColor="@color/colorAccept"
+        android:text="@string/end"
+        android:textColor="@color/titleText"
         android:textSize="@dimen/text_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_time_text_view" />
@@ -87,8 +86,8 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:gravity="center"
-        android:text="Выходной"
-        android:textColor="@color/colorAccept"
+        android:text="@string/holiday"
+        android:textColor="@color/titleText"
         android:textSize="@dimen/text_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/end_time_text_view" />

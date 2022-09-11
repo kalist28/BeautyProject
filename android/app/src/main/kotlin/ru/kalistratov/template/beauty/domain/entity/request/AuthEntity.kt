@@ -29,7 +29,7 @@ data class RegistrationRequest(
 
 @Serializable
 data class ServerToken(
-    @SerialName("access_token") val token: String,
+    @SerialName("access_token") val accessToken: String,
     @SerialName("refresh_token") val refreshToken: String,
 )
 

@@ -99,7 +99,7 @@ class PersonalAreaFragment : BaseFragment(),
     override fun intents(): Flow<PersonalAreaIntent> = merge(
         flowOf(PersonalAreaIntent.InitData),
         binding.userPanel.root.clicks().map { PersonalAreaIntent.UserPanelClick },
-        menuController.clicks().map { PersonalAreaIntent.MenuItemClick(it) },
+        menuController.clicks.map { PersonalAreaIntent.MenuItemClick(it) },
     )
 
     override fun render(state: PersonalAreaState) {

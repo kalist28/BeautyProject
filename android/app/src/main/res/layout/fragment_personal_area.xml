@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/user_panel"
-        layout="@layout/personal_area_panel_user"
+        layout="@layout/view_personal_area_panel_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_medium"

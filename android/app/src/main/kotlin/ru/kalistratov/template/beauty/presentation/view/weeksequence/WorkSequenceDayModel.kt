@@ -19,7 +19,7 @@ class WeekSequenceDayModel(
         id(workday.hashCode())
     }
 
-    override fun getDefaultLayout(): Int = R.layout.item_sequence_work_day
+    override fun getDefaultLayout(): Int = R.layout.item_sequence_day
 
     override fun bind(holder: WorkDayHolder) = with(holder) {
         root?.setOnClickListener { clickListener.invoke(workday.day.index) }

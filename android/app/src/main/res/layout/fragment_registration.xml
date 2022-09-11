@@ -98,6 +98,7 @@
         android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:background="@color/transparent50"
         android:translationZ="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

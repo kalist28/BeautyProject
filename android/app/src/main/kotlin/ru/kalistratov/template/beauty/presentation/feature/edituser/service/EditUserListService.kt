@@ -9,7 +9,8 @@ interface EditUserListService {
 }
 
 class EditUserListServiceImpl : EditUserListService {
-    override suspend fun getItems(): List<EditUserListItem> = mutableListOf(
+
+    private val items = mutableListOf(
         EditUserListItem.EditText(
             R.string.name,
             EditUserListItemType.NAME
@@ -35,4 +36,6 @@ class EditUserListServiceImpl : EditUserListService {
             EditUserListItemType.SAVE_BUTTON
         ),
     )
+
+    override suspend fun getItems(): List<EditUserListItem> = items
 }

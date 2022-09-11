@@ -20,8 +20,8 @@ class ApiAuthRepositoryImpl(
 ) : ApiRepository(url, authSettingsService), ApiAuthRepository {
     override suspend fun registration(
         request: RegistrationRequest
-    ): NetworkResult<User> =
-        getClient().use {
+    ): NetworkResult<User> = getClient()
+        .useWithHandleUnauthorizedError {
             handlingNetworkSafety {
                 it.post("$url/register") {
                     contentType(ContentType.Application.Json)
@@ -33,7 +33,7 @@ class ApiAuthRepositoryImpl(
     override suspend fun auth(
         request: AuthRequest
     ): NetworkResult<ServerToken> = getClient()
-        .use {
+        .useWithHandleUnauthorizedError {
             handlingNetworkSafetyWithoutData<ServerToken> {
                 it.post("$url/clients/web/login") {
                     contentType(ContentType.Application.Json)

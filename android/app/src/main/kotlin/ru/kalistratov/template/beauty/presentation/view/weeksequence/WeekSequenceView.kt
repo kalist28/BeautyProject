@@ -36,7 +36,7 @@ class WeekSequenceView @JvmOverloads constructor(
     }
 
     init {
-        inflate(context, R.layout.view_week_sequence, this)
+        inflate(context, R.layout.view_sequence_week, this)
         with(recyclerView) {
             adapter = controller.adapter
             isNestedScrollingEnabled = false

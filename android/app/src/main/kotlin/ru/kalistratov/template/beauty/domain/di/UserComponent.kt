@@ -24,6 +24,8 @@ import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.Perso
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaModule
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileComponent
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileModule
+import ru.kalistratov.template.beauty.presentation.feature.servicelist.di.ServiceListComponent
+import ru.kalistratov.template.beauty.presentation.feature.servicelist.di.ServiceListModule
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableComponent
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableModule
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceComponent
@@ -47,6 +49,7 @@ interface UserComponent {
     fun plus(module: CalendarModule): CalendarComponent
     fun plus(module: EditUserModule): EditUserComponent
     fun plus(module: TimetableModule): TimetableComponent
+    fun plus(module: ServiceListModule): ServiceListComponent
     fun plus(module: PersonalAreaModule): PersonalAreaComponent
     fun plus(module: WeekSequenceModule): WeekSequenceComponent
     fun plus(module: ChangePasswordModule): ChangePasswordComponent

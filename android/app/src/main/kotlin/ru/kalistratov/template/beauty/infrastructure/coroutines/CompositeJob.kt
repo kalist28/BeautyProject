@@ -7,7 +7,10 @@ class CompositeJob {
 
     fun add(job: Job) = jobs.add(job)
 
-    fun cancel() = jobs.forEach { it.cancel() }
+    fun cancel() {
+        jobs.forEach { it.cancel() }
+        jobs.clear()
+    }
 }
 
 fun Job.addTo(composite: CompositeJob) = composite.add(this)

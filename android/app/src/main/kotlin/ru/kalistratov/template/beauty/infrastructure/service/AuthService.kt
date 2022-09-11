@@ -39,7 +39,7 @@ class AuthServiceImpl(
         .also { response ->
             response.doIfSuccess {
                 with(authSettingsService) {
-                    updateToken(it.token)
+                    updateToken(it.accessToken)
                     updateRefreshToken(it.refreshToken)
 
                     apiUserRepository.getUser()

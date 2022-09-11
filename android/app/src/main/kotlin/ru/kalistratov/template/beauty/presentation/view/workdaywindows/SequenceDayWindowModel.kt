@@ -10,17 +10,17 @@ import ru.kalistratov.template.beauty.domain.entity.WorkdayWindow
 import ru.kalistratov.template.beauty.domain.extension.getTotalMinute
 import ru.kalistratov.template.beauty.domain.extension.toClockFormat
 
-data class WorkdayWindowModel(
+data class SequenceDayWindowModel(
     private val number: Int,
     private val workdayWindow: WorkdayWindow,
     private val clickAction: (Long) -> Unit
-) : EpoxyModelWithHolder<WorkdayWindowModel.Holder>() {
+) : EpoxyModelWithHolder<SequenceDayWindowModel.Holder>() {
 
     init {
         id(workdayWindow.hashCode())
     }
 
-    override fun getDefaultLayout() = R.layout.item_workday_window
+    override fun getDefaultLayout() = R.layout.list_item_sequence_day_window
 
     override fun createNewHolder(parent: ViewParent) = Holder()
 

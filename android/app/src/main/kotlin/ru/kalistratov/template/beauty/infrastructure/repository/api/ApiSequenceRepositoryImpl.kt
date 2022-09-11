@@ -22,8 +22,8 @@ class ApiSequenceRepositoryImpl(
 
     override suspend fun getDay(
         id: Id
-    ): NetworkResult<SequenceDay> =
-        getClient().use {
+    ): NetworkResult<SequenceDay> = getClient()
+        .useWithHandleUnauthorizedError {
             handlingNetworkSafety<SequenceDay> {
                 it.get("$url/sequences/days/$id") {
                     contentType(ContentType.Application.Json)
@@ -33,39 +33,39 @@ class ApiSequenceRepositoryImpl(
         }.logIfError()
 
 
-    override suspend fun getWeek(): NetworkResult<SequenceWeek> =
-        handleUnauthorizedError {
-            getClient().use {
-                handlingNetworkSafetyWithoutData<SequenceWeek> {
-                    it.get(sequenceUrl) {
-                        contentType(ContentType.Application.Json)
-                        header(AUTH_HEADER, getBearerToken())
-                    }
+    override suspend fun getWeek(): NetworkResult<SequenceWeek> = getClient()
+        .useWithHandleUnauthorizedError {
+            handlingNetworkSafetyWithoutData<SequenceWeek> {
+                it.get(sequenceUrl) {
+                    contentType(ContentType.Application.Json)
+                    header(AUTH_HEADER, getBearerToken())
                 }
             }
         }.logIfError()
 
     override suspend fun createDay(
         day: SequenceDay
-    ): NetworkResult<SequenceDay> = getClient().use {
-        handlingNetworkSafety<SequenceDay> {
-            it.post(sequenceUrl) {
-                contentType(ContentType.Application.Json)
-                header(AUTH_HEADER, getBearerToken())
-                body = day
+    ): NetworkResult<SequenceDay> = getClient()
+        .useWithHandleUnauthorizedError {
+            handlingNetworkSafety<SequenceDay> {
+                it.post(sequenceUrl) {
+                    contentType(ContentType.Application.Json)
+                    header(AUTH_HEADER, getBearerToken())
+                    body = day
+                }
             }
-        }
-    }.logIfError()
+        }.logIfError()
 
     override suspend fun updateDay(
         day: SequenceDay
-    ): NetworkResult<SequenceDay> = getClient().use {
-        handlingNetworkSafety<SequenceDay> {
-            it.patch("$sequenceUrl/${day.day.index}") {
-                contentType(ContentType.Application.Json)
-                header(AUTH_HEADER, getBearerToken())
-                body = day
+    ): NetworkResult<SequenceDay> = getClient()
+        .useWithHandleUnauthorizedError {
+            handlingNetworkSafety<SequenceDay> {
+                it.patch("$sequenceUrl/${day.day.index}") {
+                    contentType(ContentType.Application.Json)
+                    header(AUTH_HEADER, getBearerToken())
+                    body = day
+                }
             }
-        }
-    }.logIfError()
+        }.logIfError()
 }

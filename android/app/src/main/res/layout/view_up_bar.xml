@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
-        android:text="@string/setting"
+        android:text="@string/title"
         android:textColor="@color/titleText"
         android:textSize="@dimen/text_large"
         app:layout_constraintBottom_toBottomOf="parent"

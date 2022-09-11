@@ -101,6 +101,9 @@
         <action
             android:id="@+id/action_personalAreaFragment_to_editUserFragment"
             app:destination="@id/editUserFragment" />
+        <action
+            android:id="@+id/action_personalAreaFragment_to_serviceListFragment"
+            app:destination="@id/serviceListFragment" />
     </fragment>
     <fragment
         android:id="@+id/weekSequenceFragment"
@@ -137,4 +140,9 @@
         android:name="ru.kalistratov.template.beauty.presentation.feature.changepassword.view.ChangePasswordFragment"
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_change_password"/>
+    <fragment
+        android:id="@+id/serviceListFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.servicelist.view.ServiceListFragment"
+        android:label="ServiceListFragment"
+        tools:layout="@layout/fragment_list_service" />
 </navigation>

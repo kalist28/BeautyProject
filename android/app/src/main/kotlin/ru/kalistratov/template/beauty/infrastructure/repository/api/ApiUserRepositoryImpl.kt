@@ -18,7 +18,7 @@ class ApiUserRepositoryImpl(
 ) : ApiRepository(url, authSettingsService), ApiUserRepository {
     override suspend fun getUser(
         id: String?
-    ): NetworkResult<User> = getClient().use {
+    ): NetworkResult<User> = getClient().useWithHandleUnauthorizedError {
         handlingNetworkSafety<User> {
             val path = if (id == null) "$url/user/profile" else "$url/users/$id"
             it.get(path) {
@@ -30,8 +30,8 @@ class ApiUserRepositoryImpl(
 
     override suspend fun updateUser(
         request: UpdateUserRequest
-    ): NetworkResult<User> = getClient().use {
-        handlingNetworkSafetyWithoutData<User> {
+    ): NetworkResult<User> = getClient().useWithHandleUnauthorizedError {
+        handlingNetworkSafety<User> {
             it.patch("$url/users/${getUserId()}") {
                 contentType(ContentType.Application.Json)
                 header(AUTH_HEADER, getBearerToken())

@@ -18,45 +18,49 @@ class ApiWorkdayWindowRepositoryImpl(
 
     override suspend fun get(
         dayNumber: Int
-    ): NetworkResult<SequenceDay> = getClient().use {
-        handlingNetworkSafety<SequenceDay> {
-            it.get("$url/sequences/days/$dayNumber") {
-                contentType(ContentType.Application.Json)
-                header(AUTH_HEADER, getBearerToken())
+    ): NetworkResult<SequenceDay> = getClient()
+        .useWithHandleUnauthorizedError {
+            handlingNetworkSafety<SequenceDay> {
+                it.get("$url/sequences/days/$dayNumber") {
+                    contentType(ContentType.Application.Json)
+                    header(AUTH_HEADER, getBearerToken())
+                }
             }
-        }
-    }.logIfError()
+        }.logIfError()
 
-    override suspend fun getAll(): NetworkResult<List<WorkdayWindow>> = getClient().use {
-        handlingNetworkSafety<List<WorkdayWindow>> {
-            it.get("$url/workday-windows") {
-                contentType(ContentType.Application.Json)
-                header(AUTH_HEADER, getBearerToken())
+    override suspend fun getAll(): NetworkResult<List<WorkdayWindow>> = getClient()
+        .useWithHandleUnauthorizedError {
+            handlingNetworkSafety<List<WorkdayWindow>> {
+                it.get("$url/workday-windows") {
+                    contentType(ContentType.Application.Json)
+                    header(AUTH_HEADER, getBearerToken())
+                }
             }
-        }
-    }.logIfError()
+        }.logIfError()
 
     override suspend fun create(
         window: WorkdayWindow
-    ): NetworkResult<WorkdayWindow> = getClient().use {
-        handlingNetworkSafety<WorkdayWindow> {
-            it.post("$url/workday-windows") {
-                contentType(ContentType.Application.Json)
-                header(AUTH_HEADER, getBearerToken())
-                body = window
+    ): NetworkResult<WorkdayWindow> = getClient()
+        .useWithHandleUnauthorizedError {
+            handlingNetworkSafety<WorkdayWindow> {
+                it.post("$url/workday-windows") {
+                    contentType(ContentType.Application.Json)
+                    header(AUTH_HEADER, getBearerToken())
+                    body = window
+                }
             }
-        }
-    }.logIfError()
+        }.logIfError()
 
     override suspend fun update(
         window: WorkdayWindow
-    ): NetworkResult<WorkdayWindow> = getClient().use {
-        handlingNetworkSafety<WorkdayWindow> {
-            it.patch("$url/workday-windows/${window.id}") {
-                contentType(ContentType.Application.Json)
-                header(AUTH_HEADER, getBearerToken())
-                body = window
+    ): NetworkResult<WorkdayWindow> = getClient()
+        .useWithHandleUnauthorizedError {
+            handlingNetworkSafety<WorkdayWindow> {
+                it.patch("$url/workday-windows/${window.id}") {
+                    contentType(ContentType.Application.Json)
+                    header(AUTH_HEADER, getBearerToken())
+                    body = window
+                }
             }
-        }
-    }.logIfError()
+        }.logIfError()
 }

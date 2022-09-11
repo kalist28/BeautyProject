@@ -9,9 +9,9 @@
         android:id="@+id/icon"
         android:layout_width="@dimen/margin_xlarge"
         android:layout_height="@dimen/margin_xlarge"
-        android:src="@drawable/ic_list_alt"
-        android:padding="@dimen/margin_small"
         android:background="@drawable/profile_menu_item_background"
+        android:padding="@dimen/margin_small"
+        android:src="@drawable/ic_list_alt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,13 +21,13 @@
         android:id="@+id/title_text_view"
         android:layout_width="@dimen/constraint_fill"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
         android:text="Рабочая неделя"
         android:textColor="#1A1C3D"
         android:textSize="@dimen/text_medium"
-        android:layout_marginStart="@dimen/margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintEnd_toStartOf="@id/arrow"
+        app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -35,9 +35,9 @@
         android:layout_width="@dimen/margin_small"
         android:layout_height="@dimen/margin_medium"
         android:src="@drawable/ic_arrow_right"
-        app:tint="@color/colorAccept"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorAccept" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

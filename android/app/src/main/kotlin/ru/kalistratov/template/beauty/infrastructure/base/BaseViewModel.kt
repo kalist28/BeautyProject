@@ -12,8 +12,8 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
     private val uiComposite = CompositeJob()
     protected val workComposite = CompositeJob()
 
-    protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow()
-    protected val intentFlow: MutableSharedFlow<I> = mutableSharedFlow()
+    protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow(2)
+    protected val intentFlow: MutableSharedFlow<I> = mutableSharedFlow(2)
 
     override fun onCleared() {
         workComposite.cancel()

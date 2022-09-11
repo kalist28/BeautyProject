@@ -32,11 +32,12 @@ class WorkdayWindowsView @JvmOverloads constructor(
     )
 
     init {
-        inflate(context, R.layout.view_week_sequence, this)
+        inflate(context, R.layout.view_sequence_week, this)
         with(recyclerView) {
             adapter = controller.adapter
             isNestedScrollingEnabled = false
             layoutManager = LinearLayoutManager(context)
+            overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
         setLoading(false)
     }
@@ -68,7 +69,7 @@ class WorkdayWindowsView @JvmOverloads constructor(
         }
 
         private fun createNewModel(number: Int, window: WorkdayWindow) =
-            WorkdayWindowModel(number, window) { windowClicks.tryEmit(it) }
+            SequenceDayWindowModel(number, window) { windowClicks.tryEmit(it) }
     }
 
     inner class SeparatorModel(id: Int) : EpoxyModelWithHolder<SeparatorModel.ViewHolder>() {

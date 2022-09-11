@@ -8,6 +8,7 @@ interface PersonalAreaRouter {
     fun openProfile()
     fun openEditUser()
     fun openCalendar()
+    fun openServices()
     fun openTimetable()
     fun openWeekSequence()
     fun exit()
@@ -27,6 +28,10 @@ class PersonalAreaRouterImpl(
 
     override fun openCalendar() = navController.safetyNavigate(
         PersonalAreaFragmentDirections.actionPersonalAreaFragmentToCalendarFragment()
+    )
+
+    override fun openServices() = navController.safetyNavigate(
+        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToServiceListFragment()
     )
 
     override fun openTimetable() = navController.safetyNavigate(
