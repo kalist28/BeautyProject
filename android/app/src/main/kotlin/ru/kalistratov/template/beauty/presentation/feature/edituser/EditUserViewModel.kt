@@ -13,8 +13,8 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.infrastructure.coroutines.textDebounce
+import ru.kalistratov.template.beauty.presentation.entity.ViewListItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserData
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 import ru.kalistratov.template.beauty.presentation.feature.edituser.view.EditUserIntent
 import javax.inject.Inject
@@ -24,7 +24,7 @@ data class EditUserState(
     var userData: UserData = UserData(),
     val allowSaveChanges: Boolean = false,
     val settingData: List<EditUserData> = emptyList(),
-    val settingItems: List<EditUserListItem> = emptyList(),
+    val settingItems: List<ViewListItem> = emptyList(),
 ) : BaseState
 
 sealed interface EditUserAction : BaseAction {
@@ -32,7 +32,7 @@ sealed interface EditUserAction : BaseAction {
     data class UpdateUserData(val userData: UserData) : EditUserAction
     data class UpdateAllowSave(val allow: Boolean) : EditUserAction
     data class UpdateSettingData(val data: List<EditUserData>) : EditUserAction
-    data class UpdateSettingItems(val items: List<EditUserListItem>) : EditUserAction
+    data class UpdateSettingItems(val items: List<ViewListItem>) : EditUserAction
 }
 
 class EditUserViewModel @Inject constructor(
@@ -83,9 +83,9 @@ class EditUserViewModel @Inject constructor(
                     val value = data.value
 
                     val changedUserData = when (data.type) {
-                        EditUserListItemType.NAME -> userData.copy(name = value)
-                        EditUserListItemType.SURNAME -> userData.copy(surname = value)
-                        EditUserListItemType.PATRONYMIC -> userData.copy(patronymic = value)
+                        EditUserListItemType.Name -> userData.copy(name = value)
+                        EditUserListItemType.Surname -> userData.copy(surname = value)
+                        EditUserListItemType.Patronymic -> userData.copy(patronymic = value)
                         else -> userData
                     }
 
@@ -121,8 +121,8 @@ class EditUserViewModel @Inject constructor(
             intentFlow.filterIsInstance<EditUserIntent.ButtonClick>()
                 .onEach {
                     when (it.type) {
-                        EditUserListItemType.SAVE_BUTTON -> updateUser()
-                        EditUserListItemType.CHANGE_PASSWORD_BUTTON -> router.openChangePassword()
+                        EditUserListItemType.SaveButton -> updateUser()
+                        EditUserListItemType.ChangePasswordButton -> router.openChangePassword()
                         else -> Unit
                     }
                 }

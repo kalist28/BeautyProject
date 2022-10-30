@@ -3,9 +3,13 @@ package ru.kalistratov.template.beauty.presentation.feature.main.di
 import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
-import ru.kalistratov.template.beauty.domain.di.ViewModelKey
+import ru.kalistratov.template.beauty.domain.service.MainInteractor
+import ru.kalistratov.template.beauty.domain.service.PermissionsService
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelKey
+import ru.kalistratov.template.beauty.presentation.feature.main.MainInteractorImpl
 import ru.kalistratov.template.beauty.presentation.feature.main.MainViewModel
 import ru.kalistratov.template.beauty.presentation.feature.main.view.MainActivity
 
@@ -20,7 +24,15 @@ interface MainComponent {
 }
 
 @Module
-class MainModule
+class MainModule() {
+
+    @Provides
+    fun provideMainInteractor(
+        permissionsService: PermissionsService
+    ): MainInteractor = MainInteractorImpl(
+        permissionsService
+    )
+}
 
 @Module
 abstract class MainPresentationModule {

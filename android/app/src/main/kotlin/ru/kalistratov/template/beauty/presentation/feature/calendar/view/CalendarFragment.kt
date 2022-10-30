@@ -11,8 +11,8 @@ import com.kizitonwose.calendarview.model.CalendarDay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.di.UserComponent
-import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
@@ -27,7 +27,6 @@ import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarView
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarModule
 import ru.kalistratov.template.beauty.presentation.view.SimpleCalendarView
 import ru.kalistratov.template.beauty.presentation.view.bottomsheet.DayDetailsBottomSheet
-import java.util.*
 import javax.inject.Inject
 
 sealed class CalendarIntent : BaseIntent {

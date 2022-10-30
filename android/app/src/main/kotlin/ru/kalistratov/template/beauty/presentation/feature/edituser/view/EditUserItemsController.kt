@@ -12,13 +12,13 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItem
+import ru.kalistratov.template.beauty.presentation.entity.ViewListItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserData
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 
 class EditUserItemsController : EpoxyController() {
 
-    var items: List<EditUserListItem> = emptyList()
+    var items: List<ViewListItem> = emptyList()
     var itemsData: List<EditUserData> = emptyList()
 
     val buttonClicks = mutableSharedFlow<EditUserListItemType>()
@@ -28,31 +28,43 @@ class EditUserItemsController : EpoxyController() {
 
     override fun buildModels() {
         items.forEach { item ->
+            val itemType = item.type
+            if (itemType !is EditUserListItemType) return@forEach
             when (item) {
-                is EditUserListItem.Button -> ButtonItemModel(
-                    item.titleId,
-                    when (item.type != EditUserListItemType.CHANGE_PASSWORD_BUTTON) {
-                        true -> allowSaveChanges
-                        false -> false
-                    }
-                ) { buttonClicks.tryEmit(item.type) }
-
-                is EditUserListItem.EditText -> EditTextItemModel(
-                    item.titleId,
-                    itemsData.find { it.type == item.type }?.value,
-                    when (item.type) {
-                        EditUserListItemType.EMAIL -> false
-                        else -> true
-                    },
-                    textUpdatedAction = {
-                        dataUpdates.tryEmit(
-                            EditUserData(item.type, it)
-                        )
-                    }
-                )
-            }.addTo(this)
+                is ViewListItem.Button -> createButtonItemModel(item, itemType)
+                is ViewListItem.EditText -> createEditTextItemModel(item, itemType)
+                else -> null
+            }?.addTo(this)
         }
     }
+
+    private fun createButtonItemModel(
+        item: ViewListItem.Button,
+        itemType: EditUserListItemType
+    ) = ButtonItemModel(
+        item.titleId,
+        when (itemType != EditUserListItemType.ChangePasswordButton) {
+            true -> allowSaveChanges
+            false -> false
+        }
+    ) { buttonClicks.tryEmit(itemType) }
+
+    private fun createEditTextItemModel(
+        item: ViewListItem.EditText,
+        itemType: EditUserListItemType
+    ) = EditTextItemModel(
+        item.titleId,
+        itemsData.find { it.type == itemType }?.value,
+        when (itemType) {
+            EditUserListItemType.Email -> false
+            else -> true
+        },
+        textUpdatedAction = {
+            dataUpdates.tryEmit(
+                EditUserData(itemType, it)
+            )
+        }
+    )
 }
 
 class EditTextItemModel(

@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.databinding.FragmentListServiceBinding
-import ru.kalistratov.template.beauty.domain.di.UserComponent
-import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
@@ -63,13 +63,7 @@ class ServiceListFragment : BaseFragment(), BaseView<ServiceListIntent, ServiceL
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        with(viewModel) {
-            viewModelScope.launch(Dispatchers.Main) {
-                stateUpdates()
-                    .collect(::render)
-            }.addTo(jobComposite)
-            processIntent(intents())
-        }
+        viewModel.connectInto(this)
     }
 
     override fun intents(): Flow<ServiceListIntent> = merge(

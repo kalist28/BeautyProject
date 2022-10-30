@@ -2,9 +2,9 @@ package ru.kalistratov.template.beauty.infrastructure
 
 import android.app.Application
 import androidx.navigation.NavController
-import ru.kalistratov.template.beauty.domain.di.ApplicationModule
-import ru.kalistratov.template.beauty.domain.di.DaggerApplicationComponent
-import ru.kalistratov.template.beauty.domain.di.ServiceModule
+import ru.kalistratov.template.beauty.infrastructure.di.ApplicationModule
+import ru.kalistratov.template.beauty.infrastructure.di.DaggerApplicationComponent
+import ru.kalistratov.template.beauty.infrastructure.di.ServiceModule
 import timber.log.Timber
 
 class Application : Application() {

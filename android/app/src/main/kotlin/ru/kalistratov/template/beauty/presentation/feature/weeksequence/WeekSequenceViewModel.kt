@@ -13,11 +13,11 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.view.WeekSequenceIntent
-import ru.kalistratov.template.beauty.presentation.view.weeksequence.EditWorkDaySequenceBottomSheet
+import ru.kalistratov.template.beauty.presentation.view.weeksequence.EditSequenceDayBottomSheet
 import javax.inject.Inject
 
 data class WeekSequenceState(
-    val weekSequence: SequenceWeek = SequenceWeek(),
+    val weekSequence: SequenceWeek = emptyList(),
     val weekSequenceLoading: Boolean = true,
     val openEditWorkDaySequenceBottomSheet: Boolean = false,
     val editWorkdaySequence: SequenceDay? = null,
@@ -52,15 +52,12 @@ class WeekSequenceViewModel @Inject constructor(
                 .map { WeekSequenceAction.LoadWeekSequence }
 
             intentFlow.filterIsInstance<WeekSequenceIntent.WorkDayBottomSheetClick>()
-                .flatMapConcat {
-                    when (val intent = it.intent) {
-                        is EditWorkDaySequenceBottomSheet.ClickIntent.EditWindows -> flowOf(intent)
-                        else -> emptyFlow()
+                .onEach {
+                    if (it.intent is EditSequenceDayBottomSheet.ClickIntent.EditWindows) {
+                        router.openEditWorkdayWindows(it.intent.day.day.index)
                     }
                 }
-                .onEach { router.openEditWorkdayWindows(it.workdaySequence.day.index) }
-                .launchIn(this)
-                .addTo(workComposite)
+                .launchHere()
 
             val updateWorkDaySequenceAction = intentFlow
                 .filterIsInstance<WeekSequenceIntent.UpdateWorkDaySequence>()
@@ -70,7 +67,7 @@ class WeekSequenceViewModel @Inject constructor(
                     if (updatedDay == null) emptyFlow()
                     else {
                         val state = _stateFlow.value
-                        val days = state.weekSequence.days.toMutableList()
+                        val days = state.weekSequence.toMutableList()
                         val oldItem = days.find {
                             it.day == updatedDay.day
                         } ?: return@flatMapConcat emptyFlow()
@@ -78,7 +75,7 @@ class WeekSequenceViewModel @Inject constructor(
                         val lastIndex = days.lastIndexOf(oldItem)
                         days.removeAt(lastIndex)
                         days.add(lastIndex, updatedDay)
-                        flowOf(SequenceWeek(days))
+                        flowOf(days)
                     }
                 }
                 .share(this)
@@ -95,7 +92,7 @@ class WeekSequenceViewModel @Inject constructor(
                 .filterIsInstance<WeekSequenceIntent.WorkDaySequenceClick>()
                 .flatMapConcat { intent ->
                     val lastState = _stateFlow.value
-                    val day = lastState.weekSequence.days
+                    val day = lastState.weekSequence
                         .find { it.day.index == intent.dayIndex }
 
                     if (day == null) emptyFlow()

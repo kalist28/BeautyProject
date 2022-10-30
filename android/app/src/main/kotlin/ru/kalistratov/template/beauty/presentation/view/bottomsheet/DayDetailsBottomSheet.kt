@@ -24,6 +24,10 @@ class DayDetailsBottomSheet : BaseBottomSheet() {
         }
     }
 
+    override fun getSheetTag() = "DayDetailsBottomSheet"
+
+    override fun isFullscreen() = true
+
     override fun onCancel(dialog: DialogInterface) {
         onClosesListener?.onCloses()
         super.onCancel(dialog)

@@ -135,13 +135,14 @@ class ServiceListViewModel @Inject constructor(
                 .onEach { router.back() }
                 .launchHere()
 
-            merge(
-                a, b
-            )
+            merge(a, b)
                 .flowOn(Dispatchers.IO)
                 .scan(initialState, ::reduce)
-                .onEach { _stateFlow.value = it }
-                .collect(stateFlow)
+                .onEach {
+                    stateFlow.emit(it)
+                    _stateFlow.value = it
+                }
+                .launchHere()
         }.addTo(workComposite)
     }
 

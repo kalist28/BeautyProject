@@ -15,7 +15,8 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.entity.WorkdayWindow
+import ru.kalistratov.template.beauty.domain.entity.Id
+import ru.kalistratov.template.beauty.domain.entity.SequenceDayWindow
 
 class WorkdayWindowsView @JvmOverloads constructor(
     context: Context,
@@ -26,7 +27,7 @@ class WorkdayWindowsView @JvmOverloads constructor(
     private val loadingView: View by lazy { findViewById(R.id.loading_view) }
     private val recyclerView: RecyclerView by lazy { findViewById(R.id.recycler_view) }
 
-    private val windowClicks = MutableSharedFlow<Long>(
+    private val windowClicks = MutableSharedFlow<Id>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
@@ -43,7 +44,7 @@ class WorkdayWindowsView @JvmOverloads constructor(
     }
 
     fun updateWorkdayWindows(
-        windows: List<WorkdayWindow>
+        windows: List<SequenceDayWindow>
     ) = with(controller) {
         this.windows = windows
         requestModelBuild()
@@ -57,7 +58,7 @@ class WorkdayWindowsView @JvmOverloads constructor(
     fun clicks() = windowClicks.asSharedFlow()
 
     inner class WorkdayWindowsController : EpoxyController() {
-        var windows: List<WorkdayWindow> = emptyList()
+        var windows: List<SequenceDayWindow> = emptyList()
 
         override fun buildModels() {
             windows.forEachIndexed { index, window ->
@@ -68,8 +69,8 @@ class WorkdayWindowsView @JvmOverloads constructor(
             }
         }
 
-        private fun createNewModel(number: Int, window: WorkdayWindow) =
-            SequenceDayWindowModel(number, window) { windowClicks.tryEmit(it) }
+        private fun createNewModel(number: Int, window: SequenceDayWindow) =
+            SequenceDayWindowModel(number, window) { windowClicks.tryEmit(window.id) }
     }
 
     inner class SeparatorModel(id: Int) : EpoxyModelWithHolder<SeparatorModel.ViewHolder>() {

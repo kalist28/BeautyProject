@@ -12,6 +12,7 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.entity.MenuItem
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.entity.PersonalAreaMenuItemId
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.view.PersonalAreaIntent
@@ -27,12 +28,12 @@ sealed class PersonalAreaAction : BaseAction {
 }
 
 class PersonalAreaViewModel @Inject constructor(
-    private val router: PersonalAreaRouter,
     private val interactor: PersonalAreaInteractor
 ) : BaseViewModel<PersonalAreaIntent, PersonalAreaAction, PersonalAreaState>() {
 
     private val initialState = PersonalAreaState()
-    private val _stateFlow = MutableStateFlow(initialState)
+
+    var router: PersonalAreaRouter? = null
 
     init {
         viewModelScope.launch {
@@ -56,18 +57,20 @@ class PersonalAreaViewModel @Inject constructor(
 
             intentFlow.filterIsInstance<PersonalAreaIntent.UserPanelClick>()
                 .debounce(300)
-                .onEach { router.openEditUser() }
+                .onEach { router?.openEditUser() }
                 .launchIn(this)
                 .addTo(workComposite)
 
             intentFlow.filterIsInstance<PersonalAreaIntent.MenuItemClick>()
                 .onEach {
+                    loge(it.id)
                     when (it.id) {
-                        PersonalAreaMenuItemId.WEEK_SEQUENCE.id -> router.openWeekSequence()
-                        PersonalAreaMenuItemId.SERVICES.id -> router.openServices()
+                        PersonalAreaMenuItemId.WEEK_SEQUENCE.id -> router?.openWeekSequence()
+                        PersonalAreaMenuItemId.SERVICES.id -> router?.openServices()
+                        PersonalAreaMenuItemId.CLIENTS.id -> router?.openClientsList()
                         PersonalAreaMenuItemId.EXIT.id -> {
                             interactor.exit()
-                            router.exit()
+                            router?.exit()
                         }
                     }
                 }
@@ -79,9 +82,7 @@ class PersonalAreaViewModel @Inject constructor(
                 updateMenuItemsAction,
             )
                 .flowOn(Dispatchers.IO)
-                .scan(initialState, ::reduce)
-                .onEach { _stateFlow.value = it }
-                .collect(stateFlow)
+                .collectState(initialState)
         }.addTo(workComposite)
     }
 

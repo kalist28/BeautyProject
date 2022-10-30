@@ -6,20 +6,20 @@ import ru.kalistratov.template.beauty.domain.entity.request.AuthRequest
 import ru.kalistratov.template.beauty.domain.entity.request.RegistrationRequest
 import ru.kalistratov.template.beauty.domain.entity.request.ServerToken
 import ru.kalistratov.template.beauty.domain.extension.doIfSuccess
-import ru.kalistratov.template.beauty.domain.repository.api.ApiAuthRepository
-import ru.kalistratov.template.beauty.domain.repository.api.ApiUserRepository
+import ru.kalistratov.template.beauty.domain.service.api.ApiAuthService
+import ru.kalistratov.template.beauty.domain.service.api.ApiUserService
 import ru.kalistratov.template.beauty.domain.service.AuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 
 class AuthServiceImpl(
-    private val apiAuthRepository: ApiAuthRepository,
-    private val apiUserRepository: ApiUserRepository,
+    private val apiAuthService: ApiAuthService,
+    private val apiUserService: ApiUserService,
     private val authSettingsService: AuthSettingsService
 ) : AuthService {
 
     override suspend fun registration(
         request: RegistrationRequest
-    ): NetworkResult<User> = apiAuthRepository
+    ): NetworkResult<User> = apiAuthService
         .registration(request)
         .also { response ->
             response.doIfSuccess {
@@ -34,7 +34,7 @@ class AuthServiceImpl(
 
     override suspend fun auth(
         request: AuthRequest
-    ): NetworkResult<ServerToken> = apiAuthRepository
+    ): NetworkResult<ServerToken> = apiAuthService
         .auth(request)
         .also { response ->
             response.doIfSuccess {
@@ -42,7 +42,7 @@ class AuthServiceImpl(
                     updateToken(it.accessToken)
                     updateRefreshToken(it.refreshToken)
 
-                    apiUserRepository.getUser()
+                    apiUserService.getUser()
                         .doIfSuccess { user -> updateUserId(user.id) }
                 }
             }

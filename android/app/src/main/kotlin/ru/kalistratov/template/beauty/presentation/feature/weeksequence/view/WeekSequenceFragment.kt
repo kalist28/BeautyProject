@@ -11,21 +11,23 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.di.UserComponent
-import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.presentation.extension.clicks
+import ru.kalistratov.template.beauty.presentation.extension.disposeBottomSheet
 import ru.kalistratov.template.beauty.presentation.extension.find
 import ru.kalistratov.template.beauty.presentation.extension.showBottomSheet
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceRouter
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceState
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceViewModel
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceModule
-import ru.kalistratov.template.beauty.presentation.view.weeksequence.EditWorkDaySequenceBottomSheet
+import ru.kalistratov.template.beauty.presentation.view.bottomsheet.BaseBottomSheet
+import ru.kalistratov.template.beauty.presentation.view.weeksequence.EditSequenceDayBottomSheet
 import ru.kalistratov.template.beauty.presentation.view.weeksequence.WeekSequenceView
 
 sealed class WeekSequenceIntent : BaseIntent {
@@ -33,7 +35,7 @@ sealed class WeekSequenceIntent : BaseIntent {
     data class UpdateWorkDaySequence(val day: SequenceDay) : WeekSequenceIntent()
 
     data class WorkDayBottomSheetClick(
-        val intent: EditWorkDaySequenceBottomSheet.ClickIntent
+        val intent: EditSequenceDayBottomSheet.ClickIntent
     ) : WeekSequenceIntent()
 
     object BackPressed : WeekSequenceIntent()
@@ -54,6 +56,8 @@ class WeekSequenceFragment : BaseFragment(), BaseView<WeekSequenceIntent, WeekSe
 
     lateinit var weekSequenceView: WeekSequenceView
     lateinit var backButton: View
+
+    private var lastBottomSheet: BaseBottomSheet? = null
 
     override fun findViews() {
         find<TextView>(R.id.topic_text_view).text = "Рабочая неделя"
@@ -81,23 +85,24 @@ class WeekSequenceFragment : BaseFragment(), BaseView<WeekSequenceIntent, WeekSe
         }
     }
 
+    override fun onDestroyView() {
+        disposeBottomSheet(lastBottomSheet)
+        super.onDestroyView()
+    }
+
     override fun intents(): Flow<WeekSequenceIntent> = merge(
         flowOf(WeekSequenceIntent.InitData),
         backButton.clicks().map { WeekSequenceIntent.BackPressed },
         weekSequenceView.clicks().map { WeekSequenceIntent.WorkDaySequenceClick(it) },
-        EditWorkDaySequenceBottomSheet.savingDay()
-            .map { WeekSequenceIntent.UpdateWorkDaySequence(it) },
-        EditWorkDaySequenceBottomSheet.clicks()
-            .map { WeekSequenceIntent.WorkDayBottomSheetClick(it) }
+        EditSequenceDayBottomSheet.clicks.map { WeekSequenceIntent.WorkDayBottomSheetClick(it) }
     )
 
     override fun render(state: WeekSequenceState) {
         weekSequenceView.setLoading(state.weekSequenceLoading)
         weekSequenceView.requestModelBuild(state.weekSequence)
-
         if (state.openEditWorkDaySequenceBottomSheet)
             state.editWorkdaySequence?.let {
-                showBottomSheet(EditWorkDaySequenceBottomSheet(state.editWorkdaySequence))
+                lastBottomSheet = showBottomSheet(EditSequenceDayBottomSheet(state.editWorkdaySequence))
             }
     }
 }

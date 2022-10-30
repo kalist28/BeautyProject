@@ -11,6 +11,7 @@ interface PersonalAreaRouter {
     fun openServices()
     fun openTimetable()
     fun openWeekSequence()
+    fun openClientsList()
     fun exit()
 }
 
@@ -40,6 +41,10 @@ class PersonalAreaRouterImpl(
 
     override fun openWeekSequence() = navController.safetyNavigate(
         PersonalAreaFragmentDirections.actionPersonalAreaFragmentToWeekSequenceFragment()
+    )
+
+    override fun openClientsList() = navController.safetyNavigate(
+        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToClientsListFragment()
     )
 
     override fun exit() = navController.safetyNavigate(

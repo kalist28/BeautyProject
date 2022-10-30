@@ -7,9 +7,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
-import ru.kalistratov.template.beauty.domain.di.ViewModelKey
 import ru.kalistratov.template.beauty.domain.feature.weeksequence.WeekSequenceInteractor
-import ru.kalistratov.template.beauty.domain.service.WorkSequenceService
+import ru.kalistratov.template.beauty.domain.repository.SequenceDayRepository
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelKey
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceInteractorImpl
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceRouter
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceRouterImpl
@@ -31,9 +31,9 @@ class WeekSequenceModule(private val fragment: WeekSequenceFragment) {
 
     @Provides
     fun provideWeekSequenceInteractor(
-        workSequenceService: WorkSequenceService
+        sequenceDayRepository: SequenceDayRepository
     ): WeekSequenceInteractor = WeekSequenceInteractorImpl(
-        workSequenceService
+        sequenceDayRepository
     )
 
     @Provides

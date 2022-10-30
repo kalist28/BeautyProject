@@ -4,8 +4,8 @@ import ru.kalistratov.template.beauty.domain.entity.User
 import ru.kalistratov.template.beauty.domain.entity.UserData
 import ru.kalistratov.template.beauty.domain.feature.edituser.EditUserInteractor
 import ru.kalistratov.template.beauty.domain.repository.UserRepository
+import ru.kalistratov.template.beauty.presentation.entity.ViewListItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserData
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 import ru.kalistratov.template.beauty.presentation.feature.edituser.service.EditUserListService
 
@@ -20,25 +20,25 @@ class EditUserInteractorImpl(
         user: User
     ) = mutableListOf(
         EditUserData(
-            EditUserListItemType.EMAIL,
+            EditUserListItemType.Email,
             user.email
         ),
         EditUserData(
-            EditUserListItemType.PATRONYMIC,
+            EditUserListItemType.Patronymic,
             user.patronymic
         ),
         EditUserData(
-            EditUserListItemType.NAME,
+            EditUserListItemType.Name,
             user.name
         ),
         EditUserData(
-            EditUserListItemType.SURNAME,
+            EditUserListItemType.Surname,
             user.surname
         )
     )
 
 
-    override suspend fun getSettingItems(): List<EditUserListItem> =
+    override suspend fun getSettingItems(): List<ViewListItem> =
         editUserListService.getItems()
 
     override suspend fun updateUser(userData: UserData): Boolean {

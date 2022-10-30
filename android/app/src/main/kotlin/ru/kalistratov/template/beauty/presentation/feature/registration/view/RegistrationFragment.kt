@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.databinding.FragmentRegistrationBinding
-import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.base.AuthBaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_xsmall">8dp</dimen>
+    <dimen name="margin_small">16dp</dimen>
+    <dimen name="margin_xmedium">24dp</dimen>
+    <dimen name="margin_medium">32dp</dimen>
+    <dimen name="margin_xlarge">52dp</dimen>
+    <dimen name="margin_large">64dp</dimen>
+    <dimen name="fragment_horizontal_margin">16dp</dimen>
+    <dimen name="fragment_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="week_sequence_item">52dp</dimen>
+    <dimen name="day_text_size">18sp</dimen>
+    <dimen name="constraint_fill">0dp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_medium">18sp</dimen>
+    <dimen name="text_xlarge">20sp</dimen>
+    <dimen name="text_large">26sp</dimen>
+
+    <dimen name="contact_photo">70sp</dimen>
+
+    <dimen name="up_bar_item">42dp</dimen>
+
+    <bool name="isTablet">true</bool>
+</resources>

@@ -57,10 +57,10 @@ class WeekSequenceView @JvmOverloads constructor(
     fun clicks(): Flow<Int> = clicks
 
     inner class WeekSequenceController : EpoxyController() {
-        var sequenceWeek: SequenceWeek = SequenceWeek()
+        var sequenceWeek: SequenceWeek = emptyList()
 
         override fun buildModels() {
-            sequenceWeek.days.forEach {
+            sequenceWeek.forEach {
                 add(WeekSequenceDayModel(it) { clicks.tryEmit(it) })
             }
         }

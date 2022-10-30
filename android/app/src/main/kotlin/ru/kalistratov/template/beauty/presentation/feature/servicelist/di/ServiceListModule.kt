@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
-import ru.kalistratov.template.beauty.domain.di.ViewModelKey
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelKey
 import ru.kalistratov.template.beauty.domain.feature.servicelist.ServiceListInteractor
 import ru.kalistratov.template.beauty.presentation.feature.servicelist.ServiceListInteractorImpl
 import ru.kalistratov.template.beauty.presentation.feature.servicelist.ServiceListRouter

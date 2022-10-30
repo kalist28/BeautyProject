@@ -45,6 +45,9 @@ class TimePickerSpinnerBottomSheet(
         timePicker = find(R.id.time_picker)
     }
 
+    override fun getSheetTag() = "TimePickerSpinnerBottomSheet"
+    override fun isFullscreen() = true
+
     private var hour = 0
     private var minute = 0
 

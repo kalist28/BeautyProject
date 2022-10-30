@@ -1,30 +1,18 @@
 package ru.kalistratov.template.beauty.presentation.feature.edituser.entity
 
-import androidx.annotation.StringRes
+import ru.kalistratov.template.beauty.presentation.entity.ViewListItemType
 
-enum class EditUserListItemType {
-    NAME,
-    SURNAME,
-    PATRONYMIC,
-    GENDER,
+sealed interface EditUserListItemType : ViewListItemType {
+    object Name : EditUserListItemType
+    object Surname : EditUserListItemType
+    object Patronymic : EditUserListItemType
+    object Gender : EditUserListItemType
 
-    EMAIL,
-    USER_LOGIN,
+    object Email : EditUserListItemType
+    object UserLogin : EditUserListItemType
 
-    SAVE_BUTTON,
-    CHANGE_PASSWORD_BUTTON
-}
-
-sealed class EditUserListItem(open val type: EditUserListItemType) {
-    data class EditText(
-        @StringRes val titleId: Int,
-        override val type: EditUserListItemType
-    ) : EditUserListItem(type)
-
-    data class Button(
-        @StringRes val titleId: Int,
-        override val type: EditUserListItemType
-    ) : EditUserListItem(type)
+    object SaveButton : EditUserListItemType
+    object ChangePasswordButton: EditUserListItemType
 }
 
 data class EditUserData(

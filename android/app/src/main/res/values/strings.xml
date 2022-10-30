@@ -61,4 +61,6 @@
     <string name="holiday">Выходной</string>
     <string name="end">Конец</string>
     <string name="start">Начало</string>
+
+    <string name="clients">Клиенты</string>
 </resources>

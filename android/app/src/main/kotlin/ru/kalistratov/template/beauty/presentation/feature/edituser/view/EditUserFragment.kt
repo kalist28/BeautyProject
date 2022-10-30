@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.databinding.FragmentEditUserBinding
-import ru.kalistratov.template.beauty.domain.di.UserComponent
-import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView

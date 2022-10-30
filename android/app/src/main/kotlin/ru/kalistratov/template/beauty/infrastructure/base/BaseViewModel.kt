@@ -12,8 +12,9 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
     private val uiComposite = CompositeJob()
     protected val workComposite = CompositeJob()
 
-    protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow(2)
-    protected val intentFlow: MutableSharedFlow<I> = mutableSharedFlow(2)
+    private lateinit var _stateFlow: MutableStateFlow<S>
+    protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow(replay = 1)
+    protected val intentFlow: MutableSharedFlow<I> = mutableSharedFlow()
 
     override fun onCleared() {
         workComposite.cancel()
@@ -33,7 +34,21 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
             .addTo(uiComposite)
     }
 
+    protected fun getLastState() = _stateFlow.value
+
     protected fun <T> Flow<T>.launchHere() = this
         .launchIn(viewModelScope)
         .addTo(workComposite)
+
+    protected suspend fun Flow<A>.collectState(initialState: S) {
+        _stateFlow = MutableStateFlow(initialState)
+        scan(initialState, ::reduce)
+            .onEach {
+                _stateFlow.value = it
+                stateFlow.emit(it)
+            }
+            .launchIn(viewModelScope)
+            .addTo(workComposite)
+    }
+
 }

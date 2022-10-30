@@ -6,18 +6,19 @@ import android.widget.TextView
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.entity.WorkdayWindow
+import ru.kalistratov.template.beauty.domain.entity.Id
+import ru.kalistratov.template.beauty.domain.entity.SequenceDayWindow
 import ru.kalistratov.template.beauty.domain.extension.getTotalMinute
 import ru.kalistratov.template.beauty.domain.extension.toClockFormat
 
 data class SequenceDayWindowModel(
     private val number: Int,
-    private val workdayWindow: WorkdayWindow,
-    private val clickAction: (Long) -> Unit
+    private val sequenceDayWindow: SequenceDayWindow,
+    private val clickAction: (Id) -> Unit
 ) : EpoxyModelWithHolder<SequenceDayWindowModel.Holder>() {
 
     init {
-        id(workdayWindow.hashCode())
+        id(sequenceDayWindow.hashCode())
     }
 
     override fun getDefaultLayout() = R.layout.list_item_sequence_day_window
@@ -26,18 +27,18 @@ data class SequenceDayWindowModel(
 
     override fun bind(holder: Holder) {
         with(holder) {
-            val formatStart = workdayWindow.startAt.toClockFormat()
-            val formatFinish = workdayWindow.finishAt.toClockFormat()
+            val formatStart = sequenceDayWindow.startAt.toClockFormat()
+            val formatFinish = sequenceDayWindow.finishAt.toClockFormat()
             val formatTime = "$formatStart - $formatFinish"
             timeTextView?.text = formatTime
             numberTextView?.text = (number + 1).toString()
             minutesTextView?.let {
-                val minutes = workdayWindow.run {
+                val minutes = sequenceDayWindow.run {
                     finishAt.getTotalMinute() - startAt.getTotalMinute()
                 }
                 it.text = it.context.getString(R.string.total_minutes, minutes)
             }
-            root?.setOnClickListener { clickAction.invoke(workdayWindow.id) }
+            root?.setOnClickListener { clickAction.invoke(sequenceDayWindow.id) }
         }
     }
 

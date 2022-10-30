@@ -5,30 +5,47 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.kalistratov.template.beauty.domain.extension.noTime
+import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceDayWindow
 import ru.kalistratov.template.beauty.infrastructure.kserialization.serializer.ClockFormatTimeSerializer
 
-@Serializable
-data class SequenceWeek(
-    @SerialName("data")
-    val days: List<SequenceDay> = emptyList()
-)
+typealias SequenceWeek = List<SequenceDay>
 
 @Serializable
 data class SequenceDay(
-    val id: String = "",
+    val id: Id,
 
     @Contextual
-    @SerialName("week_day_number")
-    val day: WeekDay = WeekDay.Nothing,
+    val day: WeekDay,
 
-    @SerialName("start_at")
-    @Serializable(with = ClockFormatTimeSerializer::class)
-    val startAt: Time = noTime,
+    @Serializable(ClockFormatTimeSerializer::class)
+    val startAt: Time,
 
-    @SerialName("finish_at")
-    @Serializable(with = ClockFormatTimeSerializer::class)
-    val finishAt: Time = noTime,
+    @Serializable(ClockFormatTimeSerializer::class)
+    val finishAt: Time,
 
-    @SerialName("is_holiday")
-    val isHoliday: Boolean = false,
+    val isHoliday: Boolean,
+    val windows: List<SequenceDayWindow>,
+) {
+    companion object {
+        val emptyDay = SequenceDay(
+            id = "",
+            day = WeekDay.Nothing,
+            startAt = noTime,
+            finishAt = noTime,
+            isHoliday = false,
+            windows = emptyList()
+        )
+    }
+}
+
+@Serializable
+data class SequenceDayWindow(
+    val id: Id = "",
+    val sequenceDayId: Id = "",
+
+    @Serializable(ClockFormatTimeSerializer::class)
+    val startAt: Time,
+
+    @Serializable(ClockFormatTimeSerializer::class)
+    val finishAt: Time,
 )

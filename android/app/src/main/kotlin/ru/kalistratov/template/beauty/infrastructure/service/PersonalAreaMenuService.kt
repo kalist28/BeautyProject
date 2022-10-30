@@ -18,6 +18,11 @@ class PersonalAreaMenuServiceImpl : PersonalAreaMenuService {
             "Услуги"
         ),
         MenuItem(
+            PersonalAreaMenuItemId.CLIENTS.id,
+            R.drawable.ic_clients,
+            "Клиенты"
+        ),
+        MenuItem(
             PersonalAreaMenuItemId.EXIT.id,
             R.drawable.ic_exit,
             "Выход"

@@ -2,14 +2,20 @@ package ru.kalistratov.template.beauty.infrastructure.base
 
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.LayoutRes
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import ru.kalistratov.template.beauty.domain.di.UserComponent
+import kotlinx.coroutines.launch
+import ru.kalistratov.template.beauty.R
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
+import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
+import ru.kalistratov.template.beauty.presentation.extension.find
 
 interface BaseView<I : BaseIntent, S : BaseState> {
     fun intents(): Flow<I>
@@ -50,4 +56,18 @@ abstract class BaseFragment : Fragment() {
     open fun findViews() = Unit
 
     open fun initViews() = Unit
+
+    open fun setTitle(title: String) {
+        find<TextView>(R.id.topic_text_view).text = title
+    }
+
+    fun <I : BaseIntent, A : BaseAction, S : BaseState>
+            BaseViewModel<I, A, S>.connectInto(view: BaseView<I, S>) {
+        with(this) {
+            viewModelScope.launch(Dispatchers.Main) {
+                stateUpdates().collect(view::render)
+            }.addTo(jobComposite)
+            processIntent(view.intents())
+        }
+    }
 }

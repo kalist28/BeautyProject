@@ -1,5 +1,7 @@
 package ru.kalistratov.template.beauty.domain.entity
 
-typealias Id = Long
+typealias Id = String
 
-fun Id.exist() = this != -1L
+val emptyId = ""
+
+fun Id.exist() = this.isNotBlank()

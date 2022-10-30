@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.databinding.FragmentPersonalAreaBinding
-import ru.kalistratov.template.beauty.domain.di.UserComponent
-import ru.kalistratov.template.beauty.domain.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
@@ -27,7 +27,8 @@ import ru.kalistratov.template.beauty.presentation.feature.personalarea.Personal
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaModule
 
 sealed class PersonalAreaIntent : BaseIntent {
-    data class MenuItemClick(val id: Int) : PersonalAreaIntent()
+    data class
+    MenuItemClick(val id: Int) : PersonalAreaIntent()
 
     object InitData : PersonalAreaIntent()
     object UserPanelClick : PersonalAreaIntent()
@@ -87,12 +88,9 @@ class PersonalAreaFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(viewModel) {
-            viewModelScope.launch(Dispatchers.Main) {
-                stateUpdates()
-                    .collect(::render)
-            }.addTo(jobComposite)
-            processIntent(intents())
+        viewModel.also {
+            it.router = profileRouter
+            it.connectInto(this)
         }
     }
 

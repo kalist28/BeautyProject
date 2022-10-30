@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.entity.MenuItem
 import ru.kalistratov.template.beauty.presentation.extension.getColorStateList
 import ru.kalistratov.template.beauty.presentation.extension.getDrawable
@@ -19,11 +20,12 @@ import ru.kalistratov.template.beauty.presentation.feature.personalarea.entity.P
 class PersonalAreaMenuController : EpoxyController() {
     var items: List<MenuItem> = emptyList()
 
-    val clicks = mutableSharedFlow<Int>()
+    private val _clicks = mutableSharedFlow<Int>()
+    val clicks: Flow<Int> = _clicks.asSharedFlow()
 
     override fun buildModels() {
         items.forEachIndexed { index, item ->
-            MenuItemModel(item, clicks::tryEmit).addTo(this)
+            MenuItemModel(item, _clicks::tryEmit).addTo(this)
             if (index != items.lastIndex) SeparatorModel(index)
                 .addTo(this)
         }

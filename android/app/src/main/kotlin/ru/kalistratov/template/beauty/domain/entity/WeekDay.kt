@@ -60,14 +60,3 @@ sealed class WeekDay(val index: Int) {
     object Sunday : WeekDay(0)
     object Nothing : WeekDay(-1)
 }
-
-object WeekDaySerializer : KSerializer<WeekDay> {
-    override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor("day", PrimitiveKind.STRING)
-
-    override fun serialize(encoder: Encoder, value: WeekDay) =
-        encoder.encodeString(value.index.toString())
-
-    override fun deserialize(decoder: Decoder): WeekDay =
-        WeekDay.fromIndex(decoder.decodeInt()) ?: WeekDay.Sunday
-}

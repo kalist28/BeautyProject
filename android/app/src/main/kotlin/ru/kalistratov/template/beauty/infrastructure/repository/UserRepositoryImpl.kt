@@ -11,12 +11,12 @@ import ru.kalistratov.template.beauty.domain.entity.UserData
 import ru.kalistratov.template.beauty.domain.entity.request.UpdateUserRequest
 import ru.kalistratov.template.beauty.domain.extension.doIfSuccess
 import ru.kalistratov.template.beauty.domain.repository.UserRepository
-import ru.kalistratov.template.beauty.domain.repository.api.ApiUserRepository
+import ru.kalistratov.template.beauty.domain.service.api.ApiUserService
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class UserRepositoryImpl(
-    private val apiUserRepository: ApiUserRepository
+    private val apiUserService: ApiUserService
 ) : UserRepository {
 
     private var data: User? = null
@@ -39,7 +39,7 @@ class UserRepositoryImpl(
     }
 
     override suspend fun update(data: UserData) {
-        apiUserRepository.updateUser(
+        apiUserService.updateUser(
             data.run { UpdateUserRequest(name, surname, patronymic) }
         ).doIfSuccess { this.data = it }
     }
@@ -48,7 +48,7 @@ class UserRepositoryImpl(
         mutableSharedFlow.tryEmit(Unit)
     }
 
-    private suspend fun loadData() = when (val response = apiUserRepository.getUser()) {
+    private suspend fun loadData() = when (val response = apiUserService.getUser()) {
         is NetworkResult.Success -> {
             response.value
         }

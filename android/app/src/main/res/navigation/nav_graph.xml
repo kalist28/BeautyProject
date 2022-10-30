@@ -104,6 +104,9 @@
         <action
             android:id="@+id/action_personalAreaFragment_to_serviceListFragment"
             app:destination="@id/serviceListFragment" />
+        <action
+            android:id="@+id/action_personalAreaFragment_to_clientsListFragment"
+            app:destination="@id/clientsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/weekSequenceFragment"
@@ -112,14 +115,14 @@
         tools:layout="@layout/fragment_weeksequence">
         <action
             android:id="@+id/action_weekSequenceFragment_to_editWorkdayWindowsFragment"
-            app:destination="@id/editWorkdayWindowsFragment"
+            app:destination="@id/editSequenceDayWindowsFragment"
             app:popUpTo="@id/weekSequenceFragment" />
     </fragment>
     <fragment
-        android:id="@+id/editWorkdayWindowsFragment"
-        android:name="ru.kalistratov.template.beauty.presentation.feature.editworkdaywindows.view.EditWorkdayWindowsFragment"
+        android:id="@+id/editSequenceDayWindowsFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.view.EditSequenceDayWindowsFragment"
         android:label="EditWorkdayWindowsFragment"
-        tools:layout="@layout/fragment_edit_workday_windows">
+        tools:layout="@layout/fragment_edit_sequence_day_windows">
 
         <argument
             android:name="dayNumber"
@@ -145,4 +148,9 @@
         android:name="ru.kalistratov.template.beauty.presentation.feature.servicelist.view.ServiceListFragment"
         android:label="ServiceListFragment"
         tools:layout="@layout/fragment_list_service" />
+    <fragment
+        android:id="@+id/clientsListFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.clientslist.view.ClientsListFragment"
+        android:label="ClientsListFragment"
+        tools:layout="@layout/fragment_list_clients" />
 </navigation>

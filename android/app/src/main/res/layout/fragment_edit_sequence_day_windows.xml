@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.feature.editsequencedaywindows.view.EditSequenceDayWindowsFragment">
+
+        <include
+            android:id="@+id/up_bar"
+            layout="@layout/view_up_bar" />
+
+        <ImageView
+            android:id="@+id/add_window_button"
+            android:layout_width="@dimen/up_bar_item"
+            android:layout_height="@dimen/up_bar_item"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@drawable/background_rounded_menu_button_transporent"
+            android:padding="@dimen/margin_xsmall"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@id/up_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorAccept" />
+
+        <TextView
+            android:id="@+id/workday_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_xsmall"
+            android:text="Рабочий день:"
+            android:textColor="@color/colorAccept"
+            android:textSize="@dimen/text_xlarge"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/workday_windows"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/up_bar" />
+
+        <TextView
+            android:id="@+id/workday_time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_xsmall"
+            android:textColor="@color/titleText"
+            android:textSize="@dimen/text_xlarge"
+            app:layout_constraintBottom_toTopOf="@id/workday_windows"
+            app:layout_constraintStart_toEndOf="@id/workday_text"
+            app:layout_constraintTop_toBottomOf="@id/up_bar" />
+
+        <ru.kalistratov.template.beauty.presentation.view.workdaywindows.WorkdayWindowsView
+            android:id="@+id/workday_windows"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/workday_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

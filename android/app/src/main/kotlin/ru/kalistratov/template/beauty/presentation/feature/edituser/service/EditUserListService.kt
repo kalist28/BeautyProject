@@ -1,41 +1,41 @@
 package ru.kalistratov.template.beauty.presentation.feature.edituser.service
 
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItem
+import ru.kalistratov.template.beauty.presentation.entity.ViewListItem
 import ru.kalistratov.template.beauty.presentation.feature.edituser.entity.EditUserListItemType
 
 interface EditUserListService {
-    suspend fun getItems(): List<EditUserListItem>
+    suspend fun getItems(): List<ViewListItem>
 }
 
 class EditUserListServiceImpl : EditUserListService {
 
     private val items = mutableListOf(
-        EditUserListItem.EditText(
+        ViewListItem.EditText(
             R.string.name,
-            EditUserListItemType.NAME
+            EditUserListItemType.Name
         ),
-        EditUserListItem.EditText(
+        ViewListItem.EditText(
             R.string.lastname,
-            EditUserListItemType.SURNAME
+            EditUserListItemType.Surname
         ),
-        EditUserListItem.EditText(
+        ViewListItem.EditText(
             R.string.patronymic,
-            EditUserListItemType.PATRONYMIC
+            EditUserListItemType.Patronymic
         ),
-        EditUserListItem.EditText(
+        ViewListItem.EditText(
             R.string.email,
-            EditUserListItemType.EMAIL
+            EditUserListItemType.Email
         ),
-        EditUserListItem.Button(
+        ViewListItem.Button(
             R.string.update_password,
-            EditUserListItemType.CHANGE_PASSWORD_BUTTON
+            EditUserListItemType.ChangePasswordButton
         ),
-        EditUserListItem.Button(
+        ViewListItem.Button(
             R.string.save,
-            EditUserListItemType.SAVE_BUTTON
+            EditUserListItemType.SaveButton
         ),
     )
 
-    override suspend fun getItems(): List<EditUserListItem> = items
+    override suspend fun getItems(): List<ViewListItem> = items
 }
