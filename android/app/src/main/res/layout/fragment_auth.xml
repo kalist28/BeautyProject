@@ -33,30 +33,39 @@
         android:id="@+id/app_logo"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:tint="@color/light_primary"
-        android:src="@drawable/ic_outline_account_circle"
+        android:src="@mipmap/app_icon_round"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_logo_center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/horizontal_logo_center"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_logo_center"
-        />
+        app:layout_constraintTop_toTopOf="@id/horizontal_logo_center" />
 
     <TextView
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_medium"
+        android:layout_marginTop="@dimen/margin_small"
         android:text="@string/app_name"
-        android:textStyle="bold"
         android:textColor="@color/light_primary"
-        app:layout_constraintTop_toBottomOf="@id/app_logo"
+        android:textSize="@dimen/text_large"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_logo" />
+
+    <TextView
+        style="@style/SubTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="alpha 0.0.1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_name" />
 
     <View
         android:id="@+id/main_panel"
         android:layout_width="match_parent"
         android:layout_height="@dimen/constraint_fill"
-        android:background="@drawable/background_white_rounded_panel"
         app:layout_constraintTop_toTopOf="@id/scrollView" />
 
     <ScrollView
@@ -85,15 +94,15 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/main_panel"
-                app:startIconDrawable="@drawable/ic_outline_account_circle"
-                app:startIconTint="@color/light_primary">
+                app:startIconDrawable="@drawable/ic_outline_account_circle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
+                    style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/background_stroke_round"
-                    android:hint="@string/email" />
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,31 +114,30 @@
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_small"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/light_primary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/email_input_layout"
-                app:startIconDrawable="@drawable/ic_lock"
-                app:startIconTint="@color/light_primary">
+                app:passwordToggleEnabled="true"
+                app:startIconDrawable="@drawable/ic_lock">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_text"
+                    style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/background_stroke_round"
-                    android:hint="@string/password" />
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:nextFocusDown="@id/auth_btn" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/auth_btn"
+                style="@style/ThemeOverlay.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_small"
-                android:background="@drawable/background_rounded_button"
                 android:text="Авторизоваться"
                 app:layout_constraintTop_toBottomOf="@+id/password_input_layout" />
 
@@ -139,6 +147,7 @@
 
     <TextView
         android:id="@+id/registration_btn"
+        style="@style/DefaultText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_large"
@@ -146,7 +155,6 @@
         android:alpha="0.4"
         android:gravity="center"
         android:text="Нет профиля?"
-        android:textColor="#040415"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

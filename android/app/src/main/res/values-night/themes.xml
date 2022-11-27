@@ -54,6 +54,8 @@
     </style>
 
     <style name="TextInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="startIconTint">@color/text_input_box_stroke</item>
+        <item name="passwordToggleTint">@color/text_input_box_stroke</item>
         <item name="boxStrokeColor">@color/text_input_box_stroke</item>
         <item name="boxCornerRadiusTopEnd">@dimen/margin_small</item>
         <item name="boxCornerRadiusTopStart">@dimen/margin_small</item>
@@ -82,7 +84,7 @@
     </style>
 
     <style name="SubTitleText" parent="ThemeOverlay.Material3.AutoCompleteTextView">
-        <item name="android:textColor">@color/dark_primary</item>
+        <item name="android:textColor">@color/dark_onSurfaceVariant</item>
     </style>
 
     <style name="BaseDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered"/>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TemplateBeautyApp</string>
+    <string name="app_name">Beauty Masters</string>
 
     <string name="name">Имя</string>
     <string name="lastname">Фамилия</string>

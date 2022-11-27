@@ -19,14 +19,13 @@
         app:hintEnabled="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/main_panel"
-        app:startIconTint="@color/light_primary">
+        app:layout_constraintTop_toTopOf="@id/main_panel">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/lastname_edit_text"
+            style="@style/TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_stroke_round"
             android:hint="@string/lastname"
             android:inputType="textAutoCorrect"
             android:maxLines="1"
@@ -49,9 +48,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name_edit_text"
+            style="@style/TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_stroke_round"
             android:hint="@string/name"
             android:inputType="textAutoCorrect"
             android:maxLines="1"
@@ -76,10 +75,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/patronymic_edit_text"
+            style="@style/TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="@dimen/margin_small"
-            android:background="@drawable/background_stroke_round"
             android:hint="@string/patronymic"
             android:inputType="textAutoCorrect"
             android:maxLines="1"

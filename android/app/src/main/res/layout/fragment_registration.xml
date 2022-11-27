@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontal_logo_center"
@@ -33,30 +33,34 @@
         android:id="@+id/app_logo"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/ic_outline_account_circle"
+        android:src="@mipmap/app_icon_round"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_logo_center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/horizontal_logo_center"
-        app:tint="@color/light_primary" />
+        app:layout_constraintTop_toTopOf="@id/horizontal_logo_center" />
 
     <TextView
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/registration"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/app_name"
         android:textColor="@color/light_primary"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_large"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
-    <View
-        android:id="@+id/main_panel"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/constraint_fill"
-        android:background="@drawable/background_white_rounded_panel"
-        app:layout_constraintTop_toTopOf="@id/scrollView" />
+    <TextView
+        style="@style/SubTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="alpha 0.0.1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_name" />
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -87,11 +91,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
-        android:background="@drawable/background_rounded_button"
         android:drawableEnd="@drawable/ic_arrow_right"
         android:maxLines="1"
         android:text="@string/registration"
-        app:drawableTint="@color/lightWhite"
+        app:drawableTint="@color/light_inverseOnSurface"
         app:layout_constraintTop_toBottomOf="@id/scrollView" />
 
     <FrameLayout
