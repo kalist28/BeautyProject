@@ -1,20 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <color name="colorAcceptLight">#5b93ff</color>
-    <color name="colorAccept">#377bfe</color>
-    <color name="colorDarkAccept">#377bfe</color>
-    <color name="color1">#d6c2bc</color>
-    <color name="teal_200">#c0cccc</color>
-    <color name="color2">#65b2c6</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="seed">#f75a98</color>
+    <color name="light_primary">#B12062</color>
+    <color name="color_primary10">#0DB12062</color>
+    <color name="light_onPrimary">#FFFFFF</color>
+    <color name="light_primaryContainer">#FFD9E2</color>
+    <color name="light_onPrimaryContainer">#3E001D</color>
+    <color name="light_secondary">#74565F</color>
+    <color name="light_onSecondary">#FFFFFF</color>
+    <color name="light_secondaryContainer">#FFD9E2</color>
+    <color name="light_onSecondaryContainer">#2B151C</color>
+    <color name="light_tertiary">#7C5635</color>
+    <color name="light_onTertiary">#FFFFFF</color>
+    <color name="light_tertiaryContainer">#FFDCC1</color>
+    <color name="light_onTertiaryContainer">#2E1500</color>
+    <color name="light_error">#BA1A1A</color>
+    <color name="light_errorContainer">#FFDAD6</color>
+    <color name="light_onError">#FFFFFF</color>
+    <color name="light_onErrorContainer">#410002</color>
+    <color name="light_background">#FFFBFF</color>
+    <color name="light_onBackground">#201A1B</color>
+    <color name="light_surface">#FFFBFF</color>
+    <color name="light_onSurface">#201A1B</color>
+    <color name="light_surfaceVariant">#F2DDE1</color>
+    <color name="light_onSurfaceVariant">#514347</color>
+    <color name="light_outline">#837377</color>
+    <color name="light_inverseOnSurface">#FAEEEF</color>
+    <color name="light_inverseSurface">#352F30</color>
+    <color name="light_inversePrimary">#FFB1C8</color>
+    <color name="light_shadow">#000000</color>
+    <color name="light_surfaceTint">#B12062</color>
+    <color name="light_outlineVariant">#D5C2C6</color>
+    <color name="light_scrim">#000000</color>
+    <color name="dark_primary">#FFB1C8</color>
+    <color name="dark_onPrimary">#650033</color>
+    <color name="dark_primaryContainer">#8E004A</color>
+    <color name="dark_onPrimaryContainer">#FFD9E2</color>
+    <color name="dark_secondary">#E3BDC6</color>
+    <color name="dark_onSecondary">#422931</color>
+    <color name="dark_secondaryContainer">#5A3F47</color>
+    <color name="dark_onSecondaryContainer">#FFD9E2</color>
+    <color name="dark_tertiary">#EFBD94</color>
+    <color name="dark_onTertiary">#48290B</color>
+    <color name="dark_tertiaryContainer">#613F20</color>
+    <color name="dark_onTertiaryContainer">#FFDCC1</color>
+    <color name="dark_error">#FFB4AB</color>
+    <color name="dark_errorContainer">#93000A</color>
+    <color name="dark_onError">#690005</color>
+    <color name="dark_onErrorContainer">#FFDAD6</color>
+    <color name="dark_background">#201A1B</color>
+    <color name="dark_onBackground">#EBE0E1</color>
+    <color name="dark_surface">#201A1B</color>
+    <color name="dark_onSurface">#EBE0E1</color>
+    <color name="dark_surfaceVariant">#514347</color>
+    <color name="dark_onSurfaceVariant">#D5C2C6</color>
+    <color name="dark_outline">#9E8C90</color>
+    <color name="dark_inverseOnSurface">#201A1B</color>
+    <color name="dark_inverseSurface">#EBE0E1</color>
+    <color name="dark_inversePrimary">#B12062</color>
+    <color name="dark_shadow">#000000</color>
+    <color name="dark_surfaceTint">#FFB1C8</color>
+    <color name="dark_outlineVariant">#514347</color>
+    <color name="dark_scrim">#000000</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="black">#000000</color>
+
 
     <color name="titleText">#09101D</color>
-    
+
     <color name="purple">#8A5082</color>
 
     <color name="colorAcceptLightTransparent">#1A5B93FF</color>
     <color name="colorAcceptTransparent">#1A377BFE</color>
+    <color name="colorAcceptTransparent50">#8074565F</color>
 
     <color name="bottomSheetUpSelector">#777777</color>
 
@@ -27,7 +86,10 @@
     <color name="colorSeparator">#EBEEF2</color>
 
     <color name="authBackgroundGradientEnd">#FFFFFFFF</color>
-    <color name="authBackgroundGradientStart">@color/colorAccept</color>
+    <color name="authBackgroundGradientStart">@color/dark_primary</color>
+
+    <color name="colorOrange">#F9A825</color>
+    <color name="colorOrange10">#1AF9A825</color>
 
     <color name="exitColor">#FF1843</color>
     <color name="exitColorBackground">#FFE8ED</color>

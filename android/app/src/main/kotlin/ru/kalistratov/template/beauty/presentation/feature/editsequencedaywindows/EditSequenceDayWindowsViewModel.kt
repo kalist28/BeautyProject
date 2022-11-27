@@ -5,9 +5,9 @@ import com.soywiz.klock.Time
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.kalistratov.template.beauty.domain.entity.Id
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.SequenceDayWindow
-import ru.kalistratov.template.beauty.domain.extension.noTime
 import ru.kalistratov.template.beauty.domain.feature.editworkdaywindows.EditWorkdayWindowsInteractor
 import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
 import ru.kalistratov.template.beauty.infrastructure.base.BaseState
@@ -15,7 +15,10 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.notNullFlow
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
+import ru.kalistratov.template.beauty.infrastructure.extensions.noTime
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.view.EditSequenceDayWindowsIntent
+import ru.kalistratov.template.beauty.presentation.view.workdaywindows.IdSelector
 import javax.inject.Inject
 
 data class EditWorkdayWindowsState(
@@ -24,8 +27,12 @@ data class EditWorkdayWindowsState(
     val fromTime: Time = noTime,
     val canAddWindow: Boolean = false,
     val selectedWindow: SequenceDayWindow? = null,
+    val selectedWindows: List<Id> = emptyList(),
+    val windowsListState: IdSelector.State = IdSelector.State.LIST,
 
-    val showAddWindowDialog: Boolean = false
+    val loading: Boolean = false,
+    val showAddWindowDialog: Boolean = false,
+    val needInvalidateOptionMenu: Boolean = false,
 ) : BaseState
 
 sealed class EditWorkdayWindowsAction : BaseAction {
@@ -33,14 +40,20 @@ sealed class EditWorkdayWindowsAction : BaseAction {
     data class UpdateFromTime(val time: Time) : EditWorkdayWindowsAction()
     data class UpdateSelectedWindow(val window: SequenceDayWindow) : EditWorkdayWindowsAction()
     data class UpdateCanAddWindow(val can: Boolean) : EditWorkdayWindowsAction()
-    data class UpdateDay(val sequence: SequenceDay) : EditWorkdayWindowsAction()
+    data class UpdateDay(val day: SequenceDay) : EditWorkdayWindowsAction()
+    data class UpdateSelectedWindows(val list: List<Id>) : EditWorkdayWindowsAction()
+    data class UpdateLoading(val loading: Boolean) : EditWorkdayWindowsAction()
+
+    data class UpdateWindowListState(
+        val state: IdSelector.State
+    ) : EditWorkdayWindowsAction()
 
     object ShowAddWindowDialog : EditWorkdayWindowsAction()
+    object UpdateOptionMenu : EditWorkdayWindowsAction()
     object Clear : EditWorkdayWindowsAction()
 }
 
 class EditWorkdayWindowsViewModel @Inject constructor(
-    private val router: EditWorkdayWindowsRouter,
     private val interactor: EditWorkdayWindowsInteractor,
 ) : BaseViewModel<EditSequenceDayWindowsIntent, EditWorkdayWindowsAction, EditWorkdayWindowsState>() {
 
@@ -57,7 +70,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
             val initDataFlow = intentFlow
                 .filterIsInstance<EditSequenceDayWindowsIntent.InitData>()
                 .take(1)
-                .share(this)
+                .share(this, replay = 1)
 
             val updateDaySequenceIdAction = initDataFlow
                 .flatMapConcat {
@@ -129,15 +142,49 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                     )
                 }
 
-            intentFlow.filterIsInstance<EditSequenceDayWindowsIntent.BackPressed>()
-                .onEach { router.back() }
-                .launchIn(this)
-                .addTo(workComposite)
+            val updateWindowListStateAction = intentFlow
+                .filterIsInstance<EditSequenceDayWindowsIntent.WindowListStateChanged>()
+                .flatMapConcat {
+                    flowOf(
+                        EditWorkdayWindowsAction.UpdateWindowListState(it.state),
+                        EditWorkdayWindowsAction.UpdateOptionMenu,
+                        EditWorkdayWindowsAction.Clear
+                    )
+                }
+
+            val updateSelectedWindowsAction = intentFlow
+                .filterIsInstance<EditSequenceDayWindowsIntent.SelectedWindowsUpdated>()
+                .map { EditWorkdayWindowsAction.UpdateSelectedWindows(it.list) }
+
+            val removeWindowsFlow = intentFlow
+                .filterIsInstance<EditSequenceDayWindowsIntent.RemoveWindows>()
+                .share(this, replay = 1)
+
+            val afterWindowsRemoveActions = removeWindowsFlow
+                .flatMapConcat {
+                    val ids = state().selectedWindows
+                    loge("BEFORE - ${getDay().windows.map { it.id }}")
+                    val updatedDay = interactor.removeWindows(ids, getDay())
+                    loge("Updated -  ${updatedDay.windows.map { it.id }}")
+                    flowOf(
+                        EditWorkdayWindowsAction.UpdateDay(updatedDay),
+                        EditWorkdayWindowsAction.UpdateSelectedWindows(emptyList()),
+                        EditWorkdayWindowsAction.UpdateLoading(false),
+                    )
+                }
+
+            val showLoadingAction = merge(
+                removeWindowsFlow
+            ).map { EditWorkdayWindowsAction.UpdateLoading(true) }
 
             merge(
+                showLoadingAction,
                 showAddWindowDialogAction,
                 updateDaySequenceIdAction,
+                afterWindowsRemoveActions,
                 updateSelectedWindowAction,
+                updateWindowListStateAction,
+                updateSelectedWindowsAction,
                 updatedDayAfterWindowsUpdatedAction
             )
                 .flowOn(Dispatchers.IO)
@@ -160,7 +207,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
             fromTime = action.time
         )
         is EditWorkdayWindowsAction.UpdateDay -> state.copy(
-            day = action.sequence
+            day = action.day
         )
         is EditWorkdayWindowsAction.UpdateCanAddWindow -> state.copy(
             canAddWindow = action.can
@@ -174,8 +221,23 @@ class EditWorkdayWindowsViewModel @Inject constructor(
         is EditWorkdayWindowsAction.Clear -> state.copy(
             selectedWindow = null,
             showAddWindowDialog = false,
+            needInvalidateOptionMenu = false,
+        )
+        is EditWorkdayWindowsAction.UpdateWindowListState -> state.copy(
+            windowsListState = action.state
+        )
+        is EditWorkdayWindowsAction.UpdateSelectedWindows -> state.copy(
+            selectedWindows = action.list
+        )
+        EditWorkdayWindowsAction.UpdateOptionMenu -> state.copy(
+            needInvalidateOptionMenu = true
+        )
+        is EditWorkdayWindowsAction.UpdateLoading -> state.copy(
+            loading = action.loading
         )
     }
 
+    private fun state() = _stateFlow.value
+    private fun getDay() = _stateFlow.value.day
     private fun getDayWindows() = _stateFlow.value.day.windows
 }

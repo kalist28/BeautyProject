@@ -12,7 +12,7 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
     private val uiComposite = CompositeJob()
     protected val workComposite = CompositeJob()
 
-    private lateinit var _stateFlow: MutableStateFlow<S>
+    private var _stateFlow: MutableStateFlow<S>? = null
     protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow(replay = 1)
     protected val intentFlow: MutableSharedFlow<I> = mutableSharedFlow()
 
@@ -34,18 +34,23 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
             .addTo(uiComposite)
     }
 
-    protected fun getLastState() = _stateFlow.value
+    protected fun getLastState() = _stateFlow?.value ?: initialState()
+
+    open fun initialState(): BaseState {
+        TODO("Реализовать везде")
+    }
 
     protected fun <T> Flow<T>.launchHere() = this
         .launchIn(viewModelScope)
         .addTo(workComposite)
 
     protected suspend fun Flow<A>.collectState(initialState: S) {
-        _stateFlow = MutableStateFlow(initialState)
-        scan(initialState, ::reduce)
+        val state = _stateFlow?.value ?: initialState
+        val actualStateFlow = _stateFlow ?: MutableStateFlow(initialState).also { _stateFlow = it }
+        this.scan(state, ::reduce)
             .onEach {
-                _stateFlow.value = it
                 stateFlow.emit(it)
+                actualStateFlow.value = it
             }
             .launchIn(viewModelScope)
             .addTo(workComposite)

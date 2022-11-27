@@ -3,8 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/hours"
+        style="@style/DefaultText"
         android:layout_width="@dimen/margin_large"
         android:layout_height="wrap_content"
         android:background="@drawable/background_time_picker_start"
@@ -17,8 +18,9 @@
         android:paddingVertical="5dp"
         android:theme="@style/TimePickerEditText" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/minutes"
+        style="@style/DefaultText"
         android:layout_width="@dimen/margin_large"
         android:layout_height="wrap_content"
         android:background="@drawable/background_time_picker_end"

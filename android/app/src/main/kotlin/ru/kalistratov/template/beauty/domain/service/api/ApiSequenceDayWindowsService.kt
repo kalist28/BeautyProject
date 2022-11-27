@@ -8,4 +8,5 @@ interface ApiSequenceDayWindowsService {
     suspend fun get(id: Id): NetworkResult<ServerSequenceDayWindow>
     suspend fun create(window: ServerSequenceDayWindow): NetworkResult<ServerSequenceDayWindow>
     suspend fun update(window: ServerSequenceDayWindow): NetworkResult<ServerSequenceDayWindow>
+    suspend fun remove(id: Id): NetworkResult<Unit>
 }

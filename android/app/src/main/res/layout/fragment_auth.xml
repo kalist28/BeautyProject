@@ -33,7 +33,7 @@
         android:id="@+id/app_logo"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:tint="@color/colorAccept"
+        app:tint="@color/light_primary"
         android:src="@drawable/ic_outline_account_circle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -47,7 +47,7 @@
         android:textSize="@dimen/text_medium"
         android:text="@string/app_name"
         android:textStyle="bold"
-        android:textColor="@color/colorAccept"
+        android:textColor="@color/light_primary"
         app:layout_constraintTop_toBottomOf="@id/app_logo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -76,7 +76,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_input_layout"
-                style="@style/EditTextStyle"
+                style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
@@ -86,38 +86,38 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/main_panel"
                 app:startIconDrawable="@drawable/ic_outline_account_circle"
-                app:startIconTint="@color/colorAccept">
+                app:startIconTint="@color/light_primary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/background_stroke"
+                    android:background="@drawable/background_stroke_round"
                     android:hint="@string/email" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_input_layout"
-                style="@style/EditTextStyle"
+                style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_small"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorAccept"
+                app:passwordToggleTint="@color/light_primary"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/email_input_layout"
                 app:startIconDrawable="@drawable/ic_lock"
-                app:startIconTint="@color/colorAccept">
+                app:startIconTint="@color/light_primary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/background_stroke"
+                    android:background="@drawable/background_stroke_round"
                     android:hint="@string/password" />
 
             </com.google.android.material.textfield.TextInputLayout>

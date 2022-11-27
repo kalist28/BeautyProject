@@ -8,8 +8,8 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import ru.kalistratov.template.beauty.domain.extension.clockFormatPattern
-import ru.kalistratov.template.beauty.domain.extension.clockTimeFormat
+import ru.kalistratov.template.beauty.infrastructure.extensions.clockFormatPattern
+import ru.kalistratov.template.beauty.infrastructure.extensions.clockTimeFormat
 
 object ClockFormatTimeSerializer : KSerializer<Time> {
     override val descriptor: SerialDescriptor =

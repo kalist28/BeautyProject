@@ -2,7 +2,9 @@ package ru.kalistratov.template.beauty.infrastructure.service.api
 
 import io.ktor.client.request.*
 import io.ktor.http.*
+import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
+import ru.kalistratov.template.beauty.common.handlingNetworkSafetyWithoutData
 import ru.kalistratov.template.beauty.domain.entity.Id
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
@@ -51,4 +53,13 @@ class ApiSequenceDayWindowsServiceImpl(
             }
         }
     }.logIfError()
+
+    override suspend fun remove(id: Id): NetworkResult<Unit> =
+        getClient().useWithHandleUnauthorizedError {
+            handlingNetworkSafetyWithoutData<Unit> {
+                it.delete("$windowsUrl/${id}") {
+                    header(AUTH_HEADER, getBearerToken())
+                }
+            }
+        }.logIfError()
 }

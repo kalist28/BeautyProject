@@ -3,41 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/margin_xsmall">
+    android:paddingVertical="@dimen/leading_icon_vertical_padding">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="@dimen/margin_xlarge"
-        android:layout_height="@dimen/margin_xlarge"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_container"
+        android:layout_width="@dimen/menu_badge_size"
+        android:layout_height="@dimen/menu_badge_size"
+        android:layout_marginHorizontal="@dimen/leading_element_left_padding"
         android:background="@drawable/profile_menu_item_background"
-        android:padding="@dimen/margin_small"
-        android:src="@drawable/ic_list_alt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorDarkAccept" />
+        app:layout_constraintEnd_toStartOf="@id/title_text_view"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon"
+        style="@style/OnContainerImage"
+        android:layout_width="@dimen/menu_badge_icon_size"
+        android:layout_height="@dimen/menu_badge_icon_size"
+        android:src="@drawable/ic_list_alt"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_container"
+        app:layout_constraintStart_toStartOf="@+id/icon_container"
+        app:layout_constraintEnd_toEndOf="@id/icon_container"
+        app:layout_constraintTop_toTopOf="@+id/icon_container"/>
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title_text_view"
         android:layout_width="@dimen/constraint_fill"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_small"
-        android:text="Рабочая неделя"
-        android:textColor="#1A1C3D"
         android:textSize="@dimen/text_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/arrow"
-        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintStart_toEndOf="@id/icon_container"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/arrow"
+        style="@style/OnContainerImage"
         android:layout_width="@dimen/margin_small"
         android:layout_height="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/trailing_element_left_padding"
+        android:layout_marginEnd="@dimen/trailing_element_right_padding"
         android:src="@drawable/ic_arrow_right"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/title_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorAccept" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

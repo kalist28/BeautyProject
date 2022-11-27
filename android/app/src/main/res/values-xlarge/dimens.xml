@@ -21,5 +21,7 @@
 
     <dimen name="up_bar_item">42dp</dimen>
 
+    <dimen name="text_headline_small_size">24sp</dimen>
+
     <bool name="isTablet">true</bool>
 </resources>

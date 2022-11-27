@@ -2,10 +2,9 @@ package ru.kalistratov.template.beauty.domain.entity
 
 import com.soywiz.klock.Time
 import kotlinx.serialization.Contextual
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ru.kalistratov.template.beauty.domain.extension.noTime
-import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceDayWindow
+import ru.kalistratov.template.beauty.infrastructure.extensions.noTime
+import ru.kalistratov.template.beauty.infrastructure.extensions.toClockFormat
 import ru.kalistratov.template.beauty.infrastructure.kserialization.serializer.ClockFormatTimeSerializer
 
 typealias SequenceWeek = List<SequenceDay>
@@ -36,6 +35,8 @@ data class SequenceDay(
             windows = emptyList()
         )
     }
+
+    fun toContentTimeRange() = "${startAt.toClockFormat()} - ${finishAt.toClockFormat()}"
 }
 
 @Serializable

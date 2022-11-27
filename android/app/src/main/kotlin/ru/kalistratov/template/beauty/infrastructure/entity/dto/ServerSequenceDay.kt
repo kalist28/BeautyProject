@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.kalistratov.template.beauty.domain.entity.Data
 import ru.kalistratov.template.beauty.domain.entity.WeekDay
-import ru.kalistratov.template.beauty.domain.extension.noTime
+import ru.kalistratov.template.beauty.infrastructure.extensions.noTime
 import ru.kalistratov.template.beauty.infrastructure.kserialization.serializer.ClockFormatTimeSerializer
 
 @Serializable

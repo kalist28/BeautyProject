@@ -4,25 +4,25 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.isVisible
 import com.soywiz.klock.Time
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.SequenceDayWindow
-import ru.kalistratov.template.beauty.domain.extension.*
 import ru.kalistratov.template.beauty.infrastructure.entity.TimeRange
+import ru.kalistratov.template.beauty.infrastructure.extensions.*
 
 class SequenceDayWindowCreatorDialog(
     private val sequenceDayWindow: SequenceDayWindow?,
     windows: List<SequenceDayWindow>,
     private val dayTimeRange: TimeRange,
     context: Context,
-) : Dialog(context) {
+) : Dialog(context, R.style.BaseDialog) {
 
     sealed interface Callback {
         data class Add(val window: SequenceDayWindow) : Callback
@@ -43,18 +43,40 @@ class SequenceDayWindowCreatorDialog(
         false -> windows.toMutableList()
             .also { list -> list.removeIf { it.id == sequenceDayWindow.id } }
     }
+
     private val timeRanges = this.windows.map { it.startAt.toTimeRange(it.finishAt) }
 
-    private var saveButton: Button? = null
-    private var closeButton: ImageView? = null
-    private var startError: TextView? = null
-    private var finishError: TextView? = null
-    private var startEditTime: EditTimeView? = null
-    private var finishEditTime: EditTimeView? = null
+    private val startError: TextView by lazy { findViewById(R.id.start_error_message) }
+    private val finishError: TextView by lazy { findViewById(R.id.finish_error_message) }
+
+    private val startEditTime by lazy {
+        findViewById<EditTimeView>(R.id.start_edit_time)
+            .apply { onChangeListener = { setAllowSave() } }
+    }
+
+    private val finishEditTime by lazy {
+        findViewById<EditTimeView>(R.id.finish_edit_time)
+            .apply { onChangeListener = { setAllowSave() } }
+    }
+
+    private val saveButton by lazy {
+        findViewById<Button>(R.id.save_btn).apply {
+            text = context.getString(
+                when (sequenceDayWindow == null) {
+                    true -> R.string.add
+                    false -> R.string.edit
+                }
+            )
+            setOnClickListener {
+                callbackListener.invoke(getResultCallback())
+                dismiss()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_time_range)
+        setContentView(R.layout.dialog_edit_sequence_day_window)
         findViews()
         window?.setBackgroundDrawable(
             AppCompatResources.getDrawable(
@@ -63,12 +85,20 @@ class SequenceDayWindowCreatorDialog(
             )
         )
 
-        sequenceDayWindow?.let {
-            startEditTime?.time = it.startAt
-            finishEditTime?.time = it.finishAt
-        }
-
         setAllowSave()
+        initTimeRange()
+    }
+
+    private fun initTimeRange() {
+        when (sequenceDayWindow != null) {
+            true -> sequenceDayWindow.let { it.startAt to it.finishAt }
+            false -> windows.lastOrNull()
+                ?.let { it.finishAt to it.finishAt.plus(hour = 1) }
+                ?: dayTimeRange.start.let { it to it.plus(hour = 1) }
+        }.let {
+            startEditTime.time = it.first
+            finishEditTime.time = it.second
+        }
     }
 
     private fun findViews() {
@@ -78,35 +108,10 @@ class SequenceDayWindowCreatorDialog(
                 false -> R.string.edit_work_window
             }
         )
-        startError = findViewById(R.id.start_error_message)
-        finishError = findViewById(R.id.finish_error_message)
 
-        startEditTime = findViewById<EditTimeView>(R.id.start_edit_time)
-            ?.apply { onChangeListener = { setAllowSave() } }
-
-        finishEditTime = findViewById<EditTimeView>(R.id.finish_edit_time)
-            ?.apply { onChangeListener = { setAllowSave() } }
-
-        saveButton = findViewById<Button>(R.id.saving_button)
-            ?.apply {
-                text = context.getString(
-                    when (sequenceDayWindow == null) {
-                        true -> R.string.add
-                        false -> R.string.edit
-                    }
-                )
-                setOnClickListener {
-                    callbackListener.invoke(getResultCallback())
-                    dismiss()
-                }
-            }
-
-        closeButton = findViewById<ImageView>(R.id.close_button)
-            ?.apply {
-                setOnClickListener {
-                    dismiss()
-                }
-            }
+        findViewById<Button>(R.id.close_btn)?.apply {
+            setOnClickListener { dismiss() }
+        }
     }
 
     private fun getResultCallback(): Callback =
@@ -134,8 +139,6 @@ class SequenceDayWindowCreatorDialog(
             return
         }
 
-        val newWindowRange = TimeRange(startTime, finishTime)
-
         timeRanges.find { finishTime.insideWithoutCorners(it) }.let {
             updateInsideError(finishError, it)
             finishEditTime?.error = (it == null).not()
@@ -146,16 +149,22 @@ class SequenceDayWindowCreatorDialog(
             startEditTime?.error = (it == null).not()
         }
 
-        var contains = false
-
+        var insideFreeWindows = false
         val freeWindows = calculateFreeWindows()
+        val newWindowRange = TimeRange(startTime, finishTime)
+
         for (freeWindow in freeWindows) {
             if (newWindowRange.insideOf(freeWindow)) {
-                contains = true
+                insideFreeWindows = true
                 break
             }
         }
-        saveButton?.isEnabled = contains
+        saveButton?.isEnabled = insideFreeWindows
+
+        finishError.text = when (!insideFreeWindows) {
+            true -> context.getString(R.string.shadow_windows_error)
+            false -> null
+        }
     }
 
     private fun checkOutsideError(startTime: Time, finishTime: Time): Boolean {
@@ -220,8 +229,8 @@ class SequenceDayWindowCreatorDialog(
         val inverseRange = startMills > finishMills
 
 
-        startError?.text = null
-        finishError?.text = context.getString(
+        startError.text = null
+        finishError.text = context.getString(
             when {
                 timesEquals -> R.string.times_equals
                 inverseRange -> R.string.inverse_range

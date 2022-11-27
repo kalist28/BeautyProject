@@ -6,18 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".presentation.feature.weeksequence.view.WeekSequenceFragment">
 
-    <include
-        android:id="@+id/up_bar"
-        layout="@layout/view_up_bar" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ru.kalistratov.template.beauty.presentation.view.weeksequence.WeekSequenceView
         android:id="@+id/week_sequence_view"
         android:layout_width="@dimen/constraint_fill"
         android:layout_height="@dimen/constraint_fill"
-        android:layout_margin="@dimen/margin_small"
+        android:paddingHorizontal="@dimen/margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/up_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,6 +31,7 @@
     <string name="outside_work_window">Выходит за пределы дня: %s</string>
     <string name="times_equals">Время должно отличаться.</string>
     <string name="inverse_range">Начало не может быть больше конца.</string>
+    <string name="shadow_windows_error">Окно не может перекрывать другие окна.</string>
 
     <string name="monday">Понедельник</string>
     <string name="tuesday">Вторник</string>
@@ -54,13 +55,26 @@
     <string name="edit">Изменить</string>
     <string name="save">Сохранить</string>
     <string name="update">Обновить</string>
+    <string name="selected_count">Выбрано: %d</string>
 
-    <string name="total_minutes">%d мин.</string>
+    <string name="total_minutes">%d\nмин</string>
     <string name="next">Далее</string>
     <string name="title">Заголовок</string>
     <string name="holiday">Выходной</string>
+    <string name="not_specified">Не указано</string>
     <string name="end">Конец</string>
     <string name="start">Начало</string>
 
     <string name="clients">Клиенты</string>
+    <string name="user">Пользователь</string>
+    <string name="week_sequence">Рабочая неделя</string>
+    <string name="add_window">Добавить окно</string>
+
+    <string name="warning">Предупреждение</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="delete">Удалить</string>
+    <string name="cancel">Отменить</string>
+
+    <string name="delete_windows_warning">Будет удалено %s</string>
+
 </resources>

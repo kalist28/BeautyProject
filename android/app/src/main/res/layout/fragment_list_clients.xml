@@ -20,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="@id/up_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorAccept" />
+        app:tint="@color/light_primary" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

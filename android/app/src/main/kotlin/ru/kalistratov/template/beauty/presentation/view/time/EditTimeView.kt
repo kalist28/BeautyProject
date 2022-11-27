@@ -14,7 +14,7 @@ import com.soywiz.klock.Time
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.extension.timeNow
+import ru.kalistratov.template.beauty.infrastructure.extensions.timeNow
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class EditTimeView @JvmOverloads constructor(

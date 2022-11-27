@@ -1,7 +1,6 @@
 package ru.kalistratov.template.beauty.presentation.view.weeksequence
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -19,10 +18,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
-import ru.kalistratov.template.beauty.domain.extension.noTime
+import ru.kalistratov.template.beauty.infrastructure.extensions.noTime
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.extensions.jsonParser
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.find
 import ru.kalistratov.template.beauty.presentation.view.bottomsheet.BaseBottomSheet
 import ru.kalistratov.template.beauty.presentation.view.time.EditTimeView
@@ -71,7 +69,7 @@ class EditSequenceDayBottomSheet : BaseBottomSheet {
         endEditTime = find(R.id.end_edit_time)
         startEditTime = find(R.id.start_edit_time)
         holidaySwitch = find(R.id.holiday_switch)
-        savingButton = find(R.id.saving_button)
+        savingButton = find(R.id.save_btn)
         editWindowsButton = find(R.id.windows_edit_btn)
     }
 
@@ -90,14 +88,19 @@ class EditSequenceDayBottomSheet : BaseBottomSheet {
         find<TextView>(R.id.topic_text_view)
             .setText(sequenceDay.day.tittleResId)
 
-        if (sequenceDay.id.isBlank())
-            editWindowsButton?.isVisible = false
-
         initBottomSheetBehavior()
         initSavingButtonListener()
         initHolidaySwitchListener()
         initEditWindowsButtonListener()
         updateViewsByWorkDay(sequenceDay)
+
+        val noTimeRange = sequenceDay.let { day ->
+            val startAllMinutes =  day.startAt .let { it.hour * 60 + it.minute }
+            val finishAllMinutes = day.finishAt.let { it.hour * 60 + it.minute }
+            finishAllMinutes - startAllMinutes == 0
+        }
+        if (sequenceDay.id.isBlank() or noTimeRange)
+            editWindowsButton?.isVisible = false
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

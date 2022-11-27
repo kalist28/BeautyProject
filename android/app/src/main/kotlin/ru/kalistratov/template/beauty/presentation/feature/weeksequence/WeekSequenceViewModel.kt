@@ -31,12 +31,13 @@ sealed class WeekSequenceAction : BaseAction {
 }
 
 class WeekSequenceViewModel @Inject constructor(
-    private val router: WeekSequenceRouter,
     private val interactor: WeekSequenceInteractor
 ) : BaseViewModel<WeekSequenceIntent, WeekSequenceAction, WeekSequenceState>() {
 
     private val initialState = WeekSequenceState()
     private val _stateFlow = MutableStateFlow(initialState)
+
+    var router: WeekSequenceRouter? = null
 
     init {
         viewModelScope.launch {
@@ -51,18 +52,23 @@ class WeekSequenceViewModel @Inject constructor(
             val showLoadingWeekSequenceAction = initFlow
                 .map { WeekSequenceAction.LoadWeekSequence }
 
-            intentFlow.filterIsInstance<WeekSequenceIntent.WorkDayBottomSheetClick>()
+            val workDayBottomSheetClicksFlow = intentFlow.filterIsInstance<WeekSequenceIntent.WorkDayBottomSheetClick>()
                 .onEach {
                     if (it.intent is EditSequenceDayBottomSheet.ClickIntent.EditWindows) {
-                        router.openEditWorkdayWindows(it.intent.day.day.index)
+                        router?.openEditWorkdayWindows(it.intent.day.day.index)
                     }
                 }
-                .launchHere()
+                .share(this)
 
-            val updateWorkDaySequenceAction = intentFlow
-                .filterIsInstance<WeekSequenceIntent.UpdateWorkDaySequence>()
-                .flatMapConcat { intent ->
-                    val dayToUpdate = intent.day
+            val updateWorkDaySequenceAction = workDayBottomSheetClicksFlow
+                .flatMapConcat {
+                    val intent = it.intent
+                    when (intent is EditSequenceDayBottomSheet.ClickIntent.SaveSequenceDay) {
+                        true -> flowOf(intent.day)
+                        false -> emptyFlow()
+                    }
+                }
+                .flatMapConcat { dayToUpdate ->
                     val updatedDay = interactor.updateWorkDaySequence(dayToUpdate)
                     if (updatedDay == null) emptyFlow()
                     else {
@@ -79,6 +85,7 @@ class WeekSequenceViewModel @Inject constructor(
                     }
                 }
                 .share(this)
+
 
             val updateWeekSequenceAction = merge(
                 loadWeekSequenceFlow,
@@ -101,11 +108,6 @@ class WeekSequenceViewModel @Inject constructor(
                         WeekSequenceAction.Clear,
                     )
                 }
-
-            intentFlow.filterIsInstance<WeekSequenceIntent.BackPressed>()
-                .onEach { router.back() }
-                .launchIn(this)
-                .addTo(workComposite)
 
             merge(
                 updateWeekSequenceAction,

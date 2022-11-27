@@ -15,7 +15,7 @@ fun interface BottomSheetOnClosesListener {
 abstract class BaseBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
-        private const val PERCENTAGE_OF_TOTAL_HEIGHT = 0.9
+        private const val PERCENTAGE_OF_TOTAL_HEIGHT = 0.7
     }
 
     var onClosesListener: BottomSheetOnClosesListener? = null

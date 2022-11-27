@@ -40,7 +40,7 @@ class PersonalAreaViewModel @Inject constructor(
 
             val initFlow = intentFlow
                 .filterIsInstance<PersonalAreaIntent.InitData>()
-                .share(this)
+                .share(this, replay = 1)
 
             val updateMenuItemsAction = initFlow.map {
                 val items = interactor.loadMenuItems()

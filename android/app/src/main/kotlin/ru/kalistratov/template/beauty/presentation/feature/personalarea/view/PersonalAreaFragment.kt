@@ -1,34 +1,28 @@
 package ru.kalistratov.template.beauty.presentation.feature.personalarea.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isVisible
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.databinding.FragmentPersonalAreaBinding
-import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
-import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
-import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.presentation.extension.clicks
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaRouter
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaState
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.PersonalAreaViewModel
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaModule
+import javax.inject.Inject
+
 
 sealed class PersonalAreaIntent : BaseIntent {
-    data class
-    MenuItemClick(val id: Int) : PersonalAreaIntent()
+    data class MenuItemClick(val id: Int) : PersonalAreaIntent()
 
     object InitData : PersonalAreaIntent()
     object UserPanelClick : PersonalAreaIntent()
@@ -88,6 +82,7 @@ class PersonalAreaFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
         viewModel.also {
             it.router = profileRouter
             it.connectInto(this)
@@ -96,21 +91,14 @@ class PersonalAreaFragment : BaseFragment(),
 
     override fun intents(): Flow<PersonalAreaIntent> = merge(
         flowOf(PersonalAreaIntent.InitData),
-        binding.userPanel.root.clicks().map { PersonalAreaIntent.UserPanelClick },
+        binding.userIcon.clicks().map { PersonalAreaIntent.UserPanelClick },
         menuController.clicks.map { PersonalAreaIntent.MenuItemClick(it) },
     )
 
     override fun render(state: PersonalAreaState) {
         menuController.items = state.menuItems
         menuController.requestModelBuild()
-        binding.userPanel.run {
-            val user = state.user
-            progressBar.isVisible = user == null
-
-            if (user == null) return@run
-            val fullName = "${user.name} ${user.surname}"
-            userFullname.text = fullName
-            userEmail.text = user.email
-        }
+        binding.toolbar.title = state.user
+            ?.let { "${it.name} ${it.surname}" } ?: ""
     }
 }

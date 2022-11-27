@@ -45,13 +45,6 @@ class MenuItemModel(
         root?.setOnClickListener { clickAction.invoke(item.id) }
         title?.let { it.text = item.title }
         icon?.let { it.setImageDrawable(it.getDrawable(item.iconId)) }
-
-        if (item.id == PersonalAreaMenuItemId.EXIT.id) {
-            icon?.let {
-                it.imageTintList = it.getColorStateList(R.color.exitColor)
-                it.background = it.getDrawable(R.drawable.profile_menu_item_exit_background)
-            }
-        }
     }
 
     override fun getDefaultLayout() = R.layout.list_item_menu_with_badge

@@ -22,6 +22,19 @@
     <dimen name="up_bar_item">42dp</dimen>
 
     <dimen name="sheet_topic_margin">100dp</dimen>
+    <dimen name="target">48dp</dimen>
+    <dimen name="horizontal_padding">16dp</dimen>
+    <dimen name="leading_icon_vertical_padding">8dp</dimen>
+
+    <dimen name="menu_badge_size">48dp</dimen>
+    <dimen name="menu_badge_icon_size">24dp</dimen>
+
+    <dimen name="leading_element_left_padding">16dp</dimen>
+    <dimen name="trailing_element_right_padding">24dp</dimen>
+    <dimen name="trailing_element_left_padding">16dp</dimen>
+
+    <dimen name="text_headline_small_size">24sp</dimen>
+    <dimen name="divider_bottom_margin">16dp</dimen>
 
     <bool name="isTablet">false</bool>
 </resources>

@@ -69,7 +69,7 @@ class SimpleCalendarView @JvmOverloads constructor(
                 if (isThisMonth) {
                     when {
                         isSelected -> {
-                            textView.setTextColorRes(R.color.white)
+                            textView.setTextColorRes(R.color.lightWhite)
                             textView.setBackgroundResource(R.drawable.calendar_day_selected)
                         }
                         isToday -> {

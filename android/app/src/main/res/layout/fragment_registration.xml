@@ -38,13 +38,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/horizontal_logo_center"
-        app:tint="@color/colorAccept" />
+        app:tint="@color/light_primary" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/registration"
-        android:textColor="@color/colorAccept"
+        android:textColor="@color/light_primary"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -91,7 +91,7 @@
         android:drawableEnd="@drawable/ic_arrow_right"
         android:maxLines="1"
         android:text="@string/registration"
-        app:drawableTint="@color/white"
+        app:drawableTint="@color/lightWhite"
         app:layout_constraintTop_toBottomOf="@id/scrollView" />
 
     <FrameLayout

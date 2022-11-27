@@ -31,4 +31,16 @@ class SequenceDayWindowsRepositoryImpl(
             else -> null
         }
     }
+
+    override suspend fun remove(id: Id) = apiSequenceDayWindowsService
+        .remove(id) is NetworkResult.Success
+
+    override suspend fun removeAll(ids: List<Id>): List<Id> {
+        val unmovedIds = mutableListOf<Id>()
+        ids.forEach {
+            val removed = remove(it)
+            if (!removed) unmovedIds.add(it)
+        }
+        return unmovedIds
+    }
 }

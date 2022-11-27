@@ -1,8 +1,9 @@
-package ru.kalistratov.template.beauty.domain.extension
+package ru.kalistratov.template.beauty.infrastructure.extensions
 
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.Time
 import com.soywiz.klock.TimeFormat
+import com.soywiz.klock.TimeSpan
 import ru.kalistratov.template.beauty.infrastructure.entity.TimeRange
 import java.util.*
 
@@ -37,3 +38,17 @@ fun Date.toTime() = DateTime.fromUnix(this.time).time
 fun Date.toDateTime() = DateTime.fromUnix(this.time)
 
 fun Time.toTimeRange(time: Time) = TimeRange(this, time)
+
+fun Time.plus(
+    hour: Int = 0,
+    minute: Int = 0,
+    second: Int = 0,
+    millisecond: Int = 0,
+): Time {
+    val timeSpan = TimeSpan(
+        Time(hour, minute, second, millisecond)
+            .toMilliseconds()
+            .toDouble()
+    )
+    return Time(this.encoded + timeSpan)
+}

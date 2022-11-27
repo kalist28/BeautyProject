@@ -8,7 +8,7 @@
     android:background="@drawable/calendar_day_current"
     android:gravity="center"
     android:padding="2dp"
-    android:textColor="@color/white"
+    android:textColor="@color/lightWhite"
     android:textSize="@dimen/day_text_size"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"

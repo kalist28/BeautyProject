@@ -6,8 +6,8 @@
 
     <View
         android:layout_width="@dimen/margin_medium"
-        android:layout_height="3dp"
-        android:background="@color/bottomSheetUpSelector"
+        android:layout_height="4dp"
+        style="@style/DragHandle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

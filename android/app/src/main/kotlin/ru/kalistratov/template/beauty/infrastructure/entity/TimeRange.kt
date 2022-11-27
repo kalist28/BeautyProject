@@ -1,7 +1,7 @@
 package ru.kalistratov.template.beauty.infrastructure.entity
 
 import com.soywiz.klock.Time
-import ru.kalistratov.template.beauty.domain.extension.toClockFormat
+import ru.kalistratov.template.beauty.infrastructure.extensions.toClockFormat
 
 data class TimeRange(
     val start: Time,

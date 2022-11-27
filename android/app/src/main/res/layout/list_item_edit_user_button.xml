@@ -8,4 +8,4 @@
     android:layout_marginVertical="@dimen/margin_xsmall"
     android:background="@drawable/background_rounded_button"
     android:maxLines="1"
-    app:drawableTint="@color/white" />
+    app:drawableTint="@color/lightWhite" />
