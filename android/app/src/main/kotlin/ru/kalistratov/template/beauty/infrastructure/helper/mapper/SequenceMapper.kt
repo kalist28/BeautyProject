@@ -3,8 +3,8 @@ package ru.kalistratov.template.beauty.infrastructure.helper.mapper
 import ru.kalistratov.template.beauty.domain.entity.Data
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.SequenceDayWindow
-import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceDay
-import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceDayWindow
+import ru.kalistratov.template.beauty.interfaces.server.dto.ServerSequenceDay
+import ru.kalistratov.template.beauty.interfaces.server.dto.ServerSequenceDayWindow
 
 
 fun ServerSequenceDay.toLocal() =

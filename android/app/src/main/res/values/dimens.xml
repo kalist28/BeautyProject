@@ -26,6 +26,8 @@
     <dimen name="horizontal_padding">16dp</dimen>
     <dimen name="leading_icon_vertical_padding">8dp</dimen>
 
+    <dimen name="icon_size">54dp</dimen>
+
     <dimen name="menu_badge_size">48dp</dimen>
     <dimen name="menu_badge_icon_size">24dp</dimen>
 

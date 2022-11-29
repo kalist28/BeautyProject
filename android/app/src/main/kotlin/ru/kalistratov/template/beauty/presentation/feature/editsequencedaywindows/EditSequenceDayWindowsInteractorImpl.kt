@@ -6,7 +6,6 @@ import ru.kalistratov.template.beauty.domain.entity.SequenceDayWindow
 import ru.kalistratov.template.beauty.domain.feature.editworkdaywindows.EditWorkdayWindowsInteractor
 import ru.kalistratov.template.beauty.domain.repository.SequenceDayRepository
 import ru.kalistratov.template.beauty.domain.repository.SequenceDayWindowsRepository
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class EditSequenceDayWindowsInteractorImpl(
     private val sequenceDayRepository: SequenceDayRepository,

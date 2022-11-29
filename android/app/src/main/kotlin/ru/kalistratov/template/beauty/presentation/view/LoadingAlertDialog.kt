@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.appcompat.content.res.AppCompatResources
 import ru.kalistratov.template.beauty.R
 
 class LoadingAlertDialog(

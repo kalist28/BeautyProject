@@ -9,8 +9,8 @@ import ru.kalistratov.template.beauty.domain.entity.Id
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.domain.service.api.ApiSequenceDayWindowsService
-import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceDayWindow
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiSequenceDayWindowsService
+import ru.kalistratov.template.beauty.interfaces.server.dto.ServerSequenceDayWindow
 
 class ApiSequenceDayWindowsServiceImpl(
     url: String,

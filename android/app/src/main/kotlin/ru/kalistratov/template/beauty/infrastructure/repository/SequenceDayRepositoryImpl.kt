@@ -4,7 +4,7 @@ import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
 import ru.kalistratov.template.beauty.domain.repository.SequenceDayRepository
-import ru.kalistratov.template.beauty.domain.service.api.ApiSequenceService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiSequenceService
 import ru.kalistratov.template.beauty.infrastructure.helper.mapper.toLocal
 import ru.kalistratov.template.beauty.infrastructure.helper.mapper.toServer
 

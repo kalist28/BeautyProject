@@ -11,7 +11,7 @@ import ru.kalistratov.template.beauty.domain.entity.UserData
 import ru.kalistratov.template.beauty.domain.entity.request.UpdateUserRequest
 import ru.kalistratov.template.beauty.domain.extension.doIfSuccess
 import ru.kalistratov.template.beauty.domain.repository.UserRepository
-import ru.kalistratov.template.beauty.domain.service.api.ApiUserService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 

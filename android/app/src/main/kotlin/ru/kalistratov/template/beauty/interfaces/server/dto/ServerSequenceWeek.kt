@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.infrastructure.entity.dto
+package ru.kalistratov.template.beauty.interfaces.server.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.feature.servicelist.di
+package ru.kalistratov.template.beauty.presentation.feature.offerlist.di
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
@@ -7,13 +7,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
-import ru.kalistratov.template.beauty.infrastructure.di.ViewModelKey
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.ServiceListInteractorImpl
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.ServiceListRouter
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.ServiceListRouterImpl
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.ServiceListViewModel
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.view.ServiceListFragment
 import ru.kalistratov.template.beauty.domain.feature.servicelist.ServiceListInteractor
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.ServiceListInteractorImpl
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.ServiceListRouter
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.ServiceListRouterImpl
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.ServiceListViewModel
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.view.ServiceListFragment
+import ru.kalistratov.template.beauty.domain.repository.OfferCategoryRepository
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelKey
 
 @Subcomponent(
     modules = [
@@ -30,9 +31,9 @@ class ServiceListModule(private val fragment: ServiceListFragment) {
 
     @Provides
     fun provideInteractor(
-
+        offerCategoryRepository: OfferCategoryRepository
     ): ServiceListInteractor = ServiceListInteractorImpl(
-
+        offerCategoryRepository
     )
 
     @Provides

@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.domain.service.api
+package ru.kalistratov.template.beauty.interfaces.server.service
 
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.domain.entity.request.AuthRequest

@@ -1,9 +1,8 @@
-package ru.kalistratov.template.beauty.domain.service.api
+package ru.kalistratov.template.beauty.interfaces.server.service
 
 import ru.kalistratov.template.beauty.common.NetworkResult
-import ru.kalistratov.template.beauty.domain.entity.*
-import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceDay
-import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceWeek
+import ru.kalistratov.template.beauty.interfaces.server.dto.ServerSequenceDay
+import ru.kalistratov.template.beauty.interfaces.server.dto.ServerSequenceWeek
 
 interface ApiSequenceService {
     suspend fun getDay(dayNumber: Int): NetworkResult<ServerSequenceDay>

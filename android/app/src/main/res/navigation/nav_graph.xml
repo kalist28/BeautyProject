@@ -145,7 +145,7 @@
         tools:layout="@layout/fragment_change_password"/>
     <fragment
         android:id="@+id/serviceListFragment"
-        android:name="ru.kalistratov.template.beauty.presentation.feature.servicelist.view.ServiceListFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.offerlist.view.ServiceListFragment"
         android:label="ServiceListFragment"
         tools:layout="@layout/fragment_list_service" />
     <fragment

@@ -34,7 +34,6 @@ import ru.kalistratov.template.beauty.presentation.view.LoadingAlertDialog
 import ru.kalistratov.template.beauty.presentation.view.time.SequenceDayWindowCreatorDialog
 import ru.kalistratov.template.beauty.presentation.view.time.SequenceDayWindowCreatorDialog.Callback
 import ru.kalistratov.template.beauty.presentation.view.workdaywindows.IdSelector
-import ru.kalistratov.template.beauty.presentation.view.workdaywindows.WorkdayWindowsView
 import javax.inject.Inject
 
 sealed class EditSequenceDayWindowsIntent : BaseIntent {

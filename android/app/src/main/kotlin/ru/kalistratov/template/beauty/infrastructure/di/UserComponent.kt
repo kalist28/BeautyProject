@@ -9,8 +9,8 @@ import dagger.Subcomponent
 import ru.kalistratov.template.beauty.domain.repository.SequenceDayRepository
 import ru.kalistratov.template.beauty.domain.repository.SequenceDayWindowsRepository
 import ru.kalistratov.template.beauty.domain.service.PersonalAreaMenuService
-import ru.kalistratov.template.beauty.domain.service.api.ApiSequenceDayWindowsService
-import ru.kalistratov.template.beauty.domain.service.api.ApiSequenceService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiSequenceDayWindowsService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiSequenceService
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.repository.SequenceDayRepositoryImpl
 import ru.kalistratov.template.beauty.infrastructure.repository.SequenceDayWindowsRepositoryImpl
@@ -29,8 +29,8 @@ import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.Perso
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaModule
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileComponent
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileModule
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.di.ServiceListComponent
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.di.ServiceListModule
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.di.ServiceListComponent
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.di.ServiceListModule
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableComponent
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableModule
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceComponent

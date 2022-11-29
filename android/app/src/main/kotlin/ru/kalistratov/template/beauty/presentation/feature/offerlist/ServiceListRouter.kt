@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.feature.servicelist
+package ru.kalistratov.template.beauty.presentation.feature.offerlist
 
 import androidx.navigation.NavController
 

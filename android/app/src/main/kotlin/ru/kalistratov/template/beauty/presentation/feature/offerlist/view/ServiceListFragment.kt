@@ -1,29 +1,30 @@
-package ru.kalistratov.template.beauty.presentation.feature.servicelist.view
+package ru.kalistratov.template.beauty.presentation.feature.offerlist.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.size
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.databinding.FragmentListServiceBinding
 import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
-import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.presentation.extension.clicks
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.ServiceListState
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.ServiceListViewModel
-import ru.kalistratov.template.beauty.presentation.feature.servicelist.di.ServiceListModule
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.ServiceListState
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.ServiceListViewModel
+import ru.kalistratov.template.beauty.presentation.feature.offerlist.di.ServiceListModule
+import ru.kalistratov.template.beauty.domain.entity.Id
 import javax.inject.Inject
 
 sealed interface ServiceListIntent : BaseIntent {
+    data class CategoryClick(val id: Id, val fromCrumbs: Boolean): ServiceListIntent
+
     object InitData: ServiceListIntent
     object BackPressed: ServiceListIntent
 }
@@ -38,7 +39,7 @@ class ServiceListFragment : BaseFragment(), BaseView<ServiceListIntent, ServiceL
     }
 
     private lateinit var binding: FragmentListServiceBinding
-    private val controller = ServiceListController()
+    private val controller = ServiceListController(::changeRecycleLayoutManager)
 
     override fun injectUserComponent(userComponent: UserComponent) {
         userComponent.plus(ServiceListModule(this)).inject(this)
@@ -58,23 +59,43 @@ class ServiceListFragment : BaseFragment(), BaseView<ServiceListIntent, ServiceL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setAppBar(getString(R.string.app_name))
+
         with(binding.recycler) {
             adapter = controller.adapter
-            layoutManager = LinearLayoutManager(requireContext())
         }
 
         viewModel.connectInto(this)
     }
 
     override fun intents(): Flow<ServiceListIntent> = merge(
-        controller.serviceClicks.map { ServiceListIntent.InitData },
-        binding.upBar.backButton.clicks().map { ServiceListIntent.BackPressed }
+        controller.categoryClicks.map { ServiceListIntent.CategoryClick(it, false) },
+        binding.breadCrumbs.getClickUpdates().map { ServiceListIntent.CategoryClick(it, true) }
     )
 
     override fun render(state: ServiceListState) {
+        binding.breadCrumbs.update(
+            if (state.selected.isEmpty()) emptyList()
+            else state.categories.map { it.id to it.title }
+        )
+
         controller.let {
-            it.services = state.groups
+            it.selected = state.selected
+            it.categories = state.categories
             it.requestModelBuild()
+        }
+    }
+
+    private fun changeRecycleLayoutManager(isEmpty: Boolean) {
+        val recycler = binding.recycler
+        val oldManager = recycler.layoutManager
+        val newManager = when(isEmpty) {
+            true -> GridLayoutManager(requireContext(), 3)
+            false -> LinearLayoutManager(requireContext())
+        }
+        if (oldManager != newManager) {
+            recycler.removeAllViewsInLayout()
+            recycler.layoutManager = newManager
         }
     }
 }

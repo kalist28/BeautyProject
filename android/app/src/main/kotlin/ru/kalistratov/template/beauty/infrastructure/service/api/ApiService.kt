@@ -11,7 +11,6 @@ import ru.kalistratov.template.beauty.domain.entity.request.ServerToken
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 abstract class ApiService(
     protected val url: String,

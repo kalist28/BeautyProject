@@ -41,7 +41,7 @@
         <item name="android:background">@drawable/background_bottom_sheet_light</item>
     </style>
 
-    <style name="Toolbar" parent="Widget.Material3.Toolbar">
+    <style name="Toolbar" parent="Widget.Material3.Toolbar.OnSurface">
         <item name="title">@string/title</item>
         <item name="navigationIcon">@drawable/ic_round_arrow_white</item>
         <item name="navigationIconTint">@color/light_onSurface</item>
@@ -85,6 +85,9 @@
 
     <style name="BaseDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered"/>
 
+    <style name="IconImageView" parent="Widget.Material3.Toolbar">
+        <item name="tint">@color/light_primary</item>
+    </style>
 
 
 
@@ -96,7 +99,7 @@
 
 
 
-    <style name="AppTheme.NoActionBar">
+    <!--<style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -104,6 +107,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+-->
 
     <style name="BottomNavigation" parent="@style/Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="menu">@menu/menu_main</item>

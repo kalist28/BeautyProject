@@ -8,7 +8,7 @@ import ru.kalistratov.template.beauty.domain.entity.User
 import ru.kalistratov.template.beauty.domain.entity.request.UpdateUserRequest
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
-import ru.kalistratov.template.beauty.domain.service.api.ApiUserService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 
 class ApiUserServiceImpl(

@@ -2,6 +2,7 @@ package ru.kalistratov.template.beauty.infrastructure.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
@@ -36,7 +37,7 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
 
     protected fun getLastState() = _stateFlow?.value ?: initialState()
 
-    open fun initialState(): BaseState {
+    open fun initialState(): S {
         TODO("Реализовать везде")
     }
 
@@ -44,10 +45,11 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
         .launchIn(viewModelScope)
         .addTo(workComposite)
 
-    protected suspend fun Flow<A>.collectState(initialState: S) {
+    protected suspend fun Flow<A>.collectState(initialState: S = initialState()) {
         val state = _stateFlow?.value ?: initialState
         val actualStateFlow = _stateFlow ?: MutableStateFlow(initialState).also { _stateFlow = it }
-        this.scan(state, ::reduce)
+        this.flowOn(Dispatchers.IO)
+            .scan(state, ::reduce)
             .onEach {
                 stateFlow.emit(it)
                 actualStateFlow.value = it

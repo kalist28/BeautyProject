@@ -28,7 +28,8 @@
         <item name="colorOnSurfaceInverse">@color/dark_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/dark_inversePrimary</item>
-
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="DragHandle" parent="Widget.Material3.BottomSheet.DragHandle">
@@ -89,7 +90,9 @@
 
     <style name="BaseDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered"/>
 
-
+    <style name="IconImageView" parent="Widget.Material3.Toolbar">
+        <item name="tint">@color/dark_primary</item>
+    </style>
 
 
 
@@ -101,7 +104,7 @@
 
 
 
-    <style name="AppTheme.NoActionBar">
+   <!-- <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -109,7 +112,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
+-->
     <style name="BottomNavigation" parent="@style/Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="menu">@menu/menu_main</item>
         <item name="labelVisibilityMode">selected</item>

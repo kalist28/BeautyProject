@@ -5,13 +5,12 @@ import io.ktor.http.*
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.common.handlingNetworkSafetyWithoutData
-import ru.kalistratov.template.beauty.domain.entity.Id
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
-import ru.kalistratov.template.beauty.domain.service.api.ApiSequenceService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiSequenceService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceDay
-import ru.kalistratov.template.beauty.infrastructure.entity.dto.ServerSequenceWeek
+import ru.kalistratov.template.beauty.interfaces.server.dto.ServerSequenceDay
+import ru.kalistratov.template.beauty.interfaces.server.dto.ServerSequenceWeek
 
 class ApiSequenceServiceImpl(
     url: String,

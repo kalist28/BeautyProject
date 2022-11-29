@@ -6,8 +6,8 @@ import ru.kalistratov.template.beauty.domain.entity.request.AuthRequest
 import ru.kalistratov.template.beauty.domain.entity.request.RegistrationRequest
 import ru.kalistratov.template.beauty.domain.entity.request.ServerToken
 import ru.kalistratov.template.beauty.domain.extension.doIfSuccess
-import ru.kalistratov.template.beauty.domain.service.api.ApiAuthService
-import ru.kalistratov.template.beauty.domain.service.api.ApiUserService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiAuthService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import ru.kalistratov.template.beauty.domain.service.AuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 

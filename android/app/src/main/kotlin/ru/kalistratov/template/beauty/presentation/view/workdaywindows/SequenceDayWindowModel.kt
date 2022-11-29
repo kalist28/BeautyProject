@@ -2,7 +2,6 @@ package ru.kalistratov.template.beauty.presentation.view.workdaywindows
 
 import android.view.View
 import android.view.ViewParent
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.airbnb.epoxy.EpoxyHolder

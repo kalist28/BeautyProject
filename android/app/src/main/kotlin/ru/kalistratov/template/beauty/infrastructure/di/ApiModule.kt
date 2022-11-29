@@ -3,15 +3,9 @@ package ru.kalistratov.template.beauty.infrastructure.di
 import dagger.Module
 import dagger.Provides
 import ru.kalistratov.template.beauty.BuildConfig
-import ru.kalistratov.template.beauty.domain.service.api.ApiAuthService
-import ru.kalistratov.template.beauty.domain.service.api.ApiSequenceService
-import ru.kalistratov.template.beauty.domain.service.api.ApiUserService
-import ru.kalistratov.template.beauty.domain.service.api.ApiSequenceDayWindowsService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.infrastructure.service.api.ApiAuthServiceImpl
-import ru.kalistratov.template.beauty.infrastructure.service.api.ApiSequenceServiceImpl
-import ru.kalistratov.template.beauty.infrastructure.service.api.ApiUserServiceImpl
-import ru.kalistratov.template.beauty.infrastructure.service.api.ApiSequenceDayWindowsServiceImpl
+import ru.kalistratov.template.beauty.infrastructure.service.api.*
+import ru.kalistratov.template.beauty.interfaces.server.service.*
 import javax.inject.Singleton
 
 @Module
@@ -48,6 +42,14 @@ class ApiModule {
     fun provideApiWorkdayWindowService(
         authSettingsService: AuthSettingsService
     ): ApiSequenceDayWindowsService = ApiSequenceDayWindowsServiceImpl(
+        uri, authSettingsService
+    )
+
+    @Provides
+    @Singleton
+    fun provideApiOfferCategoryService(
+        authSettingsService: AuthSettingsService
+    ): ApiOfferCategoryService = ApiOfferCategoryServiceImpl(
         uri, authSettingsService
     )
 }

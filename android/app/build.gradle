@@ -87,7 +87,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
     // Epoxy
-    implementation 'com.airbnb.android:epoxy:4.6.3'
+    var epoxyVersion = "4.6.3"
+    implementation "com.airbnb.android:epoxy:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 
     // Ktor
     implementation 'io.ktor:ktor-client-cio:1.6.5'

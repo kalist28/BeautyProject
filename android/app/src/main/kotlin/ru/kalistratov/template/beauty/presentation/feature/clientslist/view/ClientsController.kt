@@ -8,7 +8,6 @@ import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.bumptech.glide.Glide
-import com.bumptech.glide.GlideBuilder
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.Contact
 

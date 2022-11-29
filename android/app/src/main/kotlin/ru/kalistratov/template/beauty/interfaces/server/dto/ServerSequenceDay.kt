@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.infrastructure.entity.dto
+package ru.kalistratov.template.beauty.interfaces.server.dto
 
 import com.soywiz.klock.Time
 import kotlinx.serialization.Contextual

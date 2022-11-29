@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.kalistratov.template.beauty.presentation.view.bottomsheet.BaseBottomSheet
 
 inline fun <reified F : Fragment> instanceOf(

@@ -11,7 +11,7 @@ import ru.kalistratov.template.beauty.domain.entity.request.RegistrationRequest
 import ru.kalistratov.template.beauty.domain.entity.request.ServerToken
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
-import ru.kalistratov.template.beauty.domain.service.api.ApiAuthService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiAuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 
 class ApiAuthServiceImpl(

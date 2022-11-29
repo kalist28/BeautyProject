@@ -12,7 +12,6 @@ import ru.kalistratov.template.beauty.domain.feature.editworkdaywindows.EditWork
 import ru.kalistratov.template.beauty.domain.repository.SequenceDayRepository
 import ru.kalistratov.template.beauty.domain.repository.SequenceDayWindowsRepository
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.EditWorkdayWindowsRouter
-import ru.kalistratov.template.beauty.domain.service.api.ApiSequenceDayWindowsService
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.EditSequenceDayWindowsInteractorImpl
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.EditWorkdayWindowsRouterImpl
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.EditWorkdayWindowsViewModel

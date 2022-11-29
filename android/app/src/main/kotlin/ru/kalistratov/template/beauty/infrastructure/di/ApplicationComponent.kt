@@ -4,7 +4,7 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import ru.kalistratov.template.beauty.domain.repository.UserRepository
-import ru.kalistratov.template.beauty.domain.service.api.ApiUserService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import ru.kalistratov.template.beauty.domain.service.RegistrationStepService
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.base.AuthBaseFragment
