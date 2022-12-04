@@ -66,6 +66,10 @@
     <string name="end">Конец</string>
     <string name="start">Начало</string>
 
+    <string name="workday_start">Начало рабочего дня</string>
+    <string name="workday_finish">Конец рабочего дня</string>
+    <string name="workday_holiday">Пометить как выходной день</string>
+
     <string name="clients">Клиенты</string>
     <string name="user">Пользователь</string>
     <string name="week_sequence">Рабочая неделя</string>

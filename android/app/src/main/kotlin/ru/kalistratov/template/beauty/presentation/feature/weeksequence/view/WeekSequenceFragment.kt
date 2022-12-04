@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.databinding.FragmentWeeksequenceBinding
-import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.TimeSource
 import ru.kalistratov.template.beauty.domain.entity.TimeSourceType
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
@@ -30,7 +29,6 @@ import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequ
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceViewModel
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceModule
 import ru.kalistratov.template.beauty.presentation.view.LoadingAlertDialog
-import ru.kalistratov.template.beauty.presentation.view.weeksequence.EditSequenceDayBottomSheet
 import javax.inject.Inject
 
 sealed class WeekSequenceIntent : BaseIntent {
@@ -116,6 +114,9 @@ class WeekSequenceFragment : BaseFragment(), BaseView<WeekSequenceIntent, WeekSe
     )
 
     override fun render(state: WeekSequenceState) {
+        val appBarTitle = state.selectedDay?.day?.tittleResId ?: R.string.week_sequence
+        updateAppBarTitle(getString(appBarTitle))
+
         loadingDialog.show(state.loading)
         controller.sequenceWeek = state.weekSequence
         controller.selectedDay = state.selectedDay

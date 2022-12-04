@@ -44,7 +44,7 @@ class WeekSequenceController(
 
             SwitchModel(
                 selectedDay.day.index.toString(),
-                resources.getString(R.string.holiday),
+                resources.getString(R.string.workday_holiday),
                 selectedDay.isHoliday,
                 isHolidayClicks::tryEmit,
                 marginsBundle = MarginsBundle.baseHorizontal
@@ -56,8 +56,7 @@ class WeekSequenceController(
             }
 
             val clickListener = View.OnClickListener {
-                loge("sdfgsdfsdg ${editWindowsClicks.tryEmit(selectedDay.day.index)}")
-
+                editWindowsClicks.tryEmit(selectedDay.day.index)
             }
             val titleForTitleWithArrow = resources.getString(R.string.edit_work_windows)
             titleWithArrow {
@@ -93,7 +92,9 @@ class WeekSequenceController(
             finishTime,
             dayTimeClicks::tryEmit,
             marginsBundle = MarginsBundle.baseHorizontal,
-            errorMessageChecker = errorMessageChecker
+            errorMessageChecker = errorMessageChecker,
+            startHintId = R.string.workday_start,
+            finishHintId = R.string.workday_finish
         )
     }
 }

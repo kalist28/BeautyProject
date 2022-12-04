@@ -2,6 +2,7 @@ package ru.kalistratov.template.beauty.presentation.view.epoxy
 
 import android.view.View
 import android.view.ViewParent
+import androidx.annotation.StringRes
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import ru.kalistratov.template.beauty.R

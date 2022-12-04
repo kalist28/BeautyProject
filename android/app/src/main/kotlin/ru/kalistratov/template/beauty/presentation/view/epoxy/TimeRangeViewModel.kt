@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewParent
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -23,6 +24,8 @@ data class TimeRangeViewModel(
     private val clickAction: (TimeSourceType) -> Unit,
     private val marginsBundle: MarginsBundle? = null,
     private val errorMessageChecker: () -> String? = { null },
+    @StringRes private val startHintId: Int? = null,
+    @StringRes private val finishHintId: Int? = null,
 ) : EpoxyModelWithHolder<TimeRangeViewModel.Holder>() {
 
     init {
@@ -38,6 +41,9 @@ data class TimeRangeViewModel(
         setError(holder.binding.error)
         startEditText.initTimeEditFile(startTimeSource)
         finishEditText.initTimeEditFile(finishTimeSource)
+
+        startHintId?.let(startInputLayout::setHint)
+        finishHintId?.let(finishInputLayout::setHint)
     }
 
     private fun EditText.initTimeEditFile(source: TimeSource) {
