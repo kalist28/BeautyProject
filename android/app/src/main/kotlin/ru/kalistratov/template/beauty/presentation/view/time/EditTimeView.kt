@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.infrastructure.extensions.timeNow
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class EditTimeView @JvmOverloads constructor(
     context: Context,
@@ -67,7 +66,6 @@ class EditTimeView @JvmOverloads constructor(
 
     var time: Time
         set(value) {
-            loge("set ${value}")
             hoursTextView.setText(value.hour.toString())
             minutesTextView.setText(value.minute.toString())
         }

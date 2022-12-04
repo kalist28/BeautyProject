@@ -14,7 +14,7 @@ abstract class BaseViewModel<I : BaseIntent, A : BaseAction, S : BaseState> : Vi
     protected val workComposite = CompositeJob()
 
     private var _stateFlow: MutableStateFlow<S>? = null
-    protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow(replay = 1)
+    protected val stateFlow: MutableSharedFlow<S> = mutableSharedFlow(replay = 3)
     protected val intentFlow: MutableSharedFlow<I> = mutableSharedFlow()
 
     override fun onCleared() {

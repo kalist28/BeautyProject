@@ -1,10 +1,14 @@
 package ru.kalistratov.template.beauty.presentation.extension
 
+import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
@@ -39,7 +43,9 @@ fun View.clicks(): Flow<Unit> = callbackFlow {
 
 fun onBackPressClicks(callback: OnBackPressedCallbackWrapper): Flow<Unit> = callbackFlow {
     callback.callback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed()  { trySend(Unit) }
+        override fun handleOnBackPressed() {
+            trySend(Unit)
+        }
     }
     awaitClose { callback.callback = null }
 }.conflate()
@@ -52,3 +58,11 @@ fun View.getDrawable(@DrawableRes id: Int): Drawable? =
 
 fun View.getColorStateList(@ColorRes id: Int): ColorStateList =
     AppCompatResources.getColorStateList(this.context, id)
+
+fun Int.dpToPx(context: Context): Int {
+    val metrics = context.resources.displayMetrics
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), metrics).toInt()
+}
+
+val Int.px: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).toInt()

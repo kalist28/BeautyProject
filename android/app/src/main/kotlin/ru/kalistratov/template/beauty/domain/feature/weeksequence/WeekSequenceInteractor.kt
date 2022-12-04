@@ -5,7 +5,5 @@ import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 
 interface WeekSequenceInteractor {
     suspend fun getWeekSequence(): SequenceWeek?
-    suspend fun updateWorkDaySequence(
-        workdaySequence: SequenceDay
-    ): SequenceDay?
+    suspend fun updateWorkDaySequence(day: SequenceDay): SequenceDay?
 }

@@ -21,6 +21,12 @@ fun timeNow(): Time = DateTime.nowLocal().let {
 fun Time.insideWithoutCorners(timeRange: TimeRange) =
     this > timeRange.start && this < timeRange.end
 
+fun Time.insideWithoutEnd(timeRange: TimeRange) =
+    this >= timeRange.start && this < timeRange.end
+
+fun Time.inside(timeRange: TimeRange) =
+    this >= timeRange.start && this <= timeRange.end
+
 fun Time?.toClockFormat() = (this ?: noTime).format(clockFormatPattern)
 
 fun Time.toMilliseconds() = getTotalMinute() * 60 * 1000

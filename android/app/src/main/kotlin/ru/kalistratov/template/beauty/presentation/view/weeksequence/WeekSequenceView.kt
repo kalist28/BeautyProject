@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
+import ru.kalistratov.template.beauty.presentation.view.epoxy.sequence.WeekSequenceDayModel
 
 fun interface OnDayClickListener {
     fun onDayClick(day: Int)

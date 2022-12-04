@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.view.workdaywindows
+package ru.kalistratov.template.beauty.presentation.view.epoxy.sequence
 
 import android.view.View
 import android.view.ViewParent
@@ -25,7 +25,7 @@ data class SequenceDayWindowModel(
 ) : EpoxyModelWithHolder<SequenceDayWindowModel.Holder>() {
 
     init {
-        id(sequenceDayWindow.hashCode())
+        id(number)
     }
 
     private val motionListener = object : MotionLayout.TransitionListener {
@@ -99,8 +99,7 @@ data class SequenceDayWindowModel(
         }
     }
 
-
-    class Holder() : EpoxyHolder() {
+    class Holder : EpoxyHolder() {
         var root: View? = null
         var radioButton: MaterialRadioButton? = null
         var motionLayout: MotionLayout? = null

@@ -17,15 +17,16 @@ data class SequenceDay(
     val day: WeekDay,
 
     @Serializable(ClockFormatTimeSerializer::class)
-    val startAt: Time,
+    override val startAt: Time,
 
     @Serializable(ClockFormatTimeSerializer::class)
-    val finishAt: Time,
+    override val finishAt: Time,
 
     val isHoliday: Boolean,
     val windows: List<SequenceDayWindow>,
-) {
+) : TimeRangeContainer() {
     companion object {
+
         val emptyDay = SequenceDay(
             id = "",
             day = WeekDay.Nothing,
@@ -36,7 +37,12 @@ data class SequenceDay(
         )
     }
 
-    fun toContentTimeRange() = "${startAt.toClockFormat()} - ${finishAt.toClockFormat()}"
+    fun updateByTimeSource(
+        source: TimeSource
+    ) = when (source.type) {
+        TimeSourceType.START_KEY -> this.copy(startAt = source.time)
+        TimeSourceType.FINISH_KEY -> this.copy(finishAt = source.time)
+    }
 }
 
 @Serializable
@@ -45,8 +51,15 @@ data class SequenceDayWindow(
     val sequenceDayId: Id = "",
 
     @Serializable(ClockFormatTimeSerializer::class)
-    val startAt: Time,
+    override val startAt: Time,
 
     @Serializable(ClockFormatTimeSerializer::class)
-    val finishAt: Time,
-)
+    override val finishAt: Time,
+) : TimeRangeContainer() {
+    fun updateByTimeSource(
+        source: TimeSource
+    ) = when (source.type) {
+        TimeSourceType.START_KEY -> this.copy(startAt = source.time)
+        TimeSourceType.FINISH_KEY -> this.copy(finishAt = source.time)
+    }
+}

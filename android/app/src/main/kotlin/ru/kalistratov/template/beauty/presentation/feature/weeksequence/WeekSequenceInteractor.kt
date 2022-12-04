@@ -11,8 +11,6 @@ class WeekSequenceInteractorImpl(
     override suspend fun getWeekSequence(): SequenceWeek =
         sequenceDayRepository.getAll()
 
-    override suspend fun updateWorkDaySequence(
-        workdaySequence: SequenceDay
-    ): SequenceDay? = sequenceDayRepository
-        .add(workdaySequence)
+    override suspend fun updateWorkDaySequence(day: SequenceDay) =
+        sequenceDayRepository.add(day)
 }

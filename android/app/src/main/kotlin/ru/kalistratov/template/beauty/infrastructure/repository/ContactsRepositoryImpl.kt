@@ -7,13 +7,11 @@ import android.provider.ContactsContract.CommonDataKinds.Phone.CONTACT_ID
 import android.provider.ContactsContract.CommonDataKinds.Phone.NUMBER
 import android.provider.ContactsContract.CommonDataKinds.Phone.PHOTO_URI
 import android.provider.ContactsContract.Contacts.DISPLAY_NAME
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import ru.kalistratov.template.beauty.domain.entity.Contact
 import ru.kalistratov.template.beauty.domain.repository.ContactsRepository
 import ru.kalistratov.template.beauty.domain.service.PermissionsService
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class ContactsRepositoryImpl(
     private val context: Context,
@@ -51,7 +49,5 @@ class ContactsRepositoryImpl(
     override fun getPermissionGranted(): Boolean = ContextCompat
         .checkSelfPermission(context, READ_CONTACTS)
         .let { it == PermissionChecker.PERMISSION_GRANTED }
-        .also {
-            loge("************ $it")
-            if(!it) permissionsService.requestContactsPermission() }
+        .also { if(!it) permissionsService.requestContactsPermission() }
 }

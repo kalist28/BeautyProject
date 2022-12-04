@@ -22,11 +22,10 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ru.kalistratov.template.beauty.presentation.view.weeksequence.WeekSequenceView
-        android:id="@+id/week_sequence_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="@dimen/constraint_fill"
         android:layout_height="@dimen/constraint_fill"
-        android:paddingHorizontal="@dimen/margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

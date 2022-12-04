@@ -24,6 +24,7 @@
     <string name="setting">Настройка</string>
     <string name="settings">Настройки</string>
 
+    <string name="edit_work_windows">Редактировать окна</string>
     <string name="edit_work_window">Изменить рабочее окно</string>
     <string name="create_work_window">Новое рабочее окно</string>
     <string name="inside_work_window">Входит в окно: %s</string>

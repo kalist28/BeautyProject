@@ -12,7 +12,6 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.entity.MenuItem
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.entity.PersonalAreaMenuItemId
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.view.PersonalAreaIntent
@@ -63,7 +62,6 @@ class PersonalAreaViewModel @Inject constructor(
 
             intentFlow.filterIsInstance<PersonalAreaIntent.MenuItemClick>()
                 .onEach {
-                    loge(it.id)
                     when (it.id) {
                         PersonalAreaMenuItemId.WEEK_SEQUENCE.id -> router?.openWeekSequence()
                         PersonalAreaMenuItemId.SERVICES.id -> router?.openServices()

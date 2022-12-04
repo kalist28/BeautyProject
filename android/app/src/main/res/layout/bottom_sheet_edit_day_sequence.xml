@@ -89,7 +89,6 @@
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/holiday_switch"
         android:layout_width="wrap_content"
-        android:checked="true"
         style="@style/Widget.Material3.CompoundButton.MaterialSwitch"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/holiday_text_view"

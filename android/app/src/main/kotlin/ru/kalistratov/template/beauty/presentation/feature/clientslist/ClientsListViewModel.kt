@@ -9,7 +9,6 @@ import ru.kalistratov.template.beauty.domain.feature.clientslist.ClientsListInte
 import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
 import ru.kalistratov.template.beauty.infrastructure.base.BaseState
 import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.clientslist.view.ClientsListIntent
 import javax.inject.Inject
 
@@ -29,9 +28,6 @@ class ClientsListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-
-            intentFlow.onEach { loge(it.javaClass.simpleName) }.launchIn(this)
-
             val updateClientsAction = intentFlow.filterIsInstance<ClientsListIntent.InitData>()
                 .map { ClientsListAction.UpdateClients(interactor.getClients()) }
 

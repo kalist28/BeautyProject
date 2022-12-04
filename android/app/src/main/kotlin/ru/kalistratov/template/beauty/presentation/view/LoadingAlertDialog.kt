@@ -16,4 +16,6 @@ class LoadingAlertDialog(
         setContentView(R.layout.dialog_alert_loading)
         setCancelable(false)
     }
+
+    fun show(show: Boolean) = if (show) show() else hide()
 }

@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.view.weeksequence
+package ru.kalistratov.template.beauty.presentation.view.epoxy.sequence
 
 import android.content.Context
 import android.view.View
@@ -11,11 +11,12 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
+import ru.kalistratov.template.beauty.domain.entity.exist
 import ru.kalistratov.template.beauty.infrastructure.extensions.isNoTime
 import ru.kalistratov.template.beauty.infrastructure.extensions.toClockFormat
 
-class WeekSequenceDayModel(
-    private val workday: SequenceDay,
+data class WeekSequenceDayModel(
+    private val day: SequenceDay,
     private val clickListener: (Int) -> Unit = {},
 ) : EpoxyModelWithHolder<WeekSequenceDayModel.WorkDayHolder>() {
 
@@ -26,16 +27,16 @@ class WeekSequenceDayModel(
     )
 
     init {
-        id(workday.day.hashCode())
+        id(day.day.hashCode())
     }
 
     override fun getDefaultLayout(): Int = R.layout.list_item_sequence_day
 
     override fun bind(holder: WorkDayHolder) = with(holder) {
-        root?.setOnClickListener { clickListener.invoke(workday.day.index) }
+        root?.setOnClickListener { clickListener.invoke(day.day.index) }
 
         weekDayTextView?.apply {
-            text = context?.getString(workday.day.shortTittleResId)
+            text = context?.getString(day.day.shortTittleResId)
         }
 
         val context = root?.context ?: return@with
@@ -48,18 +49,18 @@ class WeekSequenceDayModel(
     }
 
     private fun getState(context: Context): State {
-        val start = workday.startAt
-        val finish = workday.finishAt
+        val start = day.startAt
+        val finish = day.finishAt
         return when {
-            workday.isHoliday -> State(
-                context.getString(R.string.holiday),
-                R.color.colorAcceptTransparent50,
-                R.drawable.background_stroke_round_transparent,
-            )
-            start.isNoTime() && finish.isNoTime() -> State(
+            start.isNoTime() && finish.isNoTime() && !day.id.exist()-> State(
                 context.getString(R.string.not_specified),
                 R.color.colorOrange,
                 R.drawable.background_stroke_round_orange,
+            )
+            day.isHoliday -> State(
+                context.getString(R.string.holiday),
+                R.color.colorAcceptTransparent50,
+                R.drawable.background_stroke_round_transparent,
             )
             else -> State(
                 "${start.toClockFormat()} - ${finish.toClockFormat()}",
@@ -70,25 +71,6 @@ class WeekSequenceDayModel(
     }
 
     override fun createNewHolder(parent: ViewParent) = WorkDayHolder()
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        if (!super.equals(other)) return false
-
-        other as WeekSequenceDayModel
-
-        if (workday != other.workday) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = super.hashCode()
-        result = 31 * result + workday.isHoliday.hashCode()
-        result = 31 * result + workday.startAt.hashCode()
-        result = 31 * result + workday.finishAt.hashCode()
-        return result
-    }
 
     class WorkDayHolder : EpoxyHolder() {
         var root: View? = null

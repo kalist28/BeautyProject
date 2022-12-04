@@ -24,7 +24,7 @@ class ApiSequenceServiceImpl(
     ): NetworkResult<ServerSequenceDay> = getClient()
         .useWithHandleUnauthorizedError {
             handlingNetworkSafety<ServerSequenceDay> {
-                it.get("$url/sequences/days/$dayNumber") {
+                it.get("$sequenceUrl/$dayNumber") {
                     contentType(ContentType.Application.Json)
                     header(AUTH_HEADER, getBearerToken())
                 }
