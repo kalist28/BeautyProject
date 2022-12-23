@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.MenuRes
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
@@ -64,6 +65,8 @@ abstract class BaseFragment : Fragment() {
         super.onDestroyView()
     }
 
+    protected fun setAppBar(@StringRes id: Int) = setAppBar(requireContext().getString(id))
+
     protected fun setAppBar(
         title: String
     ) = find<MaterialToolbar>(R.id.toolbar).apply {
@@ -77,6 +80,10 @@ abstract class BaseFragment : Fragment() {
             _backPressedFlow.tryEmit(Unit)
             onAppBarBackPressed()
         }
+    }
+
+    protected fun updateAppBarTitle(@StringRes id: Int) {
+        updateAppBarTitle(requireContext().getString(id))
     }
 
     protected fun updateAppBarTitle(title: String) {

@@ -71,6 +71,9 @@ class AuthFragment : AuthBaseFragment(), BaseView<AuthIntent, AuthState> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        emailEditText.setText("k@k.k")
+        passwordEditText.setText("123123")
         with(viewModel) {
             viewModelScope.launch {
                 stateUpdates()

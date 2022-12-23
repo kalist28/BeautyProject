@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-        <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener" />
-
         <variable
             name="text"
             type="String" />
-
-        <variable
-            name="padding"
-            type="com.airbnb.epoxy.Carousel.Padding" />
-
     </data>
 
     <com.google.android.material.textview.MaterialTextView
@@ -24,15 +13,7 @@
         style="@style/DefaultText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_small"
-        android:layout_marginVertical="@dimen/margin_small"
-        android:onClick="@{clickListener}"
         android:text='@{text}'
-        android:textSize="@dimen/text_xlarge"
-        android:paddingTop="@{padding.top}"
-        android:paddingStart="@{padding.left}"
-        android:paddingEnd="@{padding.right}"
-        android:paddingBottom="@{padding.bottom}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

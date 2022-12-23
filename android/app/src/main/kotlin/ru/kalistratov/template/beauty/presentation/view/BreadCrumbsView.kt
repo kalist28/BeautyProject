@@ -25,7 +25,9 @@ class BreadCrumbsView @JvmOverloads constructor(
     private val controller = Controller()
     private val clicks = mutableSharedFlow<Id>()
 
-    fun update(nesting: List<Pair<Id, String>>) = with(controller) {
+    fun update(
+        nesting: List<Pair<Id, String>>
+    ) = with(controller) {
         this.nesting = nesting
         requestModelBuild()
     }
@@ -51,10 +53,6 @@ class BreadCrumbsView @JvmOverloads constructor(
         var nesting: List<Pair<Id, String>> = emptyList()
 
         override fun buildModels() {
-            //TODO Вынести и сделать настраиваемым
-            ChipModel(
-                "-1", "Категории", nesting.isEmpty(), clicks::tryEmit
-            ).addTo(this)
             nesting.forEachIndexed { index, pair ->
                 ChipModel(
                     pair.first, pair.second, index == nesting.lastIndex, clicks::tryEmit

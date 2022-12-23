@@ -11,6 +11,17 @@ fun <T> mutableSharedFlow(replay: Int = 0) = MutableSharedFlow<T>(
     onBufferOverflow = BufferOverflow.DROP_LATEST
 )
 
+fun <T, R> Flow<T>.alternative(
+    transform: suspend (value: Boolean) -> R,
+    startWith: Boolean = true
+) = flatMapConcat { createAlternative(startWith) }
+    .map { transform.invoke(it) }
+
+fun createAlternative(startWith: Boolean = true) = flowOf(startWith, !startWith)
+fun createAlternativeList(startWith: Boolean = true) = listOf(startWith, !startWith)
+
+fun <T> Flow<T>.clickDebounce(millis: Long = 100) = this.debounce(millis)
+
 fun <T> Flow<T>.textDebounce() = this.debounce(200)
 
 fun <T> Flow<T>.share(scope: CoroutineScope, replay: Int = 0) =

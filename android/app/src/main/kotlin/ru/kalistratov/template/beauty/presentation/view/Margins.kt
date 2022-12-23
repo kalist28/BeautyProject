@@ -20,6 +20,13 @@ data class MarginsBundle(
             topMarginDp = Margins.BASE_VERTICAL,
             bottomMarginDp = Margins.BASE_VERTICAL
         )
+
+        val base = MarginsBundle(
+            startMarginDp = Margins.BASE_HORIZONTAL,
+            topMarginDp = Margins.BASE_VERTICAL,
+            endMarginDp = Margins.BASE_HORIZONTAL,
+            bottomMarginDp = Margins.BASE_VERTICAL
+        )
     }
 }
 

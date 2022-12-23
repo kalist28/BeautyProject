@@ -6,14 +6,16 @@
     <dimen name="margin_medium">32dp</dimen>
     <dimen name="margin_xlarge">52dp</dimen>
     <dimen name="margin_large">64dp</dimen>
+    <dimen name="height_multiline_text">120dp</dimen>
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="week_sequence_item">52dp</dimen>
     <dimen name="day_text_size">18sp</dimen>
     <dimen name="constraint_fill">0dp</dimen>
-    <dimen name="text_small">14sp</dimen>
-    <dimen name="text_medium">18sp</dimen>
+    <dimen name="text_xsmall">14sp</dimen>
+    <dimen name="text_small">16sp</dimen>
+    <dimen name="text_default">18sp</dimen>
     <dimen name="text_xlarge">20sp</dimen>
     <dimen name="text_large">26sp</dimen>
 

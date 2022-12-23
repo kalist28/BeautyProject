@@ -73,6 +73,7 @@
     </style>
 
     <style name="DefaultText" parent="ThemeOverlay.Material3.AutoCompleteTextView">
+        <item name="android:textSize">@dimen/text_default</item>
         <item name="android:textColor">@color/dark_onSurface</item>
     </style>
 

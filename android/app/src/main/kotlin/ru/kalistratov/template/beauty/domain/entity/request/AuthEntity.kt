@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import ru.kalistratov.template.beauty.domain.extension.getJson
 import ru.kalistratov.template.beauty.infrastructure.extensions.jsonParser
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 @Serializable
 data class AuthRequest(

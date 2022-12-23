@@ -27,7 +27,7 @@
         android:paddingBottom="@{padding.bottom}"
         android:text="@{titleText}"
         android:textSize="28sp"
-        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

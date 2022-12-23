@@ -19,7 +19,6 @@
             style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIconTint="@color/transparent"
             app:titleCentered="true" />
 
     </com.google.android.material.appbar.AppBarLayout>

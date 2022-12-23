@@ -1,14 +1,14 @@
-package ru.kalistratov.template.beauty.presentation.feature.offerlist
+package ru.kalistratov.template.beauty.presentation.feature.offerpicker
 
 import androidx.navigation.NavController
 
-interface ServiceListRouter {
+interface OfferPickerRouter {
     fun back()
 }
 
-class ServiceListRouterImpl(
+class OfferPickerRouterImpl(
     private val navController: NavController
-) : ServiceListRouter {
+) : OfferPickerRouter {
     override fun back() {
         navController.popBackStack()
     }

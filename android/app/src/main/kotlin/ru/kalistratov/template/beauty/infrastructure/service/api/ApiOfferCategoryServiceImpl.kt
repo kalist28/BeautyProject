@@ -18,15 +18,28 @@ class ApiOfferCategoryServiceImpl(
     authSettingsService: AuthSettingsService
 ) : ApiService(url, authSettingsService), ApiOfferCategoryService {
 
-    private val categoryUrl = "$url/offer/categories-tree"
-
+    private val categoryUrl = "$url/offer/categories"
     override suspend fun get(
+        id: Id,
+        includeType: IncludeType?
+    ): NetworkResult<ServerOfferCategory> = getClient()
+        .useWithHandleUnauthorizedError {
+            handlingNetworkSafety<ServerOfferCategory> {
+                it.get("$categoryUrl/$id") {
+                    contentType(ContentType.Application.Json)
+                    header(AUTH_HEADER, getBearerToken())
+                    parameter("include", includeType?.value)
+                }
+            }
+        }.logIfError()
+
+    override suspend fun getTree(
         id: Id?,
         includeType: IncludeType?
     ): NetworkResult<List<ServerOfferCategory>> = getClient()
         .useWithHandleUnauthorizedError {
             handlingNetworkSafety<List<ServerOfferCategory>> {
-                it.get(categoryUrl) {
+                it.get("$categoryUrl-tree") {
                     contentType(ContentType.Application.Json)
                     header(AUTH_HEADER, getBearerToken())
                     parameter("node_id", id)

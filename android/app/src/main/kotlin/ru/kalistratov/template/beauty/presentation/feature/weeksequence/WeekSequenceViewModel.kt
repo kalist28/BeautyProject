@@ -13,10 +13,7 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.view.WeekSequenceIntent
-import ru.kalistratov.template.beauty.presentation.view.weeksequence.EditSequenceDayBottomSheet
-import java.util.Optional
 import javax.inject.Inject
 
 data class WeekSequenceState(
@@ -57,24 +54,18 @@ class WeekSequenceViewModel @Inject constructor(
             val firstCreateDayForEditWindowsFlow = intentFlow
                 .filterIsInstance<WeekSequenceIntent.EditWindows>()
                 .flatMapConcat {
-                    loge(1)
                     val selectedDay = getLastState().selectedDay
                         ?: return@flatMapConcat emptyFlow()
-
-                    loge(2)
                     val sequence = getLastState().weekSequence
                     val oldDayVersion = sequence
                         .find { it.day == selectedDay.day }
                         ?: return@flatMapConcat emptyFlow()
 
-                    loge(3)
                     if (
                         oldDayVersion.startAt != selectedDay.startAt ||
                         oldDayVersion.finishAt != selectedDay.finishAt
-                    ) flowOf(Unit).updateDay(false).onEach {
-                        loge(4) }
-                    else flowOf(selectedDay).onEach {
-                        loge(5) }
+                    ) flowOf(Unit).updateDay(false)
+                    else flowOf(selectedDay)
                 }
                 .share(this)
 
@@ -186,7 +177,7 @@ class WeekSequenceViewModel @Inject constructor(
         .flatMapConcat { dayToUpdate ->
             if (showLoading) showLoadingFlow.emit(Unit)
             interactor.updateWorkDaySequence(dayToUpdate)
-                ?.let { flowOf(it).onEach { loge("day updated") } }
+                ?.let { flowOf(it) }
                 ?: emptyFlow()
         }
 }

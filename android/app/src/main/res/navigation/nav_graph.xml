@@ -102,11 +102,11 @@
             android:id="@+id/action_personalAreaFragment_to_editUserFragment"
             app:destination="@id/editUserFragment" />
         <action
-            android:id="@+id/action_personalAreaFragment_to_serviceListFragment"
-            app:destination="@id/serviceListFragment" />
-        <action
             android:id="@+id/action_personalAreaFragment_to_clientsListFragment"
             app:destination="@id/clientsListFragment" />
+        <action
+            android:id="@+id/action_personalAreaFragment_to_myOfferListFragment"
+            app:destination="@id/myOfferListFragment" />
     </fragment>
     <fragment
         android:id="@+id/weekSequenceFragment"
@@ -144,10 +144,27 @@
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_change_password"/>
     <fragment
-        android:id="@+id/serviceListFragment"
-        android:name="ru.kalistratov.template.beauty.presentation.feature.offerlist.view.ServiceListFragment"
+        android:id="@+id/offerPickerFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.offerpicker.view.OfferPickerFragment"
         android:label="ServiceListFragment"
-        tools:layout="@layout/fragment_list_service" />
+        tools:layout="@layout/fragment_list_service">
+        <argument
+            android:name="pickerType"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/myOfferListFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.myofferlist.view.MyOfferListFragment"
+        android:label="MyOfferListFragment"
+        tools:layout="@layout/fragment_my_offer_list" >
+        <action
+            android:id="@+id/action_myOfferListFragment_to_offerPickerFragment"
+            app:destination="@id/offerPickerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/clientsListFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.clientslist.view.ClientsListFragment"

@@ -29,7 +29,6 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.EditWorkdayWindowsRouter
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.EditWorkdayWindowsState
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.EditWorkdayWindowsViewModel

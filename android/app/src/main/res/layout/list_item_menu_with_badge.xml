@@ -31,7 +31,7 @@
         android:id="@+id/title_text_view"
         android:layout_width="@dimen/constraint_fill"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/arrow"
         app:layout_constraintStart_toEndOf="@id/icon_container"

@@ -64,7 +64,7 @@ class PersonalAreaViewModel @Inject constructor(
                 .onEach {
                     when (it.id) {
                         PersonalAreaMenuItemId.WEEK_SEQUENCE.id -> router?.openWeekSequence()
-                        PersonalAreaMenuItemId.SERVICES.id -> router?.openServices()
+                        PersonalAreaMenuItemId.SERVICES.id -> router?.openMyOfferList()
                         PersonalAreaMenuItemId.CLIENTS.id -> router?.openClientsList()
                         PersonalAreaMenuItemId.EXIT.id -> {
                             interactor.exit()

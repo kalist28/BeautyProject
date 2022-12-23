@@ -18,8 +18,8 @@ import ru.kalistratov.template.beauty.presentation.feature.auth.view.AuthIntent
 import javax.inject.Inject
 
 data class AuthState(
-    val email: String? = null,
-    val password: String? = null,
+    val email: String? = "k@k.k",
+    val password: String? = "123123",
     val isLoading: Boolean = false,
     val isAuthFailed: Boolean = false,
 ) : BaseState

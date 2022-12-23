@@ -38,7 +38,7 @@
             android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginTop="20dp"
             android:text="Начало :"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_default"
             app:layout_constraintEnd_toEndOf="@id/center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_divider" />
@@ -73,7 +73,7 @@
             android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginTop="@dimen/margin_small"
             android:text="Конец :"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_default"
             app:layout_constraintEnd_toEndOf="@id/center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/start_error_message" />

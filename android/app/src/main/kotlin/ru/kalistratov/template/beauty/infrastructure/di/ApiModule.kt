@@ -52,4 +52,20 @@ class ApiModule {
     ): ApiOfferCategoryService = ApiOfferCategoryServiceImpl(
         uri, authSettingsService
     )
+
+    @Provides
+    @Singleton
+    fun provideApiOfferItemService(
+        authSettingsService: AuthSettingsService
+    ): ApiOfferItemService = ApiOfferItemServiceImpl(
+        uri, authSettingsService
+    )
+
+    @Provides
+    @Singleton
+    fun provideApiOfferTypeService(
+        authSettingsService: AuthSettingsService
+    ): ApiOfferTypeService = ApiOfferTypeServiceImpl(
+        uri, authSettingsService
+    )
 }

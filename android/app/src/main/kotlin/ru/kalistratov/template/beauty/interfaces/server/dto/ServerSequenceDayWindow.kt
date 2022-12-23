@@ -1,11 +1,11 @@
 package ru.kalistratov.template.beauty.interfaces.server.dto
 
 import com.soywiz.klock.Time
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.kalistratov.template.beauty.domain.entity.Id
 import ru.kalistratov.template.beauty.domain.entity.emptyId
-import ru.kalistratov.template.beauty.infrastructure.kserialization.serializer.ClockFormatTimeSerializer
 
 @Serializable
 data class ServerSequenceDayWindow(
@@ -15,10 +15,10 @@ data class ServerSequenceDayWindow(
     val sequenceDayId: Id = emptyId,
 
     @SerialName("start_at")
-    @Serializable(with = ClockFormatTimeSerializer::class)
+    @Contextual
     val startAt: Time,
 
     @SerialName("finish_at")
-    @Serializable(with = ClockFormatTimeSerializer::class)
+    @Contextual
     val finishAt: Time,
 )

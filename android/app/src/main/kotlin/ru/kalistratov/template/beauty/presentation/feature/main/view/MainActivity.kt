@@ -26,6 +26,7 @@ import ru.kalistratov.template.beauty.presentation.extension.onBackPressClicks
 import ru.kalistratov.template.beauty.presentation.feature.main.MainState
 import ru.kalistratov.template.beauty.presentation.feature.main.MainViewModel
 import ru.kalistratov.template.beauty.presentation.feature.main.di.MainModule
+import ru.kalistratov.template.beauty.presentation.view.LoadingAlertDialog
 import javax.inject.Inject
 
 
@@ -55,6 +56,8 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
 
     private var additionalCallback: OnBackPressedCallback? = null
     private val onBackPressedCallbackWrapper = OnBackPressedCallbackWrapper()
+
+    val loadingDialog by lazy { LoadingAlertDialog(this@MainActivity) }
 
     private val requestPermissionsResults = mutableSharedFlow<RequestPermissionsResult>()
 

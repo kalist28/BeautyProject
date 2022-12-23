@@ -1,5 +1,6 @@
 package ru.kalistratov.template.beauty.presentation.feature.weeksequence.view
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,6 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceRouter
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceState
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.WeekSequenceViewModel
@@ -134,13 +134,11 @@ class WeekSequenceFragment : BaseFragment(), BaseView<WeekSequenceIntent, WeekSe
         .build()
         .apply {
             addOnPositiveButtonClickListener {
-                loge(
-                    timePicked.tryEmit(
-                        source.copy(
-                            time = Time(
-                                hour = hour,
-                                minute = minute
-                            )
+                timePicked.tryEmit(
+                    source.copy(
+                        time = Time(
+                            hour = hour,
+                            minute = minute
                         )
                     )
                 )

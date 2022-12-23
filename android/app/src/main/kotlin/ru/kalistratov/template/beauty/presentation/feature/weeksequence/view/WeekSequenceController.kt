@@ -9,7 +9,6 @@ import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
 import ru.kalistratov.template.beauty.domain.entity.TimeSourceType
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.infrastructure.extensions.toMilliseconds
 import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
 import ru.kalistratov.template.beauty.presentation.view.epoxy.SwitchModel

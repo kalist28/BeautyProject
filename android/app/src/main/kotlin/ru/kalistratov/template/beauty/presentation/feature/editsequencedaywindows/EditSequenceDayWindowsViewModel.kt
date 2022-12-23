@@ -16,7 +16,6 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.notNullFlow
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.infrastructure.extensions.noTime
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.view.EditSequenceDayWindowsIntent
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.view.State
@@ -59,9 +58,6 @@ class EditWorkdayWindowsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-
-            intentFlow.onEach { loge(it) }.launchHere()
-
             val initDataFlow = intentFlow
                 .filterIsInstance<EditSequenceDayWindowsIntent.InitData>()
                 .take(1)
@@ -161,9 +157,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
                 pushWindowFlow,
                 removeWindowFlow,
                 removeWindowsFlow,
-            ).map {
-                loge("5695789689")
-                EditWorkdayWindowsAction.UpdateLoading(true) }
+            ).map { EditWorkdayWindowsAction.UpdateLoading(true) }
 
             val createWindowAction = intentFlow
                 .filterIsInstance<EditSequenceDayWindowsIntent.CreateWindow>()
@@ -257,7 +251,7 @@ class EditWorkdayWindowsViewModel @Inject constructor(
         is EditWorkdayWindowsAction.ShowTimePicker -> state.copy(
             timeForShowTimePicker = action.time
         )
-    }.also { loge("${action.javaClass.simpleName} -- ${state.loading}") }
+    }
 
     private fun getDay() = getLastState().day
     private fun getDayWindows() = getDay().windows

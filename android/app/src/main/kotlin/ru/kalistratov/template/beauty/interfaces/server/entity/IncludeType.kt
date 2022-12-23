@@ -9,6 +9,9 @@ sealed class IncludeType(val value: String) {
 
     object Properties : IncludeType("properties")
 
+    object Type : IncludeType("type")
+    object TypeProperties : IncludeType("type_property")
+
     companion object {
         private fun valueOfTypes(vararg types: IncludeType): String {
             var result = ""

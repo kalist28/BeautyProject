@@ -25,12 +25,14 @@ import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindow
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.di.EditSequenceDayWindowsModule
 import ru.kalistratov.template.beauty.presentation.feature.edituser.di.EditUserComponent
 import ru.kalistratov.template.beauty.presentation.feature.edituser.di.EditUserModule
+import ru.kalistratov.template.beauty.presentation.feature.myofferlist.di.MyOfferListComponent
+import ru.kalistratov.template.beauty.presentation.feature.myofferlist.di.MyOfferListModule
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaComponent
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaModule
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileComponent
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileModule
-import ru.kalistratov.template.beauty.presentation.feature.offerlist.di.ServiceListComponent
-import ru.kalistratov.template.beauty.presentation.feature.offerlist.di.ServiceListModule
+import ru.kalistratov.template.beauty.presentation.feature.offerpicker.di.OfferPickerComponent
+import ru.kalistratov.template.beauty.presentation.feature.offerpicker.di.OfferPickerModule
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableComponent
 import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableModule
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceComponent
@@ -55,7 +57,8 @@ interface UserComponent {
     fun plus(module: EditUserModule): EditUserComponent
     fun plus(module: TimetableModule): TimetableComponent
     fun plus(module: ClientsListModule): ClientsListComponent
-    fun plus(module: ServiceListModule): ServiceListComponent
+    fun plus(module: OfferPickerModule): OfferPickerComponent
+    fun plus(module: MyOfferListModule): MyOfferListComponent
     fun plus(module: PersonalAreaModule): PersonalAreaComponent
     fun plus(module: WeekSequenceModule): WeekSequenceComponent
     fun plus(module: ChangePasswordModule): ChangePasswordComponent

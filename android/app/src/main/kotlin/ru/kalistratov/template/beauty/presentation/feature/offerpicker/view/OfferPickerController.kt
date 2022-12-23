@@ -1,4 +1,4 @@
-package ru.kalistratov.template.beauty.presentation.feature.offerlist.view
+package ru.kalistratov.template.beauty.presentation.feature.offerpicker.view
 
 import android.view.View
 import android.view.ViewParent
@@ -10,13 +10,16 @@ import ru.kalistratov.template.beauty.databinding.ListItemOfferCategoryVerticalB
 import ru.kalistratov.template.beauty.domain.entity.Id
 import ru.kalistratov.template.beauty.domain.entity.OfferCategory
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.view.Margins
+import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
+import ru.kalistratov.template.beauty.presentation.view.epoxy.setMargins
 import ru.kalistratov.template.beauty.presentation.view.setMargins
 import ru.kalistratov.template.beauty.text
 import ru.kalistratov.template.beauty.title
 
 
-class ServiceListController(
+class OfferPickerController(
     private val onBuildEnded: (Boolean) -> Unit
 ) : EpoxyController() {
 
@@ -27,6 +30,7 @@ class ServiceListController(
     var selected: List<Id> = emptyList()
     var categories: List<OfferCategory> = emptyList()
 
+    val typeClicks = mutableSharedFlow<Id>()
     val categoryClicks = mutableSharedFlow<Id>()
 
     private var needClean = false
@@ -49,17 +53,20 @@ class ServiceListController(
                 hasFixedSize(false)
             }
 
-            title {
+            if (carouselModals.isNotEmpty()) title {
                 id("categories_title")
                 titleText("Услуги")
             }
-            val lastTypeIndex = category.types.lastIndex
-            category.types.forEach {
+
+            category.types.forEach { type ->
+                val listener = View.OnClickListener { typeClicks.tryEmit(type.id) }
                 text {
-                    id(it.id)
-                    text(it.name)
-                    //TODO Свой класс
-                    padding(Carousel.Padding.dp(16, 0, 16, 8, 0))
+                    id(type.id)
+                    text(type.name)
+                    onBind { _, holder, _ ->
+                        holder.setMargins(MarginsBundle.base)
+                        holder.dataBinding.root.setOnClickListener(listener)
+                    }
                 }
             }
         }

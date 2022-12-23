@@ -4,8 +4,6 @@ import com.soywiz.klock.Time
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import ru.kalistratov.template.beauty.infrastructure.extensions.noTime
-import ru.kalistratov.template.beauty.infrastructure.extensions.toClockFormat
-import ru.kalistratov.template.beauty.infrastructure.kserialization.serializer.ClockFormatTimeSerializer
 
 typealias SequenceWeek = List<SequenceDay>
 
@@ -16,10 +14,10 @@ data class SequenceDay(
     @Contextual
     val day: WeekDay,
 
-    @Serializable(ClockFormatTimeSerializer::class)
+    @Contextual
     override val startAt: Time,
 
-    @Serializable(ClockFormatTimeSerializer::class)
+    @Contextual
     override val finishAt: Time,
 
     val isHoliday: Boolean,
@@ -50,10 +48,10 @@ data class SequenceDayWindow(
     val id: Id = "",
     val sequenceDayId: Id = "",
 
-    @Serializable(ClockFormatTimeSerializer::class)
+    @Contextual
     override val startAt: Time,
 
-    @Serializable(ClockFormatTimeSerializer::class)
+    @Contextual
     override val finishAt: Time,
 ) : TimeRangeContainer() {
     fun updateByTimeSource(

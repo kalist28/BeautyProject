@@ -24,6 +24,18 @@
     <string name="setting">Настройка</string>
     <string name="settings">Настройки</string>
 
+    <string name="my_offers">Мои услуги</string>
+    <string name="offer_create">Создать услугу</string>
+    <string name="offer_delete">Удалить данную услугу?</string>
+    <string name="offer_edit">Редактирвоание услуги</string>
+    <string name="offer_description">Описание (коментарий)</string>
+    <string name="slt_offer_category">Выбор категории</string>
+    <string name="slt_offer_type">Выбор услуги</string>
+    <string name="slt_offer_type_property">Выбор параметра услуги</string>
+
+    <string name="price_by_agreement">По договоренности</string>
+    <string name="price_error_to_less_than_from">Введите значение больше %d.</string>
+
     <string name="edit_work_windows">Редактировать окна</string>
     <string name="edit_work_window">Изменить рабочее окно</string>
     <string name="create_work_window">Новое рабочее окно</string>
