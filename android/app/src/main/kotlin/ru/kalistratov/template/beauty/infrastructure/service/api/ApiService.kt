@@ -66,9 +66,9 @@ abstract class ApiService(
                 updateToken(result.value)
                 return result
             }
-            /*if (result is NetworkResult.GenericError && result.error is NetworkRequestException.Timeout)
-                return result*/
-        } while (count++ < 5)
+            if (result is NetworkResult.GenericError && result.error is NetworkRequestException.Timeout)
+                return result
+        } while (count++ < 2)
         sessionManager.closeSession()
         return result
     }

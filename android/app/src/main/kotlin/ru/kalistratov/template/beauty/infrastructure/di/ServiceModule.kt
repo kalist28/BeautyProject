@@ -21,6 +21,7 @@ import ru.kalistratov.template.beauty.infrastructure.service.PermissionsServiceI
 import ru.kalistratov.template.beauty.infrastructure.service.SessionManagerImpl
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiAuthService
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module(includes = [SettingsProvideModule::class])
@@ -55,6 +56,7 @@ interface ServiceModule {
 class SettingsProvideModule {
     @Provides
     @Singleton
+    @Named("auth_settings")
     fun provideAuthSettings(application: Application): Settings = AndroidSettings(
         application.getSharedPreferences("auth_settings", Context.MODE_PRIVATE)
     )

@@ -19,6 +19,7 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.entity.OnBackPressedCallbackWrapper
 import ru.kalistratov.template.beauty.presentation.entity.RequestPermission
 import ru.kalistratov.template.beauty.presentation.entity.RequestPermissionsResult
@@ -66,6 +67,8 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
         setContentView(R.layout.activity_main)
         initNavController()
 
+        (applicationContext as Application).activity = this
+
         with(viewModel) {
             viewModelScope.launch {
                 stateUpdates()
@@ -78,13 +81,22 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
             ?.let { onBackPressedDispatcher.addCallback(this, it) }
     }
 
-    private fun initNavController() {
+    fun updateNavGraph() {
+        val finalHost = NavHostFragment.create(R.navigation.nav_graph)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment, finalHost)
+            .setPrimaryNavigationFragment(finalHost) // equivalent to app:defaultNavHost="true"
+            .commit()
+    }
+
+    fun initNavController() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
         val user = authSettingsService.getUserId()
+        loge("User - $user")
         if (user.isNullOrBlank()) navGraph.setStartDestination(R.id.authFragment)
         else navGraph.setStartDestination(R.id.timetableFragment)
         navController.setGraph(navGraph, null)

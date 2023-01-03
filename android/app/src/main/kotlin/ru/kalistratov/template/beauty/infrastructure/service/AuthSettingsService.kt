@@ -3,9 +3,10 @@ package ru.kalistratov.template.beauty.infrastructure.service
 import com.russhwolf.settings.Settings
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 import javax.inject.Inject
+import javax.inject.Named
 
 class AuthSettingsServiceImpl @Inject constructor(
-    private val settings: Settings
+    @Named("auth_settings") private val settings: Settings
 ) : AuthSettingsService {
 
     companion object {
@@ -28,8 +29,5 @@ class AuthSettingsServiceImpl @Inject constructor(
 
     override fun updateUserId(user: String) = settings.putString(USER_ID_TAG, user)
 
-    override fun exit() = with(settings) {
-        remove(USER_ID_TAG)
-        remove(TOKEN_TAG)
-    }
+    override fun exit() = settings.clear()
 }

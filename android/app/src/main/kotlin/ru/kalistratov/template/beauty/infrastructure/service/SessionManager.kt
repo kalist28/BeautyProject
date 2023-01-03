@@ -6,6 +6,7 @@ import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.infrastructure.di.UserModule
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 import ru.kalistratov.template.beauty.domain.service.SessionManager
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import javax.inject.Inject
 
 class SessionManagerImpl @Inject constructor(
@@ -21,11 +22,12 @@ class SessionManagerImpl @Inject constructor(
     override fun closeSession() {
         component = null
         authSettingsService.exit()
-        application.navController?.setGraph(R.navigation.nav_graph)
+        application.activity?.updateNavGraph()
+        loge("sfdgdhf")
     }
 
     private fun createComponent(): UserComponent {
-        val userName = authSettingsService.getUserId() ?: throw RuntimeException("User not found.")
+        val userName = authSettingsService.getUserId() ?: "".also { closeSession() }
         val component = application.applicationComponent
             .userComponentBuilder()
             .sessionModule(UserModule(userName))
