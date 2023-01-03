@@ -3,12 +3,15 @@ package ru.kalistratov.template.beauty.presentation.extension
 import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
@@ -16,6 +19,10 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.airbnb.epoxy.EpoxyController
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -77,4 +84,22 @@ fun Activity.showLoading(show: Boolean) {
 
 fun Fragment.showLoading(show: Boolean) {
     requireActivity().showLoading(show)
+}
+
+fun RecyclerView.connect(
+    controller: EpoxyController,
+    layoutManager: LayoutManager = LinearLayoutManager(this.context)
+) {
+    this.adapter = controller.adapter
+    this.layoutManager = layoutManager
+}
+
+fun EditText.setOnlyNumericSymbols() {
+    inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
+    transformationMethod = null
+    setRawInputType(Configuration.KEYBOARD_12KEY)
+}
+
+fun EditText.setTextWithChecking(text: String?) {
+    if (this.text?.toString() != text) setText(text)
 }

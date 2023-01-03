@@ -14,7 +14,7 @@ data class TextContainerModel(
     private val id: String,
     private val hint: String? = null,
     private val title: String? = null,
-    private val clickAction: () -> Unit,
+    private val clickAction: () -> Unit = { },
     private val marginsBundle: MarginsBundle? = null
 ) : EpoxyModelWithHolder<TextContainerModel.Holder>() {
 

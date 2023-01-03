@@ -92,7 +92,9 @@
 
     <style name="TimePicker" parent="Widget.Material3.MaterialTimePicker"/>
 
-
+    <style name="ShimmerBackground" parent="ThemeOverlay.Material3.AutoCompleteTextView">
+        <item name="android:background">@color/light_onSurfaceVariant</item>
+    </style>
 
 
 

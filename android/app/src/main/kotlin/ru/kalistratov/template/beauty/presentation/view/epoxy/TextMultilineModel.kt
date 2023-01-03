@@ -9,6 +9,7 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.databinding.ListItemTextMultilineBinding
+import ru.kalistratov.template.beauty.presentation.extension.setTextWithChecking
 import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
 import ru.kalistratov.template.beauty.presentation.view.setMargins
 
@@ -32,10 +33,6 @@ class TextMultilineModel(
     override fun createNewHolder(parent: ViewParent) = Holder()
 
     override fun getDefaultLayout() = R.layout.list_item_text_multiline
-
-    private fun EditText.setTextWithChecking(text: String?) {
-        if (this.text?.toString() != text) setText(text)
-    }
 
     inner class Holder : EpoxyHolder() {
         lateinit var binding: ListItemTextMultilineBinding

@@ -23,6 +23,14 @@ class ApiModule {
 
     @Provides
     @Singleton
+    fun provideApiClientsService(
+        authSettingsService: AuthSettingsService
+    ): ApiClientsService = ApiClientsServiceImpl(
+        uri, authSettingsService
+    )
+
+    @Provides
+    @Singleton
     fun provideApiSequenceService(
         authSettingsService: AuthSettingsService
     ): ApiSequenceService = ApiSequenceServiceImpl(

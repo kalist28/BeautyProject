@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmer_view_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/photo"
+            android:layout_width="@dimen/contact_photo"
+            android:layout_height="@dimen/contact_photo"
+            android:padding="@dimen/margin_xsmall"
+            android:theme="@style/ShimmerBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="@dimen/constraint_fill"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textSize="@dimen/text_xlarge"
+            android:theme="@style/ShimmerBackground"
+            app:layout_constraintBottom_toBottomOf="@id/center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/photo"
+            app:layout_constraintTop_toTopOf="@id/photo" />
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="@dimen/constraint_fill"
+            android:layout_height="@dimen/constraint_fill"
+            android:layout_marginStart="@dimen/margin_small"
+            android:textSize="@dimen/text_default"
+            android:theme="@style/ShimmerBackground"
+            app:layout_constraintBottom_toBottomOf="@id/photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/photo"
+            app:layout_constraintTop_toTopOf="@id/center" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.facebook.shimmer.ShimmerFrameLayout>

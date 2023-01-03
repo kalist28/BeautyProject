@@ -10,8 +10,9 @@ import ru.kalistratov.template.beauty.infrastructure.helper.mapper.toServer
 import ru.kalistratov.template.beauty.interfaces.server.dto.offer.RemoveOfferItemsRequest
 import ru.kalistratov.template.beauty.interfaces.server.entity.IncludeType
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiOfferItemService
+import javax.inject.Inject
 
-class OfferItemRepositoryImpl(
+class OfferItemRepositoryImpl @Inject constructor(
     private val apiOfferItemService: ApiOfferItemService
 ) : OfferItemRepository {
 
@@ -23,7 +24,7 @@ class OfferItemRepositoryImpl(
         id: Id?,
         bundle: OfferItemDataBundle
     ) = apiOfferItemService
-        .post(id, bundle.toServer(), include)
+        .post(id, bundle.toServer(), IncludeType.Empty)
         .process(
             success = { toLocal() },
             error = { null }

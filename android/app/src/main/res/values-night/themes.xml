@@ -95,7 +95,11 @@
         <item name="tint">@color/dark_primary</item>
     </style>
 
+    <style name="TimePicker" parent="Widget.Material3.MaterialTimePicker"/>
 
+    <style name="ShimmerBackground" parent="ThemeOverlay.Material3.AutoCompleteTextView">
+        <item name="android:background">@color/dark_onSurfaceVariant</item>
+    </style>
 
 
     <style name="TimePickerEditText" >

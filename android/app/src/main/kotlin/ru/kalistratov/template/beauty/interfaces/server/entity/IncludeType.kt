@@ -1,6 +1,7 @@
 package ru.kalistratov.template.beauty.interfaces.server.entity
 
-sealed class IncludeType(val value: String) {
+sealed class IncludeType(val value: String?) {
+    object Empty : IncludeType(null)
     class Custom(value : String) : IncludeType(value)
 
     object Types : IncludeType("types")

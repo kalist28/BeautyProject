@@ -26,7 +26,7 @@
             style="@style/TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/lastname"
+            android:hint="@string/surname"
             android:inputType="textAutoCorrect"
             android:maxLines="1"
             android:nextFocusForward="@id/password_edit_text"

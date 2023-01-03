@@ -132,17 +132,17 @@
         android:id="@+id/editUserFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.edituser.view.EditUserFragment"
         android:label="EditUserFragment"
-        tools:layout="@layout/fragment_edit_user" >
+        tools:layout="@layout/fragment_edit_user">
         <action
             android:id="@+id/action_editUserFragment_to_changePasswordFragment"
-            app:popUpTo="@id/editUserFragment"
-            app:destination="@id/changePasswordFragment" />
+            app:destination="@id/changePasswordFragment"
+            app:popUpTo="@id/editUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.changepassword.view.ChangePasswordFragment"
         android:label="ChangePasswordFragment"
-        tools:layout="@layout/fragment_change_password"/>
+        tools:layout="@layout/fragment_change_password" />
     <fragment
         android:id="@+id/offerPickerFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.offerpicker.view.OfferPickerFragment"
@@ -154,20 +154,46 @@
         <argument
             android:name="id"
             app:argType="string"
-            app:nullable="true"/>
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/myOfferListFragment"
         android:name="ru.kalistratov.template.beauty.presentation.feature.myofferlist.view.MyOfferListFragment"
         android:label="MyOfferListFragment"
-        tools:layout="@layout/fragment_my_offer_list" >
+        tools:layout="@layout/fragment_my_offer_list">
         <action
             android:id="@+id/action_myOfferListFragment_to_offerPickerFragment"
             app:destination="@id/offerPickerFragment" />
     </fragment>
     <fragment
         android:id="@+id/clientsListFragment"
-        android:name="ru.kalistratov.template.beauty.presentation.feature.clientslist.view.ClientsListFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.client.list.view.ClientsListFragment"
         android:label="ClientsListFragment"
-        tools:layout="@layout/fragment_list_clients" />
+        tools:layout="@layout/fragment_list_clients">
+        <action
+            android:id="@+id/action_clientsListFragment_to_editClientFragment"
+            app:destination="@id/editClientFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editClientFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.client.edit.view.EditClientFragment"
+        android:label="EditClientFragment"
+        tools:layout="@layout/fragment_list_base">
+
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_editClientFragment_to_contactsPickerFragment"
+            app:destination="@id/contactsPickerFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactsPickerFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.contactpicker.view.ContactPickerFragment"
+        android:label="ContactsPickerFragment"
+        tools:layout="@layout/fragment_list_base"/>
 </navigation>

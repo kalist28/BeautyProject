@@ -6,10 +6,12 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.MenuRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +27,7 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.presentation.extension.find
+import ru.kalistratov.template.beauty.presentation.extension.showLoading
 
 interface BaseView<I : BaseIntent, S : BaseState> {
     fun intents(): Flow<I>
@@ -73,8 +76,13 @@ abstract class BaseFragment : Fragment() {
         toolbar = this
         updateAppBarTitle(title)
 
-        (requireActivity() as AppCompatActivity).setSupportActionBar(this)
-
+        (requireActivity() as AppCompatActivity).also {
+            it.setSupportActionBar(this)
+            appBarMenu()?.let {
+                setHasOptionsMenu(true)
+                invalidateMenu()
+            }
+        }
         setOnMenuItemClickListener { onAppBarMenuItemClick(it) }
         setNavigationOnClickListener {
             _backPressedFlow.tryEmit(Unit)
@@ -121,5 +129,28 @@ abstract class BaseFragment : Fragment() {
             }.addTo(jobComposite)
             processIntent(view.intents())
         }
+    }
+
+    fun ViewModel.connectDialogLoadingDisplay() {
+        if (this !is ViewModelLoadingSupport) error("Notification flow is not impl.")
+        viewModelScope.launch {
+            loadingUpdates().collect(::showLoading)
+        }.addTo(jobComposite)
+    }
+
+    fun ViewModel.connectNotifications() {
+        if (this !is ViewModelNotificationSupport) error("Notification flow is not impl.")
+        viewModelScope.launch {
+            notifications().collect(::showNotification)
+        }.addTo(jobComposite)
+    }
+
+    protected fun showNotification(notification: ViewNotification) = when (notification) {
+        is ViewNotification.Toast -> Toast.makeText(
+            requireContext(),
+            notification.message,
+            if (notification.showLong) Toast.LENGTH_LONG
+            else Toast.LENGTH_SHORT
+        ).show()
     }
 }

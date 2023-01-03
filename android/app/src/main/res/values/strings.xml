@@ -2,7 +2,7 @@
     <string name="app_name">Beauty Masters</string>
 
     <string name="name">Имя</string>
-    <string name="lastname">Фамилия</string>
+    <string name="surname">Фамилия</string>
     <string name="patronymic">Отчество</string>
     <string name="gender">Пол</string>
 
@@ -66,8 +66,10 @@
 
     <string name="add">Добавить</string>
     <string name="edit">Изменить</string>
+    <string name="required_to_fill">*Обязательно к заполнению</string>
     <string name="save">Сохранить</string>
     <string name="update">Обновить</string>
+    <string name="comment">Коментарий</string>
     <string name="selected_count">Выбрано: %d</string>
 
     <string name="total_minutes">%d\nмин</string>
@@ -83,6 +85,13 @@
     <string name="workday_holiday">Пометить как выходной день</string>
 
     <string name="clients">Клиенты</string>
+    <string name="contacts">Контакты</string>
+    <string name="client_edit">Редактирование клиента</string>
+    <string name="client_create">Создание клиента</string>
+    <string name="add_from_contacts">Добавить из контактов</string>
+    <string name="client_error_name">Имя не может быть пустым</string>
+    <string name="client_error_number">Номер введен не правильно</string>
+
     <string name="user">Пользователь</string>
     <string name="week_sequence">Рабочая неделя</string>
     <string name="add_window">Добавить окно</string>
@@ -93,5 +102,6 @@
     <string name="cancel">Отменить</string>
 
     <string name="delete_windows_warning">Будет удалено %s</string>
+    <string name="phone_number">Мобильный номер</string>
 
 </resources>

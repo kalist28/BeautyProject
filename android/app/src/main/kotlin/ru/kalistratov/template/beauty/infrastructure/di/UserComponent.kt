@@ -19,8 +19,12 @@ import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarC
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarModule
 import ru.kalistratov.template.beauty.presentation.feature.changepassword.di.ChangePasswordComponent
 import ru.kalistratov.template.beauty.presentation.feature.changepassword.di.ChangePasswordModule
-import ru.kalistratov.template.beauty.presentation.feature.clientslist.di.ClientsListComponent
-import ru.kalistratov.template.beauty.presentation.feature.clientslist.di.ClientsListModule
+import ru.kalistratov.template.beauty.presentation.feature.client.edit.di.EditClientComponent
+import ru.kalistratov.template.beauty.presentation.feature.client.edit.di.EditClientModule
+import ru.kalistratov.template.beauty.presentation.feature.client.list.di.ClientsListComponent
+import ru.kalistratov.template.beauty.presentation.feature.client.list.di.ClientsListModule
+import ru.kalistratov.template.beauty.presentation.feature.contactpicker.di.ContactPickerComponent
+import ru.kalistratov.template.beauty.presentation.feature.contactpicker.di.ContactPickerModule
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.di.EditSequenceDayWindowsComponent
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.di.EditSequenceDayWindowsModule
 import ru.kalistratov.template.beauty.presentation.feature.edituser.di.EditUserComponent
@@ -56,11 +60,13 @@ interface UserComponent {
     fun plus(module: CalendarModule): CalendarComponent
     fun plus(module: EditUserModule): EditUserComponent
     fun plus(module: TimetableModule): TimetableComponent
+    fun plus(module: EditClientModule): EditClientComponent
     fun plus(module: ClientsListModule): ClientsListComponent
     fun plus(module: OfferPickerModule): OfferPickerComponent
     fun plus(module: MyOfferListModule): MyOfferListComponent
     fun plus(module: PersonalAreaModule): PersonalAreaComponent
     fun plus(module: WeekSequenceModule): WeekSequenceComponent
+    fun plus(module: ContactPickerModule): ContactPickerComponent
     fun plus(module: ChangePasswordModule): ChangePasswordComponent
     fun plus(module: EditSequenceDayWindowsModule): EditSequenceDayWindowsComponent
 }
@@ -77,7 +83,7 @@ class UserModule(private val user: String) {
     @Provides
     @UserScope
     fun providePersonalAreaMenuService(): PersonalAreaMenuService = PersonalAreaMenuServiceImpl()
-    
+
     @Provides
     @UserScope
     fun provideSequenceDayRepository(

@@ -9,9 +9,7 @@ import ru.kalistratov.template.beauty.domain.entity.OfferCategory
 import ru.kalistratov.template.beauty.domain.entity.OfferItem
 import ru.kalistratov.template.beauty.domain.entity.OfferType
 import ru.kalistratov.template.beauty.domain.feature.myofferlist.MyOfferListInteractor
-import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
-import ru.kalistratov.template.beauty.infrastructure.base.BaseState
-import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModelWithLoadingSupport
+import ru.kalistratov.template.beauty.infrastructure.base.*
 import ru.kalistratov.template.beauty.infrastructure.coroutines.*
 import ru.kalistratov.template.beauty.presentation.entity.toContainer
 import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.CreatingClickType
@@ -47,7 +45,8 @@ sealed interface MyOfferListAction : BaseAction {
 
 class MyOfferListViewModel @Inject constructor(
     private val interactor: MyOfferListInteractor
-) : BaseViewModelWithLoadingSupport<MyOfferListIntent, MyOfferListAction, MyOfferListState>() {
+) : BaseViewModel<MyOfferListIntent, MyOfferListAction, MyOfferListState>(),
+    ViewModelLoadingSupport by ViewModelLoadingSupportBaseImpl() {
 
     var router: MyOfferListRouter? = null
 
@@ -101,6 +100,7 @@ class MyOfferListViewModel @Inject constructor(
                 .clickDebounce()
                 .flatMapConcat {
                     flow {
+                        if (it.text.isBlank()) return@flow
                         when (val state = state.viewTypeState) {
                             is MyOfferListViewTypeState.CreatingItem -> emit(
                                 MyOfferListAction.UpdateViewTypeState(

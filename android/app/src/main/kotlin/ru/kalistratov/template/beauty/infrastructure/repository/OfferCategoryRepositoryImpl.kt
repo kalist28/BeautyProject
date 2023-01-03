@@ -8,8 +8,9 @@ import ru.kalistratov.template.beauty.infrastructure.extensions.processWithNull
 import ru.kalistratov.template.beauty.infrastructure.helper.mapper.toLocal
 import ru.kalistratov.template.beauty.interfaces.server.entity.IncludeType
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiOfferCategoryService
+import javax.inject.Inject
 
-class OfferCategoryRepositoryImpl(
+class OfferCategoryRepositoryImpl @Inject constructor(
     private val apiOfferCategoryService: ApiOfferCategoryService
 ) : OfferCategoryRepository {
 

@@ -6,8 +6,9 @@ import ru.kalistratov.template.beauty.infrastructure.extensions.process
 import ru.kalistratov.template.beauty.infrastructure.helper.mapper.toLocal
 import ru.kalistratov.template.beauty.interfaces.server.entity.IncludeType
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiOfferTypeService
+import javax.inject.Inject
 
-class OfferTypeRepositoryImpl(
+class OfferTypeRepositoryImpl @Inject constructor(
     private val apiOfferItemService: ApiOfferTypeService
 ) : OfferTypeRepository {
 

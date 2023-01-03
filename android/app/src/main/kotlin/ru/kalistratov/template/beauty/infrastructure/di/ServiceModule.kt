@@ -3,29 +3,27 @@ package ru.kalistratov.template.beauty.infrastructure.di
 import android.content.Context
 import com.russhwolf.settings.AndroidSettings
 import com.russhwolf.settings.Settings
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import ru.kalistratov.template.beauty.domain.feature.contactpicker.ContactPickerBroadcast
 import ru.kalistratov.template.beauty.domain.repository.ContactsRepository
-import ru.kalistratov.template.beauty.domain.repository.OfferCategoryRepository
-import ru.kalistratov.template.beauty.domain.repository.OfferItemRepository
-import ru.kalistratov.template.beauty.domain.repository.OfferTypeRepository
 import ru.kalistratov.template.beauty.domain.service.AuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 import ru.kalistratov.template.beauty.domain.service.PermissionsService
 import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.infrastructure.Application
+import ru.kalistratov.template.beauty.infrastructure.feature.contactpicker.ContactPickerBroadcastImpl
 import ru.kalistratov.template.beauty.infrastructure.repository.ContactsRepositoryImpl
-import ru.kalistratov.template.beauty.infrastructure.repository.OfferCategoryRepositoryImpl
-import ru.kalistratov.template.beauty.infrastructure.repository.OfferItemRepositoryImpl
-import ru.kalistratov.template.beauty.infrastructure.repository.OfferTypeRepositoryImpl
 import ru.kalistratov.template.beauty.infrastructure.service.AuthServiceImpl
 import ru.kalistratov.template.beauty.infrastructure.service.AuthSettingsServiceImpl
 import ru.kalistratov.template.beauty.infrastructure.service.PermissionsServiceImpl
 import ru.kalistratov.template.beauty.infrastructure.service.SessionManagerImpl
-import ru.kalistratov.template.beauty.interfaces.server.service.*
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiAuthService
+import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [ServiceBindsModule::class])
 class ServiceModule(val application: Application) {
     @Provides
     @Singleton
@@ -39,9 +37,7 @@ class ServiceModule(val application: Application) {
         apiUserService: ApiUserService,
         authSettingsService: AuthSettingsService
     ): AuthService = AuthServiceImpl(
-        apiAuthService,
-        apiUserService,
-        authSettingsService
+        apiAuthService, apiUserService, authSettingsService
     )
 
     @Provides
@@ -60,35 +56,17 @@ class ServiceModule(val application: Application) {
     fun provideContactsRepository(
         permissionsService: PermissionsService
     ): ContactsRepository = ContactsRepositoryImpl(
-        application,
-        permissionsService
+        application, permissionsService
     )
 
     @Provides
     @Singleton
     fun providePermissionsService(): PermissionsService = PermissionsServiceImpl()
+}
 
-    @Provides
+@Module
+interface ServiceBindsModule {
+    @Binds
     @Singleton
-    fun provideOfferCategoryRepository(
-        apiOfferCategoryService: ApiOfferCategoryService
-    ): OfferCategoryRepository = OfferCategoryRepositoryImpl(
-        apiOfferCategoryService
-    )
-
-    @Provides
-    @Singleton
-    fun provideOfferItemRepository(
-        apiOfferItemService: ApiOfferItemService
-    ): OfferItemRepository = OfferItemRepositoryImpl(
-        apiOfferItemService
-    )
-
-    @Provides
-    @Singleton
-    fun provideOfferTypeRepository(
-        apiOfferTypeService: ApiOfferTypeService
-    ): OfferTypeRepository = OfferTypeRepositoryImpl(
-        apiOfferTypeService
-    )
+    fun bindsContactPickerBroadcast(impl: ContactPickerBroadcastImpl): ContactPickerBroadcast
 }

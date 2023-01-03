@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "ru.kalistratov.template.beauty"
-        minSdk 21
+        minSdk 23
         targetSdk 33
         versionCode 1
         versionName "0.0.2"
@@ -93,6 +93,12 @@ dependencies {
     implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
     kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
 
+    // PlaceHolder for RecyclerView
+    implementation "com.github.guilhe:placeholder-recyclerview:1.1.0"
+
+    // Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     // Ktor
     var ktor_version = "1.6.5"
     implementation "io.ktor:ktor-client-cio:$ktor_version"
@@ -115,6 +121,9 @@ dependencies {
 
     //Circle time range picker
     implementation 'nl.joery.timerangepicker:timerangepicker:1.0.0'
+
+    //Phone mask for editText
+    implementation 'ru.tinkoff.decoro:decoro:1.5.1'
 
     def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"

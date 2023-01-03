@@ -16,7 +16,7 @@ class EditUserListServiceImpl : EditUserListService {
             EditUserListItemType.Name
         ),
         ViewListItem.EditText(
-            R.string.lastname,
+            R.string.surname,
             EditUserListItemType.Surname
         ),
         ViewListItem.EditText(

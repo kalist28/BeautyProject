@@ -10,6 +10,7 @@ import ru.kalistratov.template.beauty.interfaces.server.service.ApiAuthService
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import ru.kalistratov.template.beauty.domain.service.AuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 
 class AuthServiceImpl(
     private val apiAuthService: ApiAuthService,
