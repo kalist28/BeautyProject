@@ -4,5 +4,5 @@ import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 
 interface SessionManager {
     fun getComponent(): UserComponent
-    fun clearSession()
+    fun closeSession()
 }

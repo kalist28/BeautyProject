@@ -11,8 +11,9 @@ import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import ru.kalistratov.template.beauty.domain.service.AuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
+import javax.inject.Inject
 
-class AuthServiceImpl(
+class AuthServiceImpl @Inject constructor(
     private val apiAuthService: ApiAuthService,
     private val apiUserService: ApiUserService,
     private val authSettingsService: AuthSettingsService

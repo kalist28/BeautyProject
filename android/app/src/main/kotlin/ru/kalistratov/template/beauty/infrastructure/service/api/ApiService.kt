@@ -11,9 +11,11 @@ import ru.kalistratov.template.beauty.domain.entity.request.ServerToken
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import ru.kalistratov.template.beauty.domain.service.SessionManager
 
 abstract class ApiService(
     protected val url: String,
+    protected val sessionManager: SessionManager,
     protected val authSettingsService: AuthSettingsService
 ) {
 
@@ -45,16 +47,32 @@ abstract class ApiService(
         obj: (HttpClient) -> T
     ): T = this.use {
         obj.invoke(this).let {
-            if (isUnauthorized(it)) refreshToken()
-                .let { result ->
-                    if (result is NetworkResult.Success) {
-                        updateToken(result.value)
-                        obj.invoke(this)
-                    } else it
-                }
-            else it
+            if (isUnauthorized(it)) processRefreshToken().let { result ->
+                if (result is NetworkResult.Success) {
+                    updateToken(result.value)
+                    obj.invoke(this)
+                } else it
+            }
+            return@let it
         }
     }
+
+    protected suspend inline fun processRefreshToken(): NetworkResult<ServerToken> {
+        var count = 0
+        var result: NetworkResult<ServerToken>
+        do {
+            result = refreshToken()
+            if (result is NetworkResult.Success) {
+                updateToken(result.value)
+                return result
+            }
+            /*if (result is NetworkResult.GenericError && result.error is NetworkRequestException.Timeout)
+                return result*/
+        } while (count++ < 5)
+        sessionManager.closeSession()
+        return result
+    }
+
 
     protected fun <T> isUnauthorized(obj: T) = obj.let {
         if (it is NetworkResult.GenericError) {
@@ -63,11 +81,10 @@ abstract class ApiService(
         } else false
     }
 
-    protected fun updateToken(token: ServerToken) =
-        with(authSettingsService) {
-            updateToken(token.accessToken)
-            updateRefreshToken(token.refreshToken)
-        }
+    protected fun updateToken(token: ServerToken) = with(authSettingsService) {
+        updateToken(token.accessToken)
+        updateRefreshToken(token.refreshToken)
+    }
 
     protected suspend fun refreshToken(): NetworkResult<ServerToken> = getClient().use {
         handlingNetworkSafetyWithoutData<ServerToken> {

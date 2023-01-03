@@ -5,18 +5,22 @@ import io.ktor.http.*
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.domain.entity.Id
+import ru.kalistratov.template.beauty.domain.entity.ServerUrl
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.interfaces.server.dto.offer.ServerOfferCategory
 import ru.kalistratov.template.beauty.interfaces.server.dto.offer.ServerOfferType
 import ru.kalistratov.template.beauty.interfaces.server.entity.IncludeType
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiOfferCategoryService
+import javax.inject.Inject
 
-class ApiOfferCategoryServiceImpl(
-    url: String,
+class ApiOfferCategoryServiceImpl @Inject constructor(
+    url: ServerUrl,
+    sessionManager: SessionManager,
     authSettingsService: AuthSettingsService
-) : ApiService(url, authSettingsService), ApiOfferCategoryService {
+) : ApiService(url, sessionManager, authSettingsService), ApiOfferCategoryService {
 
     private val categoryUrl = "$url/offer/categories"
     override suspend fun get(

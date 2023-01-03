@@ -1,12 +1,14 @@
 package ru.kalistratov.template.beauty.infrastructure.service
 
+import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.infrastructure.di.UserModule
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 import ru.kalistratov.template.beauty.domain.service.SessionManager
+import javax.inject.Inject
 
-class SessionManagerImpl(
+class SessionManagerImpl @Inject constructor(
     private val application: Application,
     private val authSettingsService: AuthSettingsService,
 ) : SessionManager {
@@ -16,8 +18,10 @@ class SessionManagerImpl(
     override fun getComponent(): UserComponent =
         component ?: createComponent()
 
-    override fun clearSession() {
+    override fun closeSession() {
         component = null
+        authSettingsService.exit()
+        application.navController?.setGraph(R.navigation.nav_graph)
     }
 
     private fun createComponent(): UserComponent {

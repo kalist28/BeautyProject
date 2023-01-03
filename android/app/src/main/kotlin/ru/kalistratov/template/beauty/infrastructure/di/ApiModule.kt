@@ -1,79 +1,59 @@
 package ru.kalistratov.template.beauty.infrastructure.di
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import ru.kalistratov.template.beauty.BuildConfig
-import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
 import ru.kalistratov.template.beauty.infrastructure.service.api.*
 import ru.kalistratov.template.beauty.interfaces.server.service.*
 import javax.inject.Singleton
 
 @Module
-class ApiModule {
+interface ApiModule {
 
-    private val uri = BuildConfig.SERVER_URI
-
-    @Provides
+    @Binds
     @Singleton
     fun provideApiAuthService(
-        authSettingsService: AuthSettingsService
-    ): ApiAuthService = ApiAuthServiceImpl(
-        uri, authSettingsService
-    )
+        impl: ApiAuthServiceImpl
+    ): ApiAuthService
 
-    @Provides
+    @Binds
     @Singleton
     fun provideApiClientsService(
-        authSettingsService: AuthSettingsService
-    ): ApiClientsService = ApiClientsServiceImpl(
-        uri, authSettingsService
-    )
+        impl: ApiClientsServiceImpl
+    ): ApiClientsService
 
-    @Provides
+    @Binds
     @Singleton
     fun provideApiSequenceService(
-        authSettingsService: AuthSettingsService
-    ): ApiSequenceService = ApiSequenceServiceImpl(
-        uri, authSettingsService
-    )
+        impl: ApiSequenceServiceImpl
+    ): ApiSequenceService
 
-    @Provides
+    @Binds
     @Singleton
     fun provideApiUserService(
-        authSettingsService: AuthSettingsService
-    ): ApiUserService = ApiUserServiceImpl(
-        uri, authSettingsService
-    )
+        impl: ApiUserServiceImpl
+    ): ApiUserService
 
-    @Provides
+    @Binds
     @Singleton
     fun provideApiWorkdayWindowService(
-        authSettingsService: AuthSettingsService
-    ): ApiSequenceDayWindowsService = ApiSequenceDayWindowsServiceImpl(
-        uri, authSettingsService
-    )
+        impl: ApiSequenceDayWindowsServiceImpl
+    ): ApiSequenceDayWindowsService
 
-    @Provides
+    @Binds
     @Singleton
     fun provideApiOfferCategoryService(
-        authSettingsService: AuthSettingsService
-    ): ApiOfferCategoryService = ApiOfferCategoryServiceImpl(
-        uri, authSettingsService
-    )
+        impl: ApiOfferCategoryServiceImpl
+    ): ApiOfferCategoryService
 
-    @Provides
+    @Binds
     @Singleton
     fun provideApiOfferItemService(
-        authSettingsService: AuthSettingsService
-    ): ApiOfferItemService = ApiOfferItemServiceImpl(
-        uri, authSettingsService
-    )
+        impl: ApiOfferItemServiceImpl
+    ): ApiOfferItemService
 
-    @Provides
+    @Binds
     @Singleton
     fun provideApiOfferTypeService(
-        authSettingsService: AuthSettingsService
-    ): ApiOfferTypeService = ApiOfferTypeServiceImpl(
-        uri, authSettingsService
-    )
+        impl: ApiOfferTypeServiceImpl
+    ): ApiOfferTypeService
 }

@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import ru.kalistratov.template.beauty.domain.service.PermissionsService
 import ru.kalistratov.template.beauty.presentation.entity.RequestPermission
 import ru.kalistratov.template.beauty.presentation.entity.RequestPermissionsResult
+import javax.inject.Inject
 
-class PermissionsServiceImpl : PermissionsService {
+class PermissionsServiceImpl @Inject constructor() : PermissionsService {
 
     companion object {
         const val CONTACTS_CODE = 1

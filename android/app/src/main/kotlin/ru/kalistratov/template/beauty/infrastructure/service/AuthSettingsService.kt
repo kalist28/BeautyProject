@@ -2,8 +2,11 @@ package ru.kalistratov.template.beauty.infrastructure.service
 
 import com.russhwolf.settings.Settings
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import javax.inject.Inject
 
-class AuthSettingsServiceImpl(private val settings: Settings) : AuthSettingsService {
+class AuthSettingsServiceImpl @Inject constructor(
+    private val settings: Settings
+) : AuthSettingsService {
 
     companion object {
         private const val USER_ID_TAG = "user_id_tag"

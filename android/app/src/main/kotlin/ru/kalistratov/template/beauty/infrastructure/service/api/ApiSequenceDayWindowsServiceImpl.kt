@@ -6,16 +6,20 @@ import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.common.handlingNetworkSafetyWithoutData
 import ru.kalistratov.template.beauty.domain.entity.Id
+import ru.kalistratov.template.beauty.domain.entity.ServerUrl
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiSequenceDayWindowsService
 import ru.kalistratov.template.beauty.interfaces.server.dto.ServerSequenceDayWindow
+import javax.inject.Inject
 
-class ApiSequenceDayWindowsServiceImpl(
-    url: String,
+class ApiSequenceDayWindowsServiceImpl @Inject constructor(
+    url: ServerUrl,
+    sessionManager: SessionManager,
     authSettingsService: AuthSettingsService
-) : ApiService(url, authSettingsService), ApiSequenceDayWindowsService {
+) : ApiService(url, sessionManager, authSettingsService), ApiSequenceDayWindowsService {
 
     private val windowsUrl = "$url/timetable/windows"
 

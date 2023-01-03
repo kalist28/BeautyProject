@@ -5,6 +5,7 @@ import io.ktor.http.*
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.common.handlingNetworkSafetyWithoutData
+import ru.kalistratov.template.beauty.domain.entity.ServerUrl
 import ru.kalistratov.template.beauty.domain.entity.User
 import ru.kalistratov.template.beauty.domain.entity.request.AuthRequest
 import ru.kalistratov.template.beauty.domain.entity.request.RegistrationRequest
@@ -13,11 +14,14 @@ import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiAuthService
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import ru.kalistratov.template.beauty.domain.service.SessionManager
+import javax.inject.Inject
 
-class ApiAuthServiceImpl(
-    url: String,
+class ApiAuthServiceImpl @Inject constructor(
+    url: ServerUrl,
+    sessionManager: SessionManager,
     authSettingsService: AuthSettingsService
-) : ApiService(url, authSettingsService), ApiAuthService {
+) : ApiService(url, sessionManager, authSettingsService), ApiAuthService {
     override suspend fun registration(
         request: RegistrationRequest
     ): NetworkResult<User> = getClient()

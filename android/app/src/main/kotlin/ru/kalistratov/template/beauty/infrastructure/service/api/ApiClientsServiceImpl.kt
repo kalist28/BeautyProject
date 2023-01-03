@@ -7,9 +7,11 @@ import kotlinx.serialization.encodeToString
 import ru.kalistratov.template.beauty.common.NetworkResult
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.domain.entity.Id
+import ru.kalistratov.template.beauty.domain.entity.ServerUrl
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.infrastructure.extensions.jsonParser
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.interfaces.server.dto.RemoveRequest
@@ -17,11 +19,13 @@ import ru.kalistratov.template.beauty.interfaces.server.dto.RemoveResponse
 import ru.kalistratov.template.beauty.interfaces.server.dto.ServerClient
 import ru.kalistratov.template.beauty.interfaces.server.dto.ServerClientDataBundle
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiClientsService
+import javax.inject.Inject
 
-class ApiClientsServiceImpl(
-    url: String,
+class ApiClientsServiceImpl @Inject constructor(
+    url: ServerUrl,
+    sessionManager: SessionManager,
     authSettingsService: AuthSettingsService
-) : ApiService(url, authSettingsService), ApiClientsService {
+) : ApiService(url, sessionManager, authSettingsService), ApiClientsService {
 
     private val clientUrl = "$url/contacts"
 

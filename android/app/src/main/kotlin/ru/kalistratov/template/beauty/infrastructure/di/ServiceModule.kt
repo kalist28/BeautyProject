@@ -23,50 +23,39 @@ import ru.kalistratov.template.beauty.interfaces.server.service.ApiAuthService
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import javax.inject.Singleton
 
-@Module(includes = [ServiceBindsModule::class])
-class ServiceModule(val application: Application) {
-    @Provides
-    @Singleton
-    fun provideSessionManager(authSettingsService: AuthSettingsService): SessionManager =
-        SessionManagerImpl(application, authSettingsService)
+@Module(includes = [SettingsProvideModule::class])
+interface ServiceModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideRegistrationService(
-        apiAuthService: ApiAuthService,
-        apiUserService: ApiUserService,
-        authSettingsService: AuthSettingsService
-    ): AuthService = AuthServiceImpl(
-        apiAuthService, apiUserService, authSettingsService
-    )
+    fun provideSessionManager(impl: SessionManagerImpl): SessionManager
 
+    @Binds
+    @Singleton
+    fun provideRegistrationService(impl: AuthServiceImpl): AuthService
+
+    @Binds
+    @Singleton
+    fun provideAuthSettingsService(impl: AuthSettingsServiceImpl): AuthSettingsService
+
+    @Binds
+    @Singleton
+    fun provideContactsRepository(impl: ContactsRepositoryImpl): ContactsRepository
+
+    @Binds
+    @Singleton
+    fun bindsContactPickerBroadcast(impl: ContactPickerBroadcastImpl): ContactPickerBroadcast
+
+    @Binds
+    @Singleton
+    fun providePermissionsService(impl: PermissionsServiceImpl): PermissionsService
+}
+
+@Module
+class SettingsProvideModule {
     @Provides
     @Singleton
     fun provideAuthSettings(application: Application): Settings = AndroidSettings(
         application.getSharedPreferences("auth_settings", Context.MODE_PRIVATE)
     )
-
-    @Provides
-    @Singleton
-    fun provideAuthSettingsService(authSettings: Settings): AuthSettingsService =
-        AuthSettingsServiceImpl(authSettings)
-
-    @Provides
-    @Singleton
-    fun provideContactsRepository(
-        permissionsService: PermissionsService
-    ): ContactsRepository = ContactsRepositoryImpl(
-        application, permissionsService
-    )
-
-    @Provides
-    @Singleton
-    fun providePermissionsService(): PermissionsService = PermissionsServiceImpl()
-}
-
-@Module
-interface ServiceBindsModule {
-    @Binds
-    @Singleton
-    fun bindsContactPickerBroadcast(impl: ContactPickerBroadcastImpl): ContactPickerBroadcast
 }

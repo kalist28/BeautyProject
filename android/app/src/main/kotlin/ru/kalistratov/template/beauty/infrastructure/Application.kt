@@ -1,6 +1,7 @@
 package ru.kalistratov.template.beauty.infrastructure
 
 import android.app.Application
+import android.content.Context
 import androidx.navigation.NavController
 import ru.kalistratov.template.beauty.infrastructure.di.ApplicationModule
 import ru.kalistratov.template.beauty.infrastructure.di.DaggerApplicationComponent
@@ -12,7 +13,6 @@ class Application : Application() {
     val applicationComponent by lazy {
         DaggerApplicationComponent
             .builder()
-            .serviceModule(ServiceModule(this))
             .applicationModule(ApplicationModule(this))
             .build()
     }
@@ -24,3 +24,5 @@ class Application : Application() {
         Timber.plant(Timber.DebugTree())
     }
 }
+
+typealias ApplicationContext = Context

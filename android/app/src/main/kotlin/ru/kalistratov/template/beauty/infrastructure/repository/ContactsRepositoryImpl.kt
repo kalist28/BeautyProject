@@ -13,11 +13,12 @@ import androidx.core.content.PermissionChecker
 import ru.kalistratov.template.beauty.domain.entity.Contact
 import ru.kalistratov.template.beauty.domain.repository.ContactsRepository
 import ru.kalistratov.template.beauty.domain.service.PermissionsService
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
+import ru.kalistratov.template.beauty.infrastructure.ApplicationContext
 import ru.kalistratov.template.beauty.infrastructure.extensions.toNumbers
+import javax.inject.Inject
 
-class ContactsRepositoryImpl(
-    private val context: Context,
+class ContactsRepositoryImpl @Inject constructor(
+    private val context: ApplicationContext,
     private val permissionsService: PermissionsService
 ) : ContactsRepository {
 

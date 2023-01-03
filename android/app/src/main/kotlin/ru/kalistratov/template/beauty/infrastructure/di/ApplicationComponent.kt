@@ -3,10 +3,13 @@ package ru.kalistratov.template.beauty.infrastructure.di
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import ru.kalistratov.template.beauty.BuildConfig
+import ru.kalistratov.template.beauty.domain.entity.ServerUrl
 import ru.kalistratov.template.beauty.domain.repository.UserRepository
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import ru.kalistratov.template.beauty.domain.service.RegistrationStepService
 import ru.kalistratov.template.beauty.infrastructure.Application
+import ru.kalistratov.template.beauty.infrastructure.ApplicationContext
 import ru.kalistratov.template.beauty.infrastructure.base.AuthBaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseActivity
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
@@ -50,6 +53,14 @@ class ApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideApplication(): Application = application
+
+    @Provides
+    @Singleton
+    fun provideApplicationContext(): ApplicationContext = application
+
+    @Provides
+    @Singleton
+    fun provideServerUrl(): ServerUrl = BuildConfig.SERVER_URI
 
     @Provides
     @Singleton

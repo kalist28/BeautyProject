@@ -4,19 +4,23 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import ru.kalistratov.template.beauty.common.handlingNetworkSafety
 import ru.kalistratov.template.beauty.domain.entity.Id
+import ru.kalistratov.template.beauty.domain.entity.ServerUrl
 import ru.kalistratov.template.beauty.domain.extension.getClient
 import ru.kalistratov.template.beauty.domain.extension.logIfError
 import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
+import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.interfaces.server.dto.offer.RemoveOfferItemsRequest
 import ru.kalistratov.template.beauty.interfaces.server.dto.offer.ServerOfferItemDataBundle
 import ru.kalistratov.template.beauty.interfaces.server.dto.offer.ServerOfferItem
 import ru.kalistratov.template.beauty.interfaces.server.entity.IncludeType
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiOfferItemService
+import javax.inject.Inject
 
-class ApiOfferItemServiceImpl(
-    url: String,
+class ApiOfferItemServiceImpl @Inject constructor(
+    url: ServerUrl,
+    sessionManager: SessionManager,
     authSettingsService: AuthSettingsService
-) : ApiService(url, authSettingsService), ApiOfferItemService {
+) : ApiService(url, sessionManager, authSettingsService), ApiOfferItemService {
 
     private val itemUrl = "$url/offer/items"
 
