@@ -2,6 +2,7 @@ package ru.kalistratov.template.beauty.infrastructure.base
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
@@ -18,6 +19,9 @@ abstract class AuthBaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         findViews()
         injectAppComponent()
+        requireActivity().window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+        )
     }
 
     abstract fun injectAppComponent()

@@ -1,10 +1,7 @@
 package ru.kalistratov.template.beauty.infrastructure.base
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.MenuRes
@@ -55,6 +52,7 @@ abstract class BaseFragment : Fragment() {
         injectAppComponent()
         findViews()
         initViews()
+        setSoftInputMode()
     }
 
     protected open fun injectAppComponent() {
@@ -97,6 +95,14 @@ abstract class BaseFragment : Fragment() {
     protected fun updateAppBarTitle(title: String) {
         toolbar?.title = title
     }
+
+    protected fun setSoftInputMode() {
+        requireActivity().window.setSoftInputMode(getSoftInputMode())
+    }
+
+    protected open fun getSoftInputMode() =
+        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
