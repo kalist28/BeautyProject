@@ -14,7 +14,7 @@ class AuthRouterImpl(
     fragment: String
 ) : BaseRouter(fragment), AuthRouter {
     override fun openTimetable() = navController.safetyNavigate(
-        AuthFragmentDirections.actionAuthFragmentToTimetableFragment()
+        AuthFragmentDirections.actionAuthFragmentToReservationListFragment()
     )
 
     override fun openRegistration() = navController.safetyNavigate(

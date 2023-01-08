@@ -15,7 +15,7 @@ class ProfileRouterImpl(
     fragment: String
 ) : BaseRouter(fragment), ProfileRouter {
     override fun openTimetable() = navController.safetyNavigate(
-        ProfileFragmentDirections.actionProfileFragmentToTimetableFragment()
+        ProfileFragmentDirections.actionProfileFragmentToReservationListFragment()
     )
 
     override fun openPersonalArea() = navController.safetyNavigate(

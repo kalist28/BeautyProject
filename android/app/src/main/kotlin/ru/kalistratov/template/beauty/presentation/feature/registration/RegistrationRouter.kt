@@ -13,6 +13,6 @@ class RegistrationRouterImpl(
     fragment: String
 ) : BaseRouter(fragment), RegistrationRouter {
     override fun openTimetable() = navController.safetyNavigate(
-        RegistrationFragmentDirections.actionRegistrationFragmentToTimetableFragment()
+        RegistrationFragmentDirections.actionRegistrationFragmentToReservationListFragment()
     )
 }

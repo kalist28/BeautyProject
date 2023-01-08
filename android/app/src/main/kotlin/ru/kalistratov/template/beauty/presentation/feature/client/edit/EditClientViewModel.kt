@@ -80,11 +80,9 @@ class EditClientViewModel @Inject constructor(
                 .onEach { router?.toPicker() }
                 .launchHere()
 
-            intentFlow
-                .filterIsInstance<EditClientIntent.Save>()
+            intentFlow.filterIsInstance<EditClientIntent.Save>()
                 .clickDebounce()
                 .onEach {
-                    showLoading()
                     val client = helper.client
                     val numberExist = !client.id.exist() && interactor
                         .isNumberExist(client.number)
@@ -93,18 +91,16 @@ class EditClientViewModel @Inject constructor(
                             "Номер существует",
                             true
                         )
-                    ) else {
-                        interactor.save(helper.client).process(
+                    ) else interactor
+                        .save(helper.client)
+                        .process(
                             success = { router?.back() },
                             error = { }
                         )
-                    }
-                    hideLoading()
                 }
-                .share(this)
+                .launchHere()
 
             val clientUpdatesAction = helper.clientUpdates()
-                .onEach { loge(it) }
                 .map(EditClientAction::UpdateClient)
 
             merge(

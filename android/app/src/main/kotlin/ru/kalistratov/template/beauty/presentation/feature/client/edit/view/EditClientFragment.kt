@@ -19,6 +19,7 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.connect
 import ru.kalistratov.template.beauty.presentation.extension.showLoading
 import ru.kalistratov.template.beauty.presentation.feature.client.edit.EditClientRouter
@@ -79,7 +80,7 @@ class EditClientFragment : BaseFragment(), BaseView<EditClientIntent, EditClient
 
         with(viewModel) {
             connectNotifications()
-            connectDialogLoadingDisplay()
+            connectDialogLoadingDisplay(true)
             router = editClientRouter
             connectInto(this@EditClientFragment)
         }

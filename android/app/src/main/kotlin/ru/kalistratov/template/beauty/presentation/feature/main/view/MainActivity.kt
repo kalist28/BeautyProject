@@ -58,6 +58,8 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
     private var additionalCallback: OnBackPressedCallback? = null
     private val onBackPressedCallbackWrapper = OnBackPressedCallbackWrapper()
 
+    val fragmentBackPress: () -> Boolean = { true }
+
     val loadingDialog by lazy { LoadingAlertDialog(this@MainActivity) }
 
     private val requestPermissionsResults = mutableSharedFlow<RequestPermissionsResult>()
@@ -98,7 +100,7 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
         val user = authSettingsService.getUserId()
         loge("User - $user")
         if (user.isNullOrBlank()) navGraph.setStartDestination(R.id.authFragment)
-        else navGraph.setStartDestination(R.id.timetableFragment)
+        else navGraph.setStartDestination(R.id.reservationListFragment)
         navController.setGraph(navGraph, null)
         (applicationContext as Application).navController = navController
     }
@@ -106,6 +108,7 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
     override fun injectComponent() = appComponent.plus(MainModule()).inject(this)
 
     override fun onBackPressed() {
+        if (fragmentBackPress.invoke()) return
         if (confirmBackPress) return super.onBackPressed()
         if (additionalCallback?.isEnabled == true) return additionalCallback!!.handleOnBackPressed()
         val popBackStackResult = navController.popBackStack()

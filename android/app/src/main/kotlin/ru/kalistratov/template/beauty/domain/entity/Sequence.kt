@@ -3,6 +3,8 @@ package ru.kalistratov.template.beauty.domain.entity
 import com.soywiz.klock.Time
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
+import ru.kalistratov.template.beauty.infrastructure.entity.TimeRange
+import ru.kalistratov.template.beauty.infrastructure.extensions.isNoTime
 import ru.kalistratov.template.beauty.infrastructure.extensions.noTime
 
 typealias SequenceWeek = List<SequenceDay>
@@ -24,7 +26,6 @@ data class SequenceDay(
     val windows: List<SequenceDayWindow>,
 ) : TimeRangeContainer() {
     companion object {
-
         val emptyDay = SequenceDay(
             id = "",
             day = WeekDay.Nothing,
@@ -41,6 +42,8 @@ data class SequenceDay(
         TimeSourceType.START_KEY -> this.copy(startAt = source.time)
         TimeSourceType.FINISH_KEY -> this.copy(finishAt = source.time)
     }
+
+    fun isNotExist() = !id.exist() || (startAt.isNoTime() && finishAt.isNoTime())
 }
 
 @Serializable

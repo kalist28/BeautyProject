@@ -12,6 +12,7 @@ fun ServerOfferCategory.toLocal(): OfferCategory {
 
     return OfferCategory(
         id = id,
+        parentId = parent_id,
         title = title,
         types = types,
         description = description,

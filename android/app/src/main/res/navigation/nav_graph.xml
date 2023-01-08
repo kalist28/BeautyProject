@@ -14,8 +14,8 @@
             app:destination="@id/registrationFragment"
             app:popUpTo="@id/authFragment" />
         <action
-            android:id="@+id/action_authFragment_to_timetableFragment"
-            app:destination="@id/timetableFragment"
+            android:id="@+id/action_authFragment_to_reservationListFragment"
+            app:destination="@id/reservationListFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
@@ -25,25 +25,28 @@
         android:label="RegistrationFragment"
         tools:layout="@layout/fragment_registration">
         <action
-            android:id="@+id/action_registrationFragment_to_timetableFragment"
-            app:destination="@id/timetableFragment"
+            android:id="@+id/action_registrationFragment_to_reservationListFragment"
+            app:destination="@id/reservationListFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/timetableFragment"
-        android:name="ru.kalistratov.template.beauty.presentation.feature.timetable.view.TimetableFragment"
-        android:label="TimetableFragment"
-        tools:layout="@layout/fragment_timetable">
+        android:id="@+id/reservationListFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.list.view.ReservationListFragment"
+        android:label="ReservationListFragment"
+        tools:layout="@layout/fragment_reservation_list">
         <action
-            android:id="@+id/action_timetableFragment_to_profileFragment"
+            android:id="@+id/action_reservationListFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_timetableFragment_to_calendarFragment"
+            android:id="@+id/action_reservationListFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
         <action
-            android:id="@+id/action_timetableFragment_to_personalAreaFragment"
+            android:id="@+id/action_reservationListFragment_to_personalAreaFragment"
             app:destination="@id/personalAreaFragment" />
+        <action
+            android:id="@+id/action_reservationListFragment_to_editReservationFragment"
+            app:destination="@id/editReservationFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -51,8 +54,8 @@
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
         <action
-            android:id="@+id/action_profileFragment_to_timetableFragment"
-            app:destination="@id/timetableFragment" />
+            android:id="@+id/action_profileFragment_to_reservationListFragment"
+            app:destination="@id/reservationListFragment" />
         <action
             android:id="@+id/action_profileFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
@@ -69,8 +72,8 @@
             android:id="@+id/action_calendarFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_calendarFragment_to_timetableFragment"
-            app:destination="@id/timetableFragment" />
+            android:id="@+id/action_calendarFragment_to_reservationListFragment"
+            app:destination="@id/reservationListFragment" />
         <action
             android:id="@+id/action_calendarFragment_to_personalAreaFragment"
             app:destination="@id/personalAreaFragment" />
@@ -84,8 +87,8 @@
             android:id="@+id/action_personalAreaFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
         <action
-            android:id="@+id/action_personalAreaFragment_to_timetableFragment"
-            app:destination="@id/timetableFragment" />
+            android:id="@+id/action_personalAreaFragment_to_reservationListFragment"
+            app:destination="@id/reservationListFragment" />
         <action
             android:id="@+id/action_personalAreaFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -196,4 +199,24 @@
         android:name="ru.kalistratov.template.beauty.presentation.feature.contactpicker.view.ContactPickerFragment"
         android:label="ContactsPickerFragment"
         tools:layout="@layout/fragment_list_base"/>
+    <fragment
+        android:id="@+id/editReservationFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.edit.view.EditReservationFragment"
+        android:label="EditReservationFragment"
+        tools:layout="@layout/fragment_reservation_edit" >
+        <action
+            android:id="@+id/action_editReservationFragment_to_myOfferPickerFragment"
+            app:destination="@id/myOfferPickerFragment" />
+        <action
+            android:id="@+id/action_editReservationFragment_to_clientPickerFragment"
+            app:destination="@id/clientPickerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myOfferPickerFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.offer.my.picker.view.MyOfferPickerFragment"
+        android:label="MyOfferPickerFragment" />
+    <fragment
+        android:id="@+id/clientPickerFragment"
+        android:name="ru.kalistratov.template.beauty.presentation.feature.client.picker.view.ClientPickerFragment"
+        android:label="ClientPickerFragment" />
 </navigation>

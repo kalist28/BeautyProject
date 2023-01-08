@@ -36,7 +36,7 @@ class PersonalAreaRouterImpl(
     )
 
     override fun openTimetable() = navController.safetyNavigate(
-        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToTimetableFragment()
+        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToReservationListFragment()
     )
 
     override fun openWeekSequence() = navController.safetyNavigate(

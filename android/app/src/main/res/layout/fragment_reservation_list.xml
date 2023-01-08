@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.feature.timetable.reservation.list.view.ReservationListFragment">
+
+    <com.github.guilhe.views.PlaceHolderRecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="@dimen/constraint_fill"
+        android:clipToPadding="true"
+        android:paddingVertical="@dimen/margin_small"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar_container"
+        style="@style/Widget.Material3.AppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_appbar_bottom_rounded"
+        android:paddingBottom="@dimen/margin_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/surfaceMy" />
+
+        <com.kizitonwose.calendar.view.WeekCalendarView
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            app:cv_daySize="seventhWidth"
+            app:cv_dayViewResource="@layout/calendar_day"
+            app:cv_orientation="horizontal" />
+
+        <TextView
+            android:id="@+id/day_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/text_xsmall"
+            android:layout_marginTop="@dimen/text_xsmall"
+            android:text="Понедельник"
+            android:textSize="@dimen/text_default"
+            android:textStyle="bold"
+            android:theme="@style/DefaultText" />
+
+        <TextView
+            android:id="@+id/day_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/text_xsmall"
+            android:text="Понедельник"
+            android:textSize="@dimen/text_small"
+            android:theme="@style/SubTitleText" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small"
+        android:src="@drawable/ic_add_work_window"
+        android:theme="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        style="@style/BottomNavigation"
+        android:layout_width="@dimen/constraint_fill"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <View
+        android:id="@+id/guideline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/margin_small"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_container" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

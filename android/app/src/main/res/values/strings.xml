@@ -24,6 +24,7 @@
     <string name="setting">Настройка</string>
     <string name="settings">Настройки</string>
 
+    <string name="offer">Услуга</string>
     <string name="my_offers">Мои услуги</string>
     <string name="offer_create">Создать услугу</string>
     <string name="offer_delete">Удалить данную услугу?</string>
@@ -36,6 +37,8 @@
     <string name="price_by_agreement">По договоренности</string>
     <string name="price_error_to_less_than_from">Введите значение больше %d.</string>
 
+    <string name="window">Окно</string>
+    <string name="add_window">Добавить окно</string>
     <string name="edit_work_windows">Редактировать окна</string>
     <string name="edit_work_window">Изменить рабочее окно</string>
     <string name="create_work_window">Новое рабочее окно</string>
@@ -62,6 +65,45 @@
     <string name="saturday_short">СБ</string>
     <string name="sunday_short">ВС</string>
 
+    <string name="january">январь</string>
+    <string name="february">февраль</string>
+    <string name="march">март</string>
+    <string name="april">апрель</string>
+    <string name="may">май</string>
+    <string name="june">июнь</string>
+    <string name="july">июль</string>
+    <string name="august">август</string>
+    <string name="september">сентябрь</string>
+    <string name="october">октябрь</string>
+    <string name="november">ноябрь</string>
+    <string name="december">декабрь</string>
+
+    <string name="january_declination">января</string>
+    <string name="february_declination">февраля</string>
+    <string name="march_declination">марта</string>
+    <string name="april_declination">апреля</string>
+    <string name="may_declination">мая</string>
+    <string name="june_declination">июня</string>
+    <string name="july_declination">июля</string>
+    <string name="august_declination">августа</string>
+    <string name="september_declination">сентября</string>
+    <string name="october_declination">октября</string>
+    <string name="november_declination">ноября</string>
+    <string name="december_declination">декабря</string>
+
+    <string name="january_short">янв</string>
+    <string name="february_short">февр</string>
+    <string name="march_short">март</string>
+    <string name="april_short">апр</string>
+    <string name="may_short">май</string>
+    <string name="june_short">июнь</string>
+    <string name="july_short">июль</string>
+    <string name="august_short">авг</string>
+    <string name="september_short">сент</string>
+    <string name="october_short">окт</string>
+    <string name="november_short">нояб</string>
+    <string name="december_short">дек</string>
+
     <string name="blank_string"> </string>
 
     <string name="add">Добавить</string>
@@ -72,19 +114,27 @@
     <string name="comment">Коментарий</string>
     <string name="selected_count">Выбрано: %d</string>
 
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+
     <string name="total_minutes">%d\nмин</string>
     <string name="next">Далее</string>
     <string name="title">Заголовок</string>
     <string name="holiday">Выходной</string>
     <string name="not_specified">Не указано</string>
+    <string name="not_configured">Не настроено</string>
     <string name="end">Конец</string>
     <string name="start">Начало</string>
 
+    <string name="workday">Рабочий день</string>
+    <string name="workday_arg">Рабочий день %s</string>
     <string name="workday_start">Начало рабочего дня</string>
     <string name="workday_finish">Конец рабочего дня</string>
     <string name="workday_holiday">Пометить как выходной день</string>
 
+    <string name="client">Клиент</string>
     <string name="clients">Клиенты</string>
+    <string name="client_pick">Выбор клиента</string>
     <string name="contacts">Контакты</string>
     <string name="client_edit">Редактирование клиента</string>
     <string name="client_create">Создание клиента</string>
@@ -94,7 +144,6 @@
 
     <string name="user">Пользователь</string>
     <string name="week_sequence">Рабочая неделя</string>
-    <string name="add_window">Добавить окно</string>
 
     <string name="warning">Предупреждение</string>
     <string name="confirm">Подтвердить</string>
@@ -103,5 +152,8 @@
 
     <string name="delete_windows_warning">Будет удалено %s</string>
     <string name="phone_number">Мобильный номер</string>
+
+    <string name="slc_free_window">Выбор свободного окна</string>
+    <string name="search_title">Поиск</string>
 
 </resources>

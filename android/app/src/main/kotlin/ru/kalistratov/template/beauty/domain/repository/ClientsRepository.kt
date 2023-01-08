@@ -8,7 +8,8 @@ interface ClientsRepository {
     suspend fun add(client: Client)
 
     suspend fun get(id: Id): Client?
-    suspend fun getAll(): List<Client>
+    suspend fun getAll(fromCache: Boolean = false): List<Client>
+    suspend fun search(query: String?): List<Client>
 
     suspend fun contains(number: PhoneNumber): Boolean
 

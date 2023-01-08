@@ -13,7 +13,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/constraint_fill"
-            android:background="@color/light_primary"
+            android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="@id/day_legend"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/constraint_fill"
-            android:background="@color/dark_primary"
+            android:background="@color/primary"
             app:layout_constraintBottom_toBottomOf="@id/day_legend"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,16 +59,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/month_text" />
 
-        <com.kizitonwose.calendarview.CalendarView
+        <com.kizitonwose.calendar.view.CalendarView
             android:id="@+id/calendar_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_xsmall"
             app:cv_dayViewResource="@layout/calendar_item_round_day"
-            app:cv_inDateStyle="allMonths"
             app:cv_orientation="horizontal"
-            app:cv_outDateStyle="endOfRow"
-            app:cv_scrollMode="paged"
+            app:cv_scrollPaged="false"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/day_legend" />

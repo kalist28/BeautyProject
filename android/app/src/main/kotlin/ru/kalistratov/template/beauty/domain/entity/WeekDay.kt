@@ -16,47 +16,46 @@ sealed class WeekDay(val index: Int) {
     @StringRes
     val tittleResId = when (index) {
         -1 -> R.string.blank_string
-        1 -> R.string.monday
-        2 -> R.string.tuesday
-        3 -> R.string.wednesday
-        4 -> R.string.thursday
-        5 -> R.string.friday
-        6 -> R.string.saturday
+        0 -> R.string.monday
+        1 -> R.string.tuesday
+        2 -> R.string.wednesday
+        3 -> R.string.thursday
+        4 -> R.string.friday
+        5 -> R.string.saturday
         else -> R.string.sunday
     }
 
     @StringRes
     val shortTittleResId = when (index) {
         -1 -> R.string.blank_string
-        1 -> R.string.monday_short
-        2 -> R.string.tuesday_short
-        3 -> R.string.wednesday_short
-        4 -> R.string.thursday_short
-        5 -> R.string.friday_short
-        6 -> R.string.saturday_short
+        0 -> R.string.monday_short
+        1 -> R.string.tuesday_short
+        2 -> R.string.wednesday_short
+        3 -> R.string.thursday_short
+        4 -> R.string.friday_short
+        5 -> R.string.saturday_short
         else -> R.string.sunday_short
     }
 
     companion object {
         fun fromIndex(index: Int) = when (index) {
-            -1 -> Nothing
-            0 -> Sunday
-            1 -> Monday
-            2 -> Tuesday
-            3 -> Wednesday
-            4 -> Thursday
-            5 -> Friday
-            6 -> Saturday
-            else -> null
+            6 -> Sunday
+            0 -> Monday
+            1 -> Tuesday
+            2 -> Wednesday
+            3 -> Thursday
+            4 -> Friday
+            5 -> Saturday
+            else -> Nothing
         }
     }
 
-    object Monday : WeekDay(1)
-    object Tuesday : WeekDay(2)
-    object Wednesday : WeekDay(3)
-    object Thursday : WeekDay(4)
-    object Friday : WeekDay(5)
-    object Saturday : WeekDay(6)
-    object Sunday : WeekDay(0)
+    object Monday : WeekDay(0)
+    object Tuesday : WeekDay(1)
+    object Wednesday : WeekDay(2)
+    object Thursday : WeekDay(3)
+    object Friday : WeekDay(4)
+    object Saturday : WeekDay(5)
+    object Sunday : WeekDay(6)
     object Nothing : WeekDay(-1)
 }

@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="ПН"
-        android:textColor="@android:color/white"
+        android:textColor="@color/onSurface"
         android:textSize="14sp" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="ВТ"
-        android:textColor="@android:color/white"
+        android:textColor="@color/onSurface"
         android:textSize="14sp" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="СР"
-        android:textColor="@android:color/white"
+        android:textColor="@color/onSurface"
         android:textSize="14sp" />
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="ЧТ"
-        android:textColor="@android:color/white"
+        android:textColor="@color/onSurface"
         android:textSize="14sp" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="ПТ"
-        android:textColor="@android:color/white"
+        android:textColor="@color/onSurface"
         android:textSize="14sp" />
 
     <TextView
@@ -64,7 +64,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="СБ"
-        android:textColor="@android:color/white"
+        android:textColor="@color/onSurface"
         android:textSize="14sp" />
 
     <TextView
@@ -74,7 +74,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="ВС"
-        android:textColor="@android:color/white"
+        android:textColor="@color/onSurface"
         android:textSize="14sp" />
 
 </LinearLayout>

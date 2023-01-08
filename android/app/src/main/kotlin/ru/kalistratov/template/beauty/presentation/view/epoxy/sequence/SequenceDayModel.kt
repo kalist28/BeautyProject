@@ -64,7 +64,7 @@ data class WeekSequenceDayModel(
             )
             else -> State(
                 "${start.toClockFormat()} - ${finish.toClockFormat()}",
-                R.color.light_primary,
+                R.color.primary,
                 R.drawable.background_stroke_round_accept,
             )
         }

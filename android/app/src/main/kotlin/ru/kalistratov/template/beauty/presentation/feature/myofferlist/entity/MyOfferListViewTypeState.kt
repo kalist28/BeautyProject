@@ -1,6 +1,7 @@
 package ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity
 
 import ru.kalistratov.template.beauty.domain.entity.*
+import ru.kalistratov.template.beauty.presentation.entity.OfferCategoryContainer
 import ru.kalistratov.template.beauty.presentation.entity.PriceContainer
 import ru.kalistratov.template.beauty.presentation.entity.toContainer
 

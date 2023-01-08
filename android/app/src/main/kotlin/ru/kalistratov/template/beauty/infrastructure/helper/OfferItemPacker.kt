@@ -1,13 +1,17 @@
 package ru.kalistratov.template.beauty.infrastructure.helper
 
 import ru.kalistratov.template.beauty.domain.entity.Id
+import ru.kalistratov.template.beauty.domain.entity.OfferCategory
 import ru.kalistratov.template.beauty.domain.entity.OfferItem
 import ru.kalistratov.template.beauty.domain.entity.OfferType
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
-import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.OfferTypeContainer
-import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.OfferTypePropertyContainer
+import ru.kalistratov.template.beauty.presentation.entity.OfferTypeContainer
+import ru.kalistratov.template.beauty.presentation.entity.OfferTypePropertyContainer
+
+typealias CategoryIdToOfferTypeContainer = Map<Id, List<OfferTypeContainer>>
 
 object OfferItemPacker {
+
+
     fun packItemsToContainers(
         items: List<OfferItem>
     ) = mutableMapOf<Id, List<OfferTypeContainer>>().apply {

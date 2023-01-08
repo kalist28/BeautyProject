@@ -10,6 +10,7 @@ class WeekSequenceInteractorImpl(
 ) : WeekSequenceInteractor {
     override suspend fun getWeekSequence(): SequenceWeek =
         sequenceDayRepository.getAll()
+            .sortedBy { it.day.index.run { if (this == 0) 7 else this } }
 
     override suspend fun updateWorkDaySequence(day: SequenceDay) =
         sequenceDayRepository.add(day)

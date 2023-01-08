@@ -8,17 +8,11 @@ import dagger.Module
 import dagger.Provides
 import ru.kalistratov.template.beauty.domain.feature.contactpicker.ContactPickerBroadcast
 import ru.kalistratov.template.beauty.domain.repository.ContactsRepository
-import ru.kalistratov.template.beauty.domain.service.AuthService
-import ru.kalistratov.template.beauty.domain.service.AuthSettingsService
-import ru.kalistratov.template.beauty.domain.service.PermissionsService
-import ru.kalistratov.template.beauty.domain.service.SessionManager
+import ru.kalistratov.template.beauty.domain.service.*
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.feature.contactpicker.ContactPickerBroadcastImpl
 import ru.kalistratov.template.beauty.infrastructure.repository.ContactsRepositoryImpl
-import ru.kalistratov.template.beauty.infrastructure.service.AuthServiceImpl
-import ru.kalistratov.template.beauty.infrastructure.service.AuthSettingsServiceImpl
-import ru.kalistratov.template.beauty.infrastructure.service.PermissionsServiceImpl
-import ru.kalistratov.template.beauty.infrastructure.service.SessionManagerImpl
+import ru.kalistratov.template.beauty.infrastructure.service.*
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiAuthService
 import ru.kalistratov.template.beauty.interfaces.server.service.ApiUserService
 import javax.inject.Named
@@ -50,6 +44,14 @@ interface ServiceModule {
     @Binds
     @Singleton
     fun providePermissionsService(impl: PermissionsServiceImpl): PermissionsService
+
+    @Binds
+    @Singleton
+    fun provideMyOfferPickerService(impl: MyOfferPickerServiceImpl): MyOfferPickerService
+
+    @Binds
+    @Singleton
+    fun provideClientPickerService(impl: ClientPickerServiceImpl): ClientPickerService
 }
 
 @Module

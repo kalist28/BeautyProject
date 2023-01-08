@@ -19,7 +19,7 @@ class CalendarRouterImpl(
     )
 
     override fun openTimetable() = navController.safetyNavigate(
-        CalendarFragmentDirections.actionCalendarFragmentToTimetableFragment()
+        CalendarFragmentDirections.actionCalendarFragmentToReservationListFragment()
     )
 
     override fun openPersonalArea() = navController.safetyNavigate(

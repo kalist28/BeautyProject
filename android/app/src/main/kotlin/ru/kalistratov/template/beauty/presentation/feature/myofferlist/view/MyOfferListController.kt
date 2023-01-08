@@ -11,7 +11,7 @@ import ru.kalistratov.template.beauty.presentation.entity.PriceContainer
 import ru.kalistratov.template.beauty.presentation.extension.toContentString
 import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.CreatingClickType
 import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.MyOfferListViewTypeState
-import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.OfferTypeContainer
+import ru.kalistratov.template.beauty.presentation.entity.OfferTypeContainer
 import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
 import ru.kalistratov.template.beauty.presentation.view.epoxy.TextFieldModel
 import ru.kalistratov.template.beauty.presentation.view.epoxy.PriceModel

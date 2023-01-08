@@ -6,9 +6,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.domain.entity.Client
 import ru.kalistratov.template.beauty.domain.feature.clientslist.ClientsListInteractor
-import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
-import ru.kalistratov.template.beauty.infrastructure.base.BaseState
-import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
+import ru.kalistratov.template.beauty.infrastructure.base.*
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.presentation.feature.client.list.view.ClientsListIntent
 import javax.inject.Inject
@@ -23,7 +21,8 @@ sealed interface ClientsListAction : BaseAction {
 
 class ClientsListViewModel @Inject constructor(
     private val interactor: ClientsListInteractor
-) : BaseViewModel<ClientsListIntent, ClientsListAction, ClientsListState>() {
+) : BaseViewModel<ClientsListIntent, ClientsListAction, ClientsListState>(),
+    ViewModelLoadingSupport by ViewModelLoadingSupportBaseImpl() {
 
     private val initialState = ClientsListState()
 
@@ -36,8 +35,11 @@ class ClientsListViewModel @Inject constructor(
                 .filterIsInstance<ClientsListIntent.InitData>()
                 .share(this, replay = 1)
 
-            val updateClientsAction = initDataFlow
-                .map { ClientsListAction.UpdateClients(interactor.getClients()) }
+            val updateClientsAction = initDataFlow.map {
+                showLoading()
+                ClientsListAction.UpdateClients(interactor.getClients())
+                    .also { hideLoading() }
+            }
 
             intentFlow.filterIsInstance<ClientsListIntent.ClientClick>()
                 .onEach { router?.toEdit(it.id) }

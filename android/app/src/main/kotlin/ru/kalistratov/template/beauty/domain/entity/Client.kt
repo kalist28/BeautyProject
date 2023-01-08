@@ -8,6 +8,10 @@ data class Client(
     val number: PhoneNumber,
     val note: String?
 ) {
+
+    val fullname: String
+        get() = "$name ${surname ?: ""} ${patronymic ?: ""}"
+
     companion object {
         val EMPTY = Client(
             "",

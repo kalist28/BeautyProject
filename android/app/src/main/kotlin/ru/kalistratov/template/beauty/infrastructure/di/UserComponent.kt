@@ -23,6 +23,8 @@ import ru.kalistratov.template.beauty.presentation.feature.client.edit.di.EditCl
 import ru.kalistratov.template.beauty.presentation.feature.client.edit.di.EditClientModule
 import ru.kalistratov.template.beauty.presentation.feature.client.list.di.ClientsListComponent
 import ru.kalistratov.template.beauty.presentation.feature.client.list.di.ClientsListModule
+import ru.kalistratov.template.beauty.presentation.feature.client.picker.di.ClientPickerComponent
+import ru.kalistratov.template.beauty.presentation.feature.client.picker.di.ClientPickerModule
 import ru.kalistratov.template.beauty.presentation.feature.contactpicker.di.ContactPickerComponent
 import ru.kalistratov.template.beauty.presentation.feature.contactpicker.di.ContactPickerModule
 import ru.kalistratov.template.beauty.presentation.feature.editsequencedaywindows.di.EditSequenceDayWindowsComponent
@@ -31,14 +33,18 @@ import ru.kalistratov.template.beauty.presentation.feature.edituser.di.EditUserC
 import ru.kalistratov.template.beauty.presentation.feature.edituser.di.EditUserModule
 import ru.kalistratov.template.beauty.presentation.feature.myofferlist.di.MyOfferListComponent
 import ru.kalistratov.template.beauty.presentation.feature.myofferlist.di.MyOfferListModule
+import ru.kalistratov.template.beauty.presentation.feature.offer.my.picker.di.MyOfferPickerComponent
+import ru.kalistratov.template.beauty.presentation.feature.offer.my.picker.di.MyOfferPickerModule
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaComponent
 import ru.kalistratov.template.beauty.presentation.feature.personalarea.di.PersonalAreaModule
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileComponent
 import ru.kalistratov.template.beauty.presentation.feature.profile.di.ProfileModule
 import ru.kalistratov.template.beauty.presentation.feature.offerpicker.di.OfferPickerComponent
 import ru.kalistratov.template.beauty.presentation.feature.offerpicker.di.OfferPickerModule
-import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableComponent
-import ru.kalistratov.template.beauty.presentation.feature.timetable.di.TimetableModule
+import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.edit.di.EditReservationComponent
+import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.edit.di.EditReservationModule
+import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.list.di.ReservationListComponent
+import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.list.di.ReservationListModule
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceComponent
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.di.WeekSequenceModule
 
@@ -59,15 +65,18 @@ interface UserComponent {
     fun plus(module: ProfileModule): ProfileComponent
     fun plus(module: CalendarModule): CalendarComponent
     fun plus(module: EditUserModule): EditUserComponent
-    fun plus(module: TimetableModule): TimetableComponent
     fun plus(module: EditClientModule): EditClientComponent
     fun plus(module: ClientsListModule): ClientsListComponent
     fun plus(module: OfferPickerModule): OfferPickerComponent
     fun plus(module: MyOfferListModule): MyOfferListComponent
     fun plus(module: PersonalAreaModule): PersonalAreaComponent
     fun plus(module: WeekSequenceModule): WeekSequenceComponent
+    fun plus(module: ClientPickerModule): ClientPickerComponent
+    fun plus(module: MyOfferPickerModule): MyOfferPickerComponent
     fun plus(module: ContactPickerModule): ContactPickerComponent
     fun plus(module: ChangePasswordModule): ChangePasswordComponent
+    fun plus(module: ReservationListModule): ReservationListComponent
+    fun plus(module: EditReservationModule): EditReservationComponent
     fun plus(module: EditSequenceDayWindowsModule): EditSequenceDayWindowsComponent
 }
 

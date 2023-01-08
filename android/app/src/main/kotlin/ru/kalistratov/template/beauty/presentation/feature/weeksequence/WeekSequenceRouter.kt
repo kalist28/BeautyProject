@@ -27,7 +27,7 @@ class WeekSequenceRouterImpl(
     )
 
     override fun openTimetable() = navController.safetyNavigate(
-        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToTimetableFragment()
+        PersonalAreaFragmentDirections.actionPersonalAreaFragmentToReservationListFragment()
     )
 
     override fun openEditWorkdayWindows(dayNumber: Int) = navController.safetyNavigate(

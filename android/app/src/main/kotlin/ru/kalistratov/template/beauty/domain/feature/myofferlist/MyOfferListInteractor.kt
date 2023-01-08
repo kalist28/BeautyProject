@@ -5,7 +5,7 @@ import ru.kalistratov.template.beauty.domain.entity.OfferCategory
 import ru.kalistratov.template.beauty.domain.entity.OfferItem
 import ru.kalistratov.template.beauty.domain.entity.OfferType
 import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.MyOfferListViewTypeState
-import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.OfferCategoryContainer
+import ru.kalistratov.template.beauty.presentation.entity.OfferCategoryContainer
 
 interface MyOfferListInteractor {
     suspend fun getOfferItem(id: Id): OfferItem?

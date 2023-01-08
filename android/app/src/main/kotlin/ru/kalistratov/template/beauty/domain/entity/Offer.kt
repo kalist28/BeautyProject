@@ -2,6 +2,7 @@ package ru.kalistratov.template.beauty.domain.entity
 
 data class OfferCategory(
     var id: Id,
+    val parentId: Id?,
     val title: String = "",
     val description: String = "",
     val types: List<OfferType> = emptyList(),
@@ -30,7 +31,12 @@ data class OfferItem(
     val description: String = "",
     val price: Price,
     val published: Boolean,
-)
+) {
+
+    fun getContentText() =
+        if (typeProperty == null) type.name
+        else "${type.name} | ${typeProperty.name}"
+}
 
 data class OfferItemDataBundle(
     val typeId: Id? = null,

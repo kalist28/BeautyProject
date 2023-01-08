@@ -6,27 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.kizitonwose.calendarview.model.CalendarDay
-import kotlinx.coroutines.flow.*
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.kizitonwose.calendar.core.CalendarDay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
-import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
-import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
+import ru.kalistratov.template.beauty.databinding.FragmentCalendarBinding
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
 import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.presentation.extension.clicks
-import ru.kalistratov.template.beauty.presentation.extension.find
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
+import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.presentation.extension.onCloses
 import ru.kalistratov.template.beauty.presentation.extension.showBottomSheet
 import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarRouter
 import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarState
 import ru.kalistratov.template.beauty.presentation.feature.calendar.CalendarViewModel
 import ru.kalistratov.template.beauty.presentation.feature.calendar.di.CalendarModule
-import ru.kalistratov.template.beauty.presentation.view.SimpleCalendarView
 import ru.kalistratov.template.beauty.presentation.view.bottomsheet.DayDetailsBottomSheet
+import java.time.LocalDate
 import javax.inject.Inject
 
 sealed class CalendarIntent : BaseIntent {
@@ -46,14 +47,14 @@ class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState>
         ViewModelProvider(this, viewModelFactory)[CalendarViewModel::class.java]
     }
 
-    lateinit var calendarView: SimpleCalendarView
+    private var selectedDate = LocalDate.now()
+    private val binding: FragmentCalendarBinding by viewBinding(CreateMethod.INFLATE)
 
     private val dayDetailsBottomSheet by lazy { DayDetailsBottomSheet() }
 
-    override fun findViews() {
-        calendarView = find(R.id.simple_calendar_view)
 
-        find<BottomNavigationView>(R.id.bottom_nav_view).apply {
+    override fun findViews() {
+        /*find<BottomNavigationView>(R.id.bottom_nav_view).apply {
             selectedItemId = R.id.menu_calendar
             setOnItemSelectedListener {
                 when (it.itemId) {
@@ -63,7 +64,7 @@ class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState>
                 }
                 return@setOnItemSelectedListener true
             }
-        }
+        }*/
     }
 
     override fun injectUserComponent(userComponent: UserComponent) =
@@ -73,10 +74,12 @@ class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState>
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_calendar, container, false)
+    ): View = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         with(viewModel) {
             viewModelScope.launch {
                 stateUpdates()
@@ -87,12 +90,11 @@ class CalendarFragment : BaseFragment(), BaseView<CalendarIntent, CalendarState>
     }
 
     override fun intents(): Flow<CalendarIntent> = merge(
-        calendarView.clicks().map { CalendarIntent.DaySelected(it) },
+     //   calendarView.clicks().map { CalendarIntent.DaySelected(it) },
         dayDetailsBottomSheet.onCloses().map { CalendarIntent.SelectedDayCloses }
     )
 
     override fun render(state: CalendarState) {
-        calendarView.selectedDay = state.selectedDay
         if (state.showDayDetails) showBottomSheet(dayDetailsBottomSheet)
     }
 }

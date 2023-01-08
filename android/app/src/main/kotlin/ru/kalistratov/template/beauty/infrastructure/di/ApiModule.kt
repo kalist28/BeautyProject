@@ -56,4 +56,10 @@ interface ApiModule {
     fun provideApiOfferTypeService(
         impl: ApiOfferTypeServiceImpl
     ): ApiOfferTypeService
+
+    @Binds
+    @Singleton
+    fun provideApiReceptionService(
+        impl: ApiReceptionServiceImpl
+    ): ApiReceptionService
 }

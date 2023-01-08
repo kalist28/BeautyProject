@@ -21,6 +21,7 @@
     <color name="light_background">#FFFBFF</color>
     <color name="light_onBackground">#201A1B</color>
     <color name="light_surface">#FFFBFF</color>
+    <color name="light_surfaceMy">#F7E7F1</color>
     <color name="light_onSurface">#201A1B</color>
     <color name="light_surfaceVariant">#F2DDE1</color>
     <color name="light_onSurfaceVariant">#514347</color>
@@ -51,6 +52,7 @@
     <color name="dark_background">#201A1B</color>
     <color name="dark_onBackground">#EBE0E1</color>
     <color name="dark_surface">#201A1B</color>
+    <color name="dark_surfaceMy">#322629</color>
     <color name="dark_onSurface">#EBE0E1</color>
     <color name="dark_surfaceVariant">#514347</color>
     <color name="dark_onSurfaceVariant">#D5C2C6</color>
@@ -87,6 +89,9 @@
 
     <color name="authBackgroundGradientEnd">#FFFFFFFF</color>
     <color name="authBackgroundGradientStart">@color/dark_primary</color>
+
+    <color name="colorGreen">#43A047</color>
+    <color name="colorGreen10">#1A43A047</color>
 
     <color name="colorOrange">#F9A825</color>
     <color name="colorOrange10">#1AF9A825</color>

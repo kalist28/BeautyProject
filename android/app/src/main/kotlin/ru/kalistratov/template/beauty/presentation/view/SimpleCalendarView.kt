@@ -5,25 +5,16 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.kizitonwose.calendarview.CalendarView
-import com.kizitonwose.calendarview.model.CalendarDay
-import com.kizitonwose.calendarview.model.DayOwner
-import com.kizitonwose.calendarview.model.InDateStyle
-import com.kizitonwose.calendarview.ui.DayBinder
-import com.kizitonwose.calendarview.ui.ViewContainer
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
+import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.view.ViewContainer
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.presentation.extension.setTextColorRes
 
 class SimpleCalendarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-
+/*
     protected val yearText: TextView by lazy { findViewById(R.id.year_text) }
     protected val monthText: TextView by lazy { findViewById(R.id.month_text) }
     protected val calendar: CalendarView by lazy { findViewById(R.id.calendar_view) }
@@ -103,7 +94,7 @@ class SimpleCalendarView @JvmOverloads constructor(
             maxRowCount = 6,
             hasBoundaries = true
         )
-    }
+    }*/
 }
 
 class SimpleDayViewContainer(

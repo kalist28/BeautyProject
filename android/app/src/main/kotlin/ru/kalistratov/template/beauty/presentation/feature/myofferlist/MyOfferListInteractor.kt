@@ -10,7 +10,7 @@ import ru.kalistratov.template.beauty.infrastructure.helper.OfferItemPacker
 import ru.kalistratov.template.beauty.presentation.entity.getFrom
 import ru.kalistratov.template.beauty.presentation.entity.getTo
 import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.MyOfferListViewTypeState
-import ru.kalistratov.template.beauty.presentation.feature.myofferlist.entity.OfferCategoryContainer
+import ru.kalistratov.template.beauty.presentation.entity.OfferCategoryContainer
 
 class MyOfferListInteractorImpl(
     private val offerTypeRepository: OfferTypeRepository,

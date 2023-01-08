@@ -12,19 +12,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.domain.service.SessionManager
 import ru.kalistratov.template.beauty.infrastructure.Application
 import ru.kalistratov.template.beauty.infrastructure.coroutines.CompositeJob
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
+import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.extension.find
 import ru.kalistratov.template.beauty.presentation.extension.showLoading
+import javax.inject.Inject
 
 interface BaseView<I : BaseIntent, S : BaseState> {
     fun intents(): Flow<I>
@@ -137,17 +138,20 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    fun ViewModel.connectDialogLoadingDisplay() {
+    fun ViewModel.connectDialogLoadingDisplay(debug: Boolean = false) {
         if (this !is ViewModelLoadingSupport) error("Notification flow is not impl.")
         viewModelScope.launch {
-            loadingUpdates().collect(::showLoading)
+            setLoadingProcessor(this) {
+                if (debug) loge("Loading in ${this@BaseFragment.javaClass.simpleName} - $it")
+                showLoading(it)
+            }
         }.addTo(jobComposite)
     }
 
     fun ViewModel.connectNotifications() {
         if (this !is ViewModelNotificationSupport) error("Notification flow is not impl.")
         viewModelScope.launch {
-            notifications().collect(::showNotification)
+            setNotificationProcessor(::showNotification, this)
         }.addTo(jobComposite)
     }
 

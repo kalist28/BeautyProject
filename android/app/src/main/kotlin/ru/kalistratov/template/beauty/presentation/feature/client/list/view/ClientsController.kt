@@ -23,7 +23,7 @@ class ClientsController : EpoxyController() {
         clients.forEachIndexed { index, client ->
             client {
                 id(client.number)
-                name("${client.name} ${client.surname ?: ""} ${client.patronymic ?: ""}")
+                name(client.fullname)
                 number(client.number)
                 onBind { _, holder, _ ->
                     holder.setMargins(baseMargin)

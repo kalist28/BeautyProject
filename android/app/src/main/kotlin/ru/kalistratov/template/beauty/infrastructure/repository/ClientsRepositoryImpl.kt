@@ -1,5 +1,7 @@
 package ru.kalistratov.template.beauty.infrastructure.repository
 
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toLowerCase
 import ru.kalistratov.template.beauty.domain.entity.Client
 import ru.kalistratov.template.beauty.domain.entity.Id
 import ru.kalistratov.template.beauty.domain.entity.PhoneNumber
@@ -34,7 +36,7 @@ class ClientsRepositoryImpl @Inject constructor(
             error = { null }
         )
 
-    override suspend fun getAll() = apiClientsService
+    override suspend fun getAll(fromCache: Boolean) = apiClientsService
         .loadAll().process(
             success = {
                 map { it.toLocal() }
@@ -42,7 +44,10 @@ class ClientsRepositoryImpl @Inject constructor(
             },
             error = { emptyList() }
         )
-        .also { loge(it.firstOrNull()?.number) }
+
+    override suspend fun search(query: String?): List<Client> =
+        if (query == null) cache
+        else cache.filter { searchCheck(it, query.toLowerCase(Locale.current)) }
 
     override suspend fun contains(number: PhoneNumber): Boolean =
         getAll().find {
@@ -57,5 +62,15 @@ class ClientsRepositoryImpl @Inject constructor(
     override suspend fun removeAll(ids: List<Id>) {
         apiClientsService.remove(RemoveRequest(ids))
     }
+
+    private fun searchCheck(client: Client, query: String) = client.run {
+        name.search(query) or
+                number.search(query) or
+                (surname?.search(query) ?: false) or
+                (patronymic?.search(query) ?: false) or
+                (note?.search(query) ?: false)
+    }
+
+    private fun String.search(query: String) = toLowerCase(Locale.current).contains(query)
 
 }

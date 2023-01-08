@@ -8,6 +8,7 @@ import ru.kalistratov.template.beauty.domain.entity.Id
 @Serializable
 data class ServerOfferCategory(
     val id: Id = "",
+    val parent_id: Id? = null,
     val title: String = "",
     val description: String = "",
     val types: DataList<ServerOfferType> = DataList.empty(),

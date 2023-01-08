@@ -1,13 +1,24 @@
 package ru.kalistratov.template.beauty.presentation.extension
 
-import com.kizitonwose.calendarview.model.CalendarDay
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.conflate
-import ru.kalistratov.template.beauty.presentation.view.SimpleCalendarView
+import android.content.Context
+import com.kizitonwose.calendar.core.Week
+import com.kizitonwose.calendar.core.yearMonth
+import ru.kalistratov.template.beauty.R
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
+import java.time.DayOfWeek
+import java.time.Month
+import java.time.YearMonth
+import java.time.format.TextStyle
+import java.util.*
 
+/*
 fun SimpleCalendarView.clicks(): Flow<CalendarDay> = callbackFlow {
-    onDayClickAction = { trySend(it) }
+
+onDayClickAction = {
+        trySend(it) }
     awaitClose { onDayClickAction = null }
-}.conflate()
+
+    trySend(Nothing)
+    awaitClose {  }
+}.conflate()*/
+

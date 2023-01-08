@@ -133,7 +133,7 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
 
     //Calendar view
-    implementation 'com.github.kizitonwose:CalendarView:1.0.3'
+    implementation 'com.kizitonwose.calendar:view:2.1.1'
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:1.1.5"
 
     //ViewBinding delegate

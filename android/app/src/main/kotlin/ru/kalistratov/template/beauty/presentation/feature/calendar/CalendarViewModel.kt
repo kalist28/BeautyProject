@@ -1,7 +1,7 @@
 package ru.kalistratov.template.beauty.presentation.feature.calendar
 
 import androidx.lifecycle.viewModelScope
-import com.kizitonwose.calendarview.model.CalendarDay
+import com.kizitonwose.calendar.core.CalendarDay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
