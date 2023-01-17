@@ -5,6 +5,7 @@ import com.soywiz.klock.Date
 data class Reservation(
     val id: Id = "",
     val date: Date,
-    val offerItem: OfferItem,
-    val window: SequenceDayWindow,
+    val client: Client,
+    val item: OfferItem,
+    val window: SequenceDayWindow
 )

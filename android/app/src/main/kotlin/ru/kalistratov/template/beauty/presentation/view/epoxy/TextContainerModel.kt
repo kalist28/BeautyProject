@@ -7,7 +7,9 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import ru.kalistratov.template.beauty.R
 import ru.kalistratov.template.beauty.databinding.ListItemTextContainerBinding
+import ru.kalistratov.template.beauty.presentation.extension.setDrawable
 import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
+import ru.kalistratov.template.beauty.presentation.view.TextFieldDrawableBundle
 import ru.kalistratov.template.beauty.presentation.view.setMargins
 
 data class TextContainerModel(
@@ -15,7 +17,8 @@ data class TextContainerModel(
     private val hint: String? = null,
     private val title: String? = null,
     private val clickAction: () -> Unit = { },
-    private val marginsBundle: MarginsBundle? = null
+    private val marginsBundle: MarginsBundle? = null,
+    private val drawableBundle: TextFieldDrawableBundle? = null
 ) : EpoxyModelWithHolder<TextContainerModel.Holder>() {
 
     init {
@@ -27,27 +30,30 @@ data class TextContainerModel(
     override fun createNewHolder(parent: ViewParent) = Holder()
 
     override fun bind(holder: Holder): Unit = holder.binding.run {
-        marginsBundle?.let(root::setMargins)
         hint?.let(container::setHint)
-        container.isHintAnimationEnabled = false
         text.apply {
             setText(title)
-            isClickable = true
-            inputType = InputType.TYPE_NULL
-
-            setOnClickListener { clickAction() }
-            setOnFocusChangeListener { _, focus ->
-                if (!focus) return@setOnFocusChangeListener
-                clearFocus()
-                clickAction()
-            }
+            drawableBundle?.let(::setDrawable)
         }
     }
 
-    class Holder : EpoxyHolder() {
+    inner class Holder : EpoxyHolder() {
         lateinit var binding: ListItemTextContainerBinding
         override fun bindView(itemView: View) {
-            binding = ListItemTextContainerBinding.bind(itemView)
+            binding = ListItemTextContainerBinding.bind(itemView).apply {
+                marginsBundle?.let(root::setMargins)
+                container.isHintAnimationEnabled = false
+                text.apply {
+                    isClickable = true
+                    inputType = InputType.TYPE_NULL
+                    setOnClickListener { clickAction() }
+                    setOnFocusChangeListener { _, focus ->
+                        if (!focus) return@setOnFocusChangeListener
+                        clearFocus()
+                        clickAction()
+                    }
+                }
+            }
         }
     }
 }

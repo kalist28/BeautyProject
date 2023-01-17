@@ -32,8 +32,7 @@ class ClientPickerViewModel @Inject constructor(
         viewModelScope.launch {
             val initialFlow = intentFlow
                 .filterIsInstance<ClientPickerIntent.InitData>()
-                .take(1)
-                .share(this)
+                .share(this, replay = 1)
 
             val loadAllClientsFlow = initialFlow.map {
                 showLoading()

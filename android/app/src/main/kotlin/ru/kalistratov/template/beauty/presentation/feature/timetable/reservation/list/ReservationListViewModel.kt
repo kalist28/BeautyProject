@@ -1,8 +1,11 @@
 package ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.list
 
 import androidx.lifecycle.viewModelScope
+import com.soywiz.klock.DateTime
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.kalistratov.template.beauty.common.DateTimeFormat
+import ru.kalistratov.template.beauty.domain.entity.Reservation
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
 import ru.kalistratov.template.beauty.domain.feature.timetable.reservation.list.ReservationListInteractor
@@ -12,18 +15,20 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.list.view.ReservationListIntent
 import java.time.LocalDate
+import java.time.ZoneId
 import javax.inject.Inject
-import kotlin.math.round
 
 data class ReservationListState(
     val selectedDay: LocalDate = LocalDate.now(),
     val selectedSequenceDay: SequenceDay? = null,
     val sequenceWeek: SequenceWeek? = null,
+    val filledReservations: List<Reservation> = emptyList(),
 ) : BaseState
 
 sealed interface ReservationListAction : BaseAction {
     data class UpdateSelectedDay(val date: LocalDate) : ReservationListAction
     data class UpdateSelectedSequenceDay(val day: SequenceDay?) : ReservationListAction
+    data class UpdateReservations(val reservations: List<Reservation>) : ReservationListAction
     data class UpdateSequenceWeek(val week: SequenceWeek) : ReservationListAction
 }
 
@@ -39,20 +44,29 @@ class ReservationListViewModel @Inject constructor(
 
             val initDataFlow = intentFlow
                 .filterIsInstance<ReservationListIntent.InitData>()
-                .share(this, replay = 1)
+                .share(this)
 
             val daySelectedFlow = intentFlow
                 .filterIsInstance<ReservationListIntent.DaySelected>()
                 .clickDebounce()
                 .share(this)
 
+            val updateReservationsAction = daySelectedFlow.map {
+                val millis = it.date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                val reservations = interactor.getReservations(
+                    DateTime(millis).format(DateTimeFormat.DATE_STANDART)
+                )
+                ReservationListAction.UpdateReservations(reservations)
+            }
+
             val updateSelectedDay = daySelectedFlow
                 .map { ReservationListAction.UpdateSelectedDay(it.date) }
 
             val updateSelectedSequenceDay = daySelectedFlow.map {
                 showLoading()
+                loge(it.date.dayOfWeek.value)
                 ReservationListAction.UpdateSelectedSequenceDay(
-                    interactor.getSequenceDay(it.date.dayOfWeek.value)
+                    interactor.getSequenceDay(it.date.dayOfWeek.value - 1)
                 )
             }.onEach { hideLoading() }
 
@@ -64,14 +78,15 @@ class ReservationListViewModel @Inject constructor(
             intentFlow.filterIsInstance<ReservationListIntent.CreateReservation>()
                 .clickDebounce()
                 .onEach {
-                    loge("11111111")
-                    router?.toEdit() }
+                    router?.toEdit()
+                }
                 .launchHere()
 
             merge(
                 updateSelectedDay,
-                updateSelectedSequenceDay,
-                updateSequenceWeek
+                updateSequenceWeek,
+                updateReservationsAction,
+                updateSelectedSequenceDay
             ).collectState()
         }
     }
@@ -88,6 +103,9 @@ class ReservationListViewModel @Inject constructor(
         )
         is ReservationListAction.UpdateSelectedSequenceDay -> state.copy(
             selectedSequenceDay = action.day
+        )
+        is ReservationListAction.UpdateReservations -> state.copy(
+            filledReservations = action.reservations
         )
     }
 

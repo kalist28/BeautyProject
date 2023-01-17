@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import ru.kalistratov.template.beauty.presentation.entity.OnBackPressedCallbackWrapper
 import ru.kalistratov.template.beauty.presentation.feature.main.view.MainActivity
+import ru.kalistratov.template.beauty.presentation.view.TextFieldDrawableBundle
 
 fun TextView.textChanges(): Flow<CharSequence> = callbackFlow {
     val listener = object : TextWatcher {
@@ -102,4 +103,16 @@ fun EditText.setOnlyNumericSymbols() {
 
 fun EditText.setTextWithChecking(text: String?) {
     if (this.text?.toString() != text) setText(text)
+}
+
+fun Int?.toDrawable(context: Context) =
+    this?.let { ContextCompat.getDrawable(context, it) }
+
+fun TextView.setDrawable(bundle: TextFieldDrawableBundle) = with(bundle) {
+    setCompoundDrawablesWithIntrinsicBounds(
+        left.toDrawable(context),
+        top.toDrawable(context),
+        right.toDrawable(context),
+        bottom.toDrawable(context)
+    )
 }

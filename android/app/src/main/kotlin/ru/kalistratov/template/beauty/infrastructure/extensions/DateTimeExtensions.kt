@@ -5,7 +5,7 @@ import com.kizitonwose.calendar.core.Week
 import com.kizitonwose.calendar.core.yearMonth
 import com.soywiz.klock.*
 import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.domain.entity.WeekDay
+import ru.kalistratov.template.beauty.domain.entity.WeekDay as ProjectWeekDay
 import ru.kalistratov.template.beauty.infrastructure.entity.TimeRange
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -123,9 +123,9 @@ fun Int.toMonthResId(
     else -> R.string.december
 }
 
-fun LocalDate.dayOfWeekIndex() = dayOfWeek.value
+fun LocalDate.dayOfWeekIndex() = dayOfWeek.value - 1
 
-fun LocalDate.toWeekDay() = WeekDay.fromIndex(dayOfWeekIndex())
+fun LocalDate.toWeekDay() = ProjectWeekDay.fromIndex(dayOfWeekIndex())
 
 fun YearMonth.displayText(short: Boolean = false) =
     "${this.month.displayText(short = short)} ${this.year}"
@@ -174,4 +174,14 @@ fun getWeekPageTitle(context: Context, week: Week): String {
         }
         else -> "${firstDate.yearMonth.displayText(context)} - ${lastDate.yearMonth.displayText()}"
     }
+}
+
+val DateTime.weekDay: ProjectWeekDay get() = when(dayOfWeek) {
+    com.soywiz.klock.DayOfWeek.Monday -> ProjectWeekDay.Monday
+    com.soywiz.klock.DayOfWeek.Tuesday -> ProjectWeekDay.Tuesday
+    com.soywiz.klock.DayOfWeek.Wednesday -> ProjectWeekDay.Wednesday
+    com.soywiz.klock.DayOfWeek.Thursday -> ProjectWeekDay.Thursday
+    com.soywiz.klock.DayOfWeek.Friday -> ProjectWeekDay.Friday
+    com.soywiz.klock.DayOfWeek.Saturday -> ProjectWeekDay.Saturday
+    com.soywiz.klock.DayOfWeek.Sunday -> ProjectWeekDay.Sunday
 }

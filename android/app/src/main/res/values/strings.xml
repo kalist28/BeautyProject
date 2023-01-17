@@ -112,7 +112,11 @@
     <string name="save">Сохранить</string>
     <string name="update">Обновить</string>
     <string name="comment">Коментарий</string>
+
+    <string name="select">Выбрать</string>
     <string name="selected_count">Выбрано: %d</string>
+    <string name="dont_selected">Не выбрано</string>
+    <string name="client_dont_selected">Не выбран</string>
 
     <string name="date">Дата</string>
     <string name="time">Время</string>
@@ -141,6 +145,9 @@
     <string name="add_from_contacts">Добавить из контактов</string>
     <string name="client_error_name">Имя не может быть пустым</string>
     <string name="client_error_number">Номер введен не правильно</string>
+
+
+    <string name="reservation">Запись</string>
 
     <string name="user">Пользователь</string>
     <string name="week_sequence">Рабочая неделя</string>

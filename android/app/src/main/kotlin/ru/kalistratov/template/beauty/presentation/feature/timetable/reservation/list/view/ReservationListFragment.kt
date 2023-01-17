@@ -22,9 +22,9 @@ import ru.kalistratov.template.beauty.infrastructure.base.BaseView
 import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.extensions.getWeekPageTitle
-import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.infrastructure.extensions.toWeekDay
 import ru.kalistratov.template.beauty.presentation.extension.clicks
+import ru.kalistratov.template.beauty.presentation.extension.connect
 import ru.kalistratov.template.beauty.presentation.extension.find
 import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.list.ReservationListRouter
 import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.list.ReservationListState
@@ -56,6 +56,7 @@ class ReservationListFragment : BaseFragment(),
     private val binding: FragmentReservationListBinding by viewBinding(CreateMethod.INFLATE)
 
     private val reservationListCalendarHelper = ReservationListCalendarHelper()
+    private val reservationsController = ReservationsController()
 
     override fun findViews() {
         find<BottomNavigationView>(R.id.bottom_nav_view).apply {
@@ -86,6 +87,9 @@ class ReservationListFragment : BaseFragment(),
         binding.calendar.weekScrollListener = { weekDays ->
             binding.toolbar.title = getWeekPageTitle(requireContext(), weekDays)
         }
+
+        binding.recycler.connect(reservationsController)
+
         with(viewModel) {
             router = reservationListRouter
             connectDialogLoadingDisplay()
@@ -105,7 +109,11 @@ class ReservationListFragment : BaseFragment(),
             sequenceWeek = state.sequenceWeek
             render(state.selectedDay)
         }
-        loge("State - $state")
+
+        reservationsController.apply {
+            reservations = state.filledReservations
+            requestModelBuild()
+        }
     }
 
     private fun renderDayInfo(sequenceDay: SequenceDay?, date: LocalDate, isVisible: Boolean) {

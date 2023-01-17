@@ -16,5 +16,5 @@ object WeekDaySerializer : KSerializer<WeekDay> {
         encoder.encodeString(value.index.toString())
 
     override fun deserialize(decoder: Decoder): WeekDay =
-        WeekDay.fromIndex(decoder.decodeInt()) ?: WeekDay.Sunday
+        WeekDay.fromIndex(decoder.decodeInt())
 }

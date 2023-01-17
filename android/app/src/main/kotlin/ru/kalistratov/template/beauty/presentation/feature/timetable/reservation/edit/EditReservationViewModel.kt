@@ -3,7 +3,6 @@ package ru.kalistratov.template.beauty.presentation.feature.timetable.reservatio
 import androidx.lifecycle.viewModelScope
 import com.soywiz.klock.Date
 import com.soywiz.klock.DateTime
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.domain.entity.*
@@ -78,11 +77,6 @@ class EditReservationViewModel @Inject constructor(
             val updateFreeWindows = loadFreeWindowsFlow
                 .map(EditReservationAction::UpdateFreeWindows)
 
-            val showSequenceDayWindowPickerFlow = intentFlow
-                .filterIsInstance<EditReservationIntent.ShowSequenceDayWindowPicker>()
-                .clickDebounce()
-                .map { state.freeWindows }
-
             val updateOfferItemAction = interactor
                 .getSelectedMyOfferFlow()
                 .flatMapConcat {
@@ -103,18 +97,6 @@ class EditReservationViewModel @Inject constructor(
                     EditReservationAction.UpdateClient(interactor.getClient(it))
                 }.onEach { hideLoading() }
 
-            //Show WindowPickerDialog
-            merge(loadFreeWindowsFlow, showSequenceDayWindowPickerFlow)
-                .filter { it.isNotEmpty() }
-                .onEach { windows ->
-                    post(
-                        EditReservationSingleAction.ShowFreeWindowsDialog(
-                            windows.map { it.toContentTimeRange() }
-                        )
-                    )
-                }
-                .launchHere()
-
             intentFlow.filterIsInstance<EditReservationIntent.ShowOfferItemPicker>()
                 .onEach { router?.toMyOfferPicker() }
                 .launchHere()
@@ -129,13 +111,30 @@ class EditReservationViewModel @Inject constructor(
 
             val updateSelectedFreeWindowAction = intentFlow
                 .filterIsInstance<EditReservationIntent.SequenceDayWindowSelected>()
-                .map { EditReservationAction.UpdateSelectedFreeWindow(state.freeWindows[it.index]) }
+                .map { intent ->
+                    EditReservationAction.UpdateSelectedFreeWindow(
+                        state.freeWindows.find { it.id == intent.id }
+                    )
+                }
 
             // saveReservationAction
             intentFlow.filterIsInstance<EditReservationIntent.SaveClick>()
                 .clickDebounce()
                 .onEach {
-                    interactor
+                    val state = state
+                    val date = state.date ?: return@onEach
+                    val item = state.offerItem ?: return@onEach
+                    val window = state.window ?: return@onEach
+                    val client = state.client ?: return@onEach
+                    interactor.reservation(
+                        Reservation(
+                            id = "",
+                            date = date,
+                            item = item,
+                            window = window,
+                            client = client
+                        )
+                    )
                 }
                 .launchHere()
 

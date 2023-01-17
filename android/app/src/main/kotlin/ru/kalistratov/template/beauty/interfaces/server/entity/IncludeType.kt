@@ -8,13 +8,19 @@ sealed class IncludeType(val value: String?) {
     object ChildrenTypes : IncludeType("children.types")
     object AllTypes : IncludeType(valueOfTypes(Types, ChildrenTypes))
 
+    object Item : IncludeType("item")
+    object ItemType : IncludeType("item.type")
+    object ItemTypeProperty : IncludeType("item.type_property")
+
     object Properties : IncludeType("properties")
+
+    object WorkdayWindow : IncludeType("workday_window")
 
     object Type : IncludeType("type")
     object TypeProperties : IncludeType("type_property")
 
     companion object {
-        private fun valueOfTypes(vararg types: IncludeType): String {
+        fun valueOfTypes(vararg types: IncludeType): String {
             var result = ""
             types.forEachIndexed { index, type ->
                 result += type.value

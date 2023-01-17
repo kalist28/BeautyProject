@@ -8,6 +8,8 @@ interface EditReservationInteractor {
     suspend fun getSelectedMyOfferFlow(): Flow<Id>
     suspend fun getSelectedClientFlow(): Flow<Id>
 
+    suspend fun reservation(reservation: Reservation)
+
     suspend fun getClient(id: Id): Client?
     suspend fun getOfferItem(id: Id): OfferItem?
     suspend fun getCategory(id: Id): OfferCategory?

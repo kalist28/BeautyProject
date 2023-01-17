@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.datepicker.CalendarConstraints
@@ -17,7 +16,9 @@ import com.soywiz.klock.DateTime
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.kalistratov.template.beauty.R
+import ru.kalistratov.template.beauty.common.DateTimeFormat
 import ru.kalistratov.template.beauty.databinding.FragmentReservationEditBinding
+import ru.kalistratov.template.beauty.domain.entity.Id
 import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
 import ru.kalistratov.template.beauty.infrastructure.base.BaseFragment
 import ru.kalistratov.template.beauty.infrastructure.base.BaseIntent
@@ -28,6 +29,7 @@ import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlo
 import ru.kalistratov.template.beauty.infrastructure.di.UserComponent
 import ru.kalistratov.template.beauty.infrastructure.di.ViewModelFactory
 import ru.kalistratov.template.beauty.infrastructure.extensions.loge
+import ru.kalistratov.template.beauty.infrastructure.extensions.weekDay
 import ru.kalistratov.template.beauty.presentation.extension.connect
 import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.edit.EditReservationRouter
 import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.edit.EditReservationState
@@ -37,9 +39,8 @@ import javax.inject.Inject
 
 sealed interface EditReservationIntent : BaseIntent {
     data class DateSelected(val unix: Long) : EditReservationIntent
-    data class SequenceDayWindowSelected(val index: Int) : EditReservationIntent
+    data class SequenceDayWindowSelected(val id: Id?) : EditReservationIntent
     object ShowOfferItemPicker : EditReservationIntent
-    object ShowSequenceDayWindowPicker : EditReservationIntent
     object ShowDatePicker : EditReservationIntent
     object ShowClientPicker : EditReservationIntent
     object SaveClick : EditReservationIntent
@@ -48,7 +49,6 @@ sealed interface EditReservationIntent : BaseIntent {
 
 sealed interface EditReservationSingleAction : SingleAction {
     data class ShowDatePicker(val week: SequenceWeek) : EditReservationSingleAction
-    data class ShowFreeWindowsDialog(val windows: List<String>) : EditReservationSingleAction
 }
 
 class EditReservationFragment : BaseFragment(),
@@ -104,7 +104,8 @@ class EditReservationFragment : BaseFragment(),
         controller.dateClicks().map { EditReservationIntent.ShowDatePicker },
         controller.clientClicks().map { EditReservationIntent.ShowClientPicker },
         controller.offerClicks().map { EditReservationIntent.ShowOfferItemPicker },
-        controller.timeClicks().map { EditReservationIntent.ShowSequenceDayWindowPicker },
+        controller.windowClicks().map(EditReservationIntent::SequenceDayWindowSelected)
+            .onEach { loge(it) },
     )
 
     override fun render(state: EditReservationState) {
@@ -113,7 +114,8 @@ class EditReservationFragment : BaseFragment(),
             client = state.client
             category = state.offerItemCategory
             offerItem = state.offerItem
-            sequenceDayWindow = state.window
+            window = state.window
+            windows = state.freeWindows
             if(category != null && offerItem != null) loge("*******")
             requestModelBuild()
         }
@@ -123,12 +125,10 @@ class EditReservationFragment : BaseFragment(),
         when (action) {
             is EditReservationSingleAction.ShowDatePicker ->
                 showDatePicker(action.week)
-            is EditReservationSingleAction.ShowFreeWindowsDialog ->
-                showFreeWindowsDialog(action.windows)
         }
     }
 
-    private fun showFreeWindowsDialog(
+    /*private fun showFreeWindowsDialog(
         windows: List<String>
     ) = MaterialAlertDialogBuilder(requireContext())
         .setTitle(R.string.slc_free_window)
@@ -137,7 +137,7 @@ class EditReservationFragment : BaseFragment(),
                 EditReservationIntent.SequenceDayWindowSelected(index)
             )
         }
-        .show()
+        .show()*/
 
     private fun showDatePicker(week: SequenceWeek) = MaterialDatePicker.Builder
         .datePicker()
@@ -161,7 +161,8 @@ class EditReservationFragment : BaseFragment(),
             override fun isValid(timestamp: Long): Boolean {
                 val dateTime = DateTime(timestamp)
                 val isFuture = dateTime.date >= today.date
-                val sequenceDay = week.getOrNull(dateTime.dayOfWeek.index1)
+                val sequenceDay = week.find { it.day == dateTime.weekDay }
+                loge("${dateTime.format(DateTimeFormat.DATE_STANDART)} (${dateTime.weekDay}) (${dateTime.dayOfWeekInt})-- $sequenceDay ")
                 val isNotHoliday = sequenceDay?.isHoliday?.not() ?: false
                 val isExist = sequenceDay?.isNotExist()?.not() ?: false
                 return isFuture && isNotHoliday && isExist

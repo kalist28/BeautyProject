@@ -45,7 +45,9 @@ class AuthServiceImpl @Inject constructor(
                     updateRefreshToken(it.refreshToken)
 
                     apiUserService.getUser()
-                        .doIfSuccess { user -> updateUserId(user.id) }
+                        .doIfSuccess { user ->
+                            loge("--------------------------$user")
+                            updateUserId(user.id) }
                 }
             }
         }

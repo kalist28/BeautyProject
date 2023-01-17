@@ -17,6 +17,7 @@ import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import ru.kalistratov.template.beauty.domain.entity.WeekDay as ProjectWeekDay
 
 class ReservationListCalendarHelper {
 
@@ -24,6 +25,13 @@ class ReservationListCalendarHelper {
     private var selectedDay: LocalDate? = null
 
     var sequenceWeek: SequenceWeek? = null
+        set(value) {
+            val isFirstInit = field == null
+            field = value
+            if (isFirstInit) calendar?.notifyWeekChanged(
+                selectedDay ?: LocalDate.now()
+            )
+        }
     var calendar: WeekCalendarView? = null
 
     fun initialize(calendar: WeekCalendarView) = with(calendar) {
@@ -35,8 +43,9 @@ class ReservationListCalendarHelper {
 
             override fun bind(container: DayViewContainer, data: WeekDay) {
                 val dayState = getDayState(data.date)
+                val weekDay = ProjectWeekDay.fromIndex(data.date.dayOfWeek.value - 1)
                 val isHoliday = if (sequenceWeek.isNullOrEmpty()) false
-                else sequenceWeek?.get(data.date.dayOfWeek.value - 1)
+                else sequenceWeek?.find { it.day == weekDay }
                     ?.run { isHoliday || isNotExist() } ?: false
                 container.bind(data, dayState, isHoliday)
             }
@@ -68,7 +77,7 @@ class ReservationListCalendarHelper {
         isSelectedDate(date) -> DayState.SELECTED
         isCurrentDate(date) -> DayState.CURRENT
         else -> DayState.EMPTY
-    }.also { loge("$date to $it") }
+    }
 
     private fun isCurrentDate(date: LocalDate) = LocalDate.now() == date
     private fun isSelectedDate(date: LocalDate) = selectedDay?.let { it == date } ?: false
@@ -107,6 +116,8 @@ class DayViewContainer(
                 if (resId == null) background = null
                 else setBackgroundResource(resId)
             }
+
+            loge("${day.date} -- ${state} ${isHoliday}")
 
             setTextColor(
                 context.getColor(
