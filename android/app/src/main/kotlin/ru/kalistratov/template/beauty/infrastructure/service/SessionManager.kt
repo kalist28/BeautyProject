@@ -22,8 +22,10 @@ class SessionManagerImpl @Inject constructor(
     override fun closeSession() {
         component = null
         authSettingsService.exit()
-        application.activity?.updateNavGraph()
-        loge("sfdgdhf")
+        application.activity?.run {
+            updateNavGraph()
+            loadingDialog?.show(false)
+        }
     }
 
     private fun createComponent(): UserComponent {

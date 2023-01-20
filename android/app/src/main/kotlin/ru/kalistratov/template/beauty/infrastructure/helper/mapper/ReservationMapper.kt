@@ -12,7 +12,7 @@ fun Reservation.toMakeRequest() = MakeReservationRequest(
     dateAt = date.format(DATE_STANDART),
     itemId = item.id,
     windowId = window.id,
-    createdBy = client.id
+    contactId = client.id
 )
 
 fun ServerReservation.toLocal() = Reservation(

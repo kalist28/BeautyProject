@@ -10,10 +10,13 @@ import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import ru.kalistratov.template.beauty.R
+import ru.kalistratov.template.beauty.databinding.ListItemSequenceDayBinding
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.exist
 import ru.kalistratov.template.beauty.infrastructure.extensions.isNoTime
 import ru.kalistratov.template.beauty.infrastructure.extensions.toClockFormat
+import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
+import ru.kalistratov.template.beauty.presentation.view.setMargins
 
 data class WeekSequenceDayModel(
     private val day: SequenceDay,
@@ -22,66 +25,58 @@ data class WeekSequenceDayModel(
 
     private data class State(
         val text: String,
-        @ColorRes val colorId: Int,
-        @DrawableRes val strokeId: Int,
+        @ColorRes val colorId: Int
     )
 
     init {
         id(day.day.hashCode())
     }
 
-    override fun getDefaultLayout(): Int = R.layout.list_item_sequence_day
+    override fun bind(holder: WorkDayHolder) = with(holder.binding) {
+        root.setOnClickListener { clickListener.invoke(day.day.index) }
 
-    override fun bind(holder: WorkDayHolder) = with(holder) {
-        root?.setOnClickListener { clickListener.invoke(day.day.index) }
+        weekDayTextView.apply { text = context?.getString(day.day.tittleResId) }
 
-        weekDayTextView?.apply {
-            text = context?.getString(day.day.shortTittleResId)
-        }
-
-        val context = root?.context ?: return@with
+        val context = root.context ?: return@with
         val state = getState(context)
-        val textColor = ContextCompat.getColor(context, state.colorId)
-        timeTextView?.text = state.text
-        timeTextView?.setTextColor(textColor)
-        weekDayTextView?.setTextColor(textColor)
-        constraint?.background = ContextCompat.getDrawable(context, state.strokeId)
+        timeTextView.text = state.text
+        indicator.backgroundTintList = context.getColorStateList(state.colorId)
     }
 
     private fun getState(context: Context): State {
         val start = day.startAt
         val finish = day.finishAt
         return when {
-            start.isNoTime() && finish.isNoTime() && !day.id.exist()-> State(
+            start.isNoTime() && finish.isNoTime() && !day.id.exist() -> State(
                 context.getString(R.string.not_specified),
                 R.color.colorOrange,
-                R.drawable.background_stroke_round_orange,
             )
             day.isHoliday -> State(
                 context.getString(R.string.holiday),
                 R.color.colorAcceptTransparent50,
-                R.drawable.background_stroke_round_transparent,
             )
             else -> State(
                 "${start.toClockFormat()} - ${finish.toClockFormat()}",
-                R.color.primary,
-                R.drawable.background_stroke_round_accept,
+                R.color.colorGreen,
             )
         }
     }
 
     override fun createNewHolder(parent: ViewParent) = WorkDayHolder()
 
+    override fun getDefaultLayout(): Int = R.layout.list_item_sequence_day
+
     class WorkDayHolder : EpoxyHolder() {
-        var root: View? = null
-        var constraint: View? = null
-        var timeTextView: TextView? = null
-        var weekDayTextView: TextView? = null
-        override fun bindView(itemView: View) = with(itemView) {
-            root = itemView
-            constraint = findViewById(R.id.constraint)
-            timeTextView = findViewById(R.id.time_text_view)
-            weekDayTextView = findViewById(R.id.week_day_text_view)
+        lateinit var binding: ListItemSequenceDayBinding
+        override fun bindView(itemView: View) {
+            binding = ListItemSequenceDayBinding.bind(itemView).apply {
+                root.setMargins(
+                    MarginsBundle.baseHorizontal.copy(
+                        topMarginDp = 4,
+                        bottomMarginDp = 4
+                    )
+                )
+            }
         }
     }
 }

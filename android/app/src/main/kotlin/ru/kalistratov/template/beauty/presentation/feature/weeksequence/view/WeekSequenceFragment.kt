@@ -87,11 +87,12 @@ class WeekSequenceFragment : BaseFragment(), BaseView<WeekSequenceIntent, WeekSe
             layoutManager = LinearLayoutManager(requireContext())
         }
         with(viewModel) {
+            router = profileRouter
             viewModelScope.launch {
+                connectDialogLoadingDisplay()
                 stateUpdates()
                     .collect(::render)
             }.addTo(jobComposite)
-            router = profileRouter
             processIntent(intents())
         }
     }
@@ -117,7 +118,6 @@ class WeekSequenceFragment : BaseFragment(), BaseView<WeekSequenceIntent, WeekSe
         val appBarTitle = state.selectedDay?.day?.tittleResId ?: R.string.week_sequence
         updateAppBarTitle(getString(appBarTitle))
 
-        loadingDialog.show(state.loading)
         controller.sequenceWeek = state.weekSequence
         controller.selectedDay = state.selectedDay
         controller.requestModelBuild()

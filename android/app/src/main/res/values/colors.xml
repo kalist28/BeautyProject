@@ -67,6 +67,7 @@
 
     <color name="colorBlack">#000000</color>
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 
 
     <color name="titleText">#09101D</color>
@@ -100,4 +101,14 @@
     <color name="exitColorBackground">#FFE8ED</color>
 
     <color name="calendar_background">#F4F6F9</color>
+
+    <!--New bundle-->
+    <color name="primary">#30344d</color>
+    <color name="saveButton">#43A047</color>
+    <color name="onPrimary">#fafcff</color>
+    <color name="toolbarBackground">@color/primary</color>
+    <color name="toolbarTitle">#fafcff</color>
+    <color name="background">#e6e6e6</color>
+    <color name="subtitle">#C7C7C7</color>
+    <color name="textDefault">#201A1B</color>
 </resources>

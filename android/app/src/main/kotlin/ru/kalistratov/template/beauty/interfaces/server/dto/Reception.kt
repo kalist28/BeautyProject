@@ -4,7 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.kalistratov.template.beauty.domain.entity.Data
 import ru.kalistratov.template.beauty.domain.entity.DataList
-import ru.kalistratov.template.beauty.domain.entity.SequenceDayWindow
 import ru.kalistratov.template.beauty.interfaces.server.dto.offer.ServerOfferItem
 
 //TODO replace to Serializer
@@ -25,7 +24,7 @@ data class MakeReservationRequest(
     @SerialName("date_at") val dateAt: String,
     @SerialName("item_id") val itemId: String,
     @SerialName("workday_window_id") val windowId: String,
-    @SerialName("created_by") val createdBy: String,
+    @SerialName("contact_id") val contactId: String,
     @SerialName("created_for") val createdFor: String? = null,
 )
 

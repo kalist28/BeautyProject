@@ -38,10 +38,10 @@ abstract class BaseBottomSheet : BottomSheetDialogFragment() {
         }
 
     private fun setupFullHeight(sheet: BottomSheetDialog) {
-        val sheetView = sheet.findViewById<View>(R.id.design_bottom_sheet) ?: return
+        /*val sheetView = sheet.findViewById<View>(R.id.design_bottom_sheet) ?: return
         val layoutParams = sheetView.layoutParams
         sheetView.layoutParams = layoutParams
-            ?.also { it.height = getWindowHeight() }
+            ?.also { it.height = getWindowHeight() }*/
     }
 
     private fun getWindowHeight() = DisplayMetrics()

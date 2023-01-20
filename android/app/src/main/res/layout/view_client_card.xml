@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/BaseCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/margin_xsmall">
@@ -10,16 +11,30 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_xsmall">
 
+        <ImageView
+            android:id="@+id/ic_container"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_circle"
+            android:padding="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_xsmall"
-            android:text="@string/client"
+            android:layout_width="@dimen/constraint_fill"
+            android:layout_height="@dimen/constraint_fill"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textAllCaps="true"
             android:textSize="@dimen/text_xlarge"
-            android:theme="@style/DefaultText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:fontFamily="serif-monospace"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/ic_container"
+            app:layout_constraintTop_toTopOf="@id/ic_container"
+            app:layout_constraintBottom_toBottomOf="@id/ic_container"
+            app:layout_constraintEnd_toEndOf="@id/ic_container"/>
 
         <TextView
             android:id="@+id/fullname"
@@ -29,8 +44,8 @@
             android:textSize="@dimen/text_xlarge"
             android:theme="@style/DefaultText"
             android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintStart_toEndOf="@id/ic_container"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/number"
@@ -40,7 +55,7 @@
             android:theme="@style/SubTitleText"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ic_container"
             app:layout_constraintTop_toBottomOf="@id/fullname" />
 
         <TextView
@@ -54,8 +69,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

@@ -16,6 +16,11 @@ data class MarginsBundle(
             endMarginDp = Margins.BASE_HORIZONTAL
         )
 
+        val smallVertical = MarginsBundle(
+            topMarginDp = Margins.SMALL_VERTICAL,
+            bottomMarginDp = Margins.SMALL_VERTICAL
+        )
+
         val baseVertical = MarginsBundle(
             topMarginDp = Margins.BASE_VERTICAL,
             bottomMarginDp = Margins.BASE_VERTICAL
@@ -27,10 +32,16 @@ data class MarginsBundle(
             endMarginDp = Margins.BASE_HORIZONTAL,
             bottomMarginDp = Margins.BASE_VERTICAL
         )
+
+        fun horizontalOf(dp: Int) = MarginsBundle(
+            startMarginDp = dp,
+            endMarginDp = dp
+        )
     }
 }
 
 object Margins {
+    const val SMALL_VERTICAL = 2
     const val BASE_VERTICAL = 8
     const val BASE_HORIZONTAL = 16
     const val SMALL_HORIZONTAL = 8

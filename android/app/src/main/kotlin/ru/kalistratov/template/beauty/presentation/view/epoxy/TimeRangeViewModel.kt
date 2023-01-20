@@ -14,14 +14,18 @@ import ru.kalistratov.template.beauty.databinding.ListItemTimeRangeBinding
 import ru.kalistratov.template.beauty.domain.entity.TimeSource
 import ru.kalistratov.template.beauty.domain.entity.TimeSourceType
 import ru.kalistratov.template.beauty.infrastructure.extensions.toClockFormat
+import ru.kalistratov.template.beauty.presentation.extension.setDebouncedOnClickListener
 import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
+import ru.kalistratov.template.beauty.presentation.view.PaddingBundle
 import ru.kalistratov.template.beauty.presentation.view.setMargins
+import ru.kalistratov.template.beauty.presentation.view.updatePadding
 
 data class TimeRangeViewModel(
     private val id: String,
     private val startTimeSource: TimeSource,
     private val finishTimeSource: TimeSource,
     private val clickAction: (TimeSourceType) -> Unit,
+    private val paddingBundle: PaddingBundle? = null,
     private val marginsBundle: MarginsBundle? = null,
     private val errorMessageChecker: () -> String? = { null },
     @StringRes private val startHintId: Int? = null,
@@ -37,21 +41,21 @@ data class TimeRangeViewModel(
     override fun createNewHolder(parent: ViewParent) = Holder()
 
     override fun bind(holder: Holder): Unit = with(holder.binding) {
-        marginsBundle?.let(root::setMargins)
         setError(holder.binding.error)
-        startEditText.initTimeEditFile(startTimeSource)
-        finishEditText.initTimeEditFile(finishTimeSource)
+
+
+        startEditText.setText(startTimeSource.time.toClockFormat())
+        finishEditText.setText(finishTimeSource.time.toClockFormat())
 
         startHintId?.let(startInputLayout::setHint)
         finishHintId?.let(finishInputLayout::setHint)
     }
 
     private fun EditText.initTimeEditFile(source: TimeSource) {
-        setText(source.time.toClockFormat())
         isClickable = true
         inputType = InputType.TYPE_NULL
 
-        setOnClickListener { clickAction(source.type) }
+        setDebouncedOnClickListener { clickAction(source.type) }
         setOnFocusChangeListener { _, focus ->
             if (!focus) return@setOnFocusChangeListener
             clickAction(source.type)
@@ -67,10 +71,16 @@ data class TimeRangeViewModel(
         }
     }
 
-    class Holder : EpoxyHolder() {
+    inner class Holder : EpoxyHolder() {
         lateinit var binding: ListItemTimeRangeBinding
         override fun bindView(itemView: View) {
-            binding = ListItemTimeRangeBinding.bind(itemView)
+            binding = ListItemTimeRangeBinding.bind(itemView).apply {
+                marginsBundle?.let(rootContainer::setMargins)
+                paddingBundle?.let(rootContainer::updatePadding)
+
+                startEditText.initTimeEditFile(startTimeSource)
+                finishEditText.initTimeEditFile(finishTimeSource)
+            }
         }
     }
 }

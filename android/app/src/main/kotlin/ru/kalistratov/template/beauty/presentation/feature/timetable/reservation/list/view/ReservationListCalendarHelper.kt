@@ -99,6 +99,7 @@ class DayViewContainer(
 
     init {
         view.setOnClickListener {
+            loge(day)
             day?.let(clickAction::invoke)
         }
     }

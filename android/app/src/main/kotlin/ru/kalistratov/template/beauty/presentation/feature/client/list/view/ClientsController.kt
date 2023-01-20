@@ -7,37 +7,27 @@ import ru.kalistratov.template.beauty.client
 import ru.kalistratov.template.beauty.divider
 import ru.kalistratov.template.beauty.domain.entity.Client
 import ru.kalistratov.template.beauty.domain.entity.Id
+import ru.kalistratov.template.beauty.indentSmall
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
+import ru.kalistratov.template.beauty.presentation.view.epoxy.ClientCardModel
 import ru.kalistratov.template.beauty.presentation.view.epoxy.setMargins
 
-class ClientsController : EpoxyController() {
+open class ClientsController : EpoxyController() {
 
     private val clicksMutableFlow = mutableSharedFlow<Id>()
 
     var clients: List<Client> = emptyList()
 
-    override fun buildModels() {
-        val baseMargin = MarginsBundle.base
-        val clickListener: (Id) -> Unit = { clicksMutableFlow.tryEmit(it) }
-        clients.forEachIndexed { index, client ->
-            client {
-                id(client.number)
-                name(client.fullname)
-                number(client.number)
-                onBind { _, holder, _ ->
-                    holder.setMargins(baseMargin)
-                    holder.dataBinding.root.setOnClickListener {
-                        clickListener.invoke(client.id)
-                    }
-                }
-            }
-            divider {
-                id("client_$index")
-                onBind { _, holder, _ -> holder.setMargins(baseMargin) }
-            }
-        }
-    }
+    override fun buildModels() = clients.map { client ->
+        ClientCardModel(
+            client = client,
+            clickAction = { clicksMutableFlow.tryEmit(client.id) },
+            marginsBundle = MarginsBundle.base.copy(bottomMarginDp = 0),
+            idByClient = true
+        )
+    }.run(::add)
+
 
     fun clicks(): Flow<Id> = clicksMutableFlow.asSharedFlow()
 }

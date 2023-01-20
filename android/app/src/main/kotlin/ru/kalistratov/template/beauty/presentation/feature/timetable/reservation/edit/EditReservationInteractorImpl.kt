@@ -38,10 +38,11 @@ class EditReservationInteractorImpl @Inject constructor(
     override suspend fun reservation(reservation: Reservation) {
         val include = IncludeType.typeOfTypes(
             IncludeType.Item,
+            IncludeType.ItemType,
             IncludeType.WorkdayWindow
         )
-        receptionService.makeReservation(reservation.toMakeRequest(), include)
-            .also { loge(it) }
+        receptionService.makeReservation(reservation.toMakeRequest().also { loge(it) }, include)
+            .also { loge("9999 - $it") }
     }
 
     override suspend fun getClient(id: Id) = clientRepository.get(id)

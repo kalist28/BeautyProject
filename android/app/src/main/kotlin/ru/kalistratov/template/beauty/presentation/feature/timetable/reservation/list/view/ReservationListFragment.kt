@@ -63,8 +63,6 @@ class ReservationListFragment : BaseFragment(),
             selectedItemId = R.id.menu_timetable
             setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.menu_profile -> reservationListRouter.openProfile()
-                    R.id.menu_calendar -> reservationListRouter.openCalendar()
                     R.id.menu_personal_area -> reservationListRouter.toPersonalArea()
                 }
                 return@setOnItemSelectedListener true

@@ -10,6 +10,7 @@ import ru.kalistratov.template.beauty.domain.feature.timetable.reservation.edit.
 import ru.kalistratov.template.beauty.infrastructure.base.*
 import ru.kalistratov.template.beauty.infrastructure.coroutines.clickDebounce
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.edit.view.EditReservationIntent
 import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.edit.view.EditReservationSingleAction
 import javax.inject.Inject

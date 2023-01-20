@@ -9,9 +9,12 @@ import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import kotlinx.coroutines.flow.*
 import ru.kalistratov.template.beauty.R
+import ru.kalistratov.template.beauty.databinding.ListItemMenuWithBadgeBinding
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.presentation.entity.MenuItem
 import ru.kalistratov.template.beauty.presentation.extension.getDrawable
+import ru.kalistratov.template.beauty.indent
+import ru.kalistratov.template.beauty.indentSmall
 
 class PersonalAreaMenuController : EpoxyController() {
     var items: List<MenuItem> = emptyList()
@@ -21,15 +24,19 @@ class PersonalAreaMenuController : EpoxyController() {
 
     override fun buildModels() {
         items.forEachIndexed { index, item ->
-            MenuItemModel(item, _clicks::tryEmit).addTo(this)
-            if (index != items.lastIndex) SeparatorModel(index)
-                .addTo(this)
+            when(item) {
+                is MenuItem.Container -> {
+                    MenuItemModel(item, _clicks::tryEmit).addTo(this)
+                    indentSmall { id("indentSmall_1") }
+                }
+                is MenuItem.Indent -> indent { id("step_$index") }
+            }
         }
     }
 }
 
 class MenuItemModel(
-    private val item: MenuItem,
+    private val item: MenuItem.Container,
     private val clickAction: (Int) -> Unit
 ) : EpoxyModelWithHolder<MenuItemModel.ViewHolder>() {
 
@@ -37,10 +44,10 @@ class MenuItemModel(
         id(item.id)
     }
 
-    override fun bind(holder: ViewHolder): Unit = with(holder) {
-        root?.setOnClickListener { clickAction.invoke(item.id) }
-        title?.let { it.text = item.title }
-        icon?.let { it.setImageDrawable(it.getDrawable(item.iconId)) }
+    override fun bind(holder: ViewHolder): Unit = with(holder.binding) {
+        root.setOnClickListener { clickAction.invoke(item.id) }
+        titleTextView.text = item.title
+        iconContainer.let { it.setImageDrawable(it.getDrawable(item.iconId)) }
     }
 
     override fun getDefaultLayout() = R.layout.list_item_menu_with_badge
@@ -48,13 +55,9 @@ class MenuItemModel(
     override fun createNewHolder(parent: ViewParent) = ViewHolder()
 
     inner class ViewHolder : EpoxyHolder() {
-        var root: View? = null
-        var icon: ImageView? = null
-        var title: TextView? = null
+        lateinit var binding: ListItemMenuWithBadgeBinding
         override fun bindView(view: View) {
-            root = view
-            icon = view.findViewById(R.id.icon)
-            title = view.findViewById(R.id.title_text_view)
+            binding = ListItemMenuWithBadgeBinding.bind(view)
         }
     }
 }

@@ -7,22 +7,24 @@ import ru.kalistratov.template.beauty.presentation.feature.personalarea.entity.P
 
 class PersonalAreaMenuServiceImpl : PersonalAreaMenuService {
     override suspend fun getMenuItems(): List<MenuItem> = listOf(
-        MenuItem(
+        MenuItem.Indent,
+        MenuItem.Container(
             PersonalAreaMenuItemId.WEEK_SEQUENCE.id,
-            R.drawable.ic_week_sequence,
+            R.drawable.ic_days,
             "Рабочая неделя"
         ),
-        MenuItem(
+        MenuItem.Container(
             PersonalAreaMenuItemId.SERVICES.id,
-            R.drawable.ic_list_alt,
+            R.drawable.ic_offers,
             "Услуги"
         ),
-        MenuItem(
+        MenuItem.Container(
             PersonalAreaMenuItemId.CLIENTS.id,
             R.drawable.ic_clients,
             "Клиенты"
         ),
-        MenuItem(
+        MenuItem.Indent,
+        MenuItem.Container(
             PersonalAreaMenuItemId.EXIT.id,
             R.drawable.ic_exit,
             "Выход"

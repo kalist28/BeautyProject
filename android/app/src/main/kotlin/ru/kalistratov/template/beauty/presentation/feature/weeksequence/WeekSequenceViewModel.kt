@@ -7,11 +7,8 @@ import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
 import ru.kalistratov.template.beauty.domain.entity.TimeSource
 import ru.kalistratov.template.beauty.domain.feature.weeksequence.WeekSequenceInteractor
-import ru.kalistratov.template.beauty.infrastructure.base.BaseAction
-import ru.kalistratov.template.beauty.infrastructure.base.BaseState
-import ru.kalistratov.template.beauty.infrastructure.base.BaseViewModel
+import ru.kalistratov.template.beauty.infrastructure.base.*
 import ru.kalistratov.template.beauty.infrastructure.coroutines.addTo
-import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.coroutines.share
 import ru.kalistratov.template.beauty.presentation.feature.weeksequence.view.WeekSequenceIntent
 import javax.inject.Inject
@@ -19,7 +16,6 @@ import javax.inject.Inject
 data class WeekSequenceState(
     val weekSequence: SequenceWeek = emptyList(),
     val selectedDay: SequenceDay? = null,
-    val loading: Boolean = false,
     val timeForShowTimePicker: TimeSource? = null
 ) : BaseState
 
@@ -27,24 +23,22 @@ sealed class WeekSequenceAction : BaseAction {
     data class UpdateWeekSequence(val sequenceWeek: SequenceWeek) : WeekSequenceAction()
     data class UpdateSelectedDay(val day: SequenceDay?) : WeekSequenceAction()
     data class ShowTimePicker(val time: TimeSource?) : WeekSequenceAction()
-    object ShowLoading : WeekSequenceAction()
     object Clear : WeekSequenceAction()
 }
 
 class WeekSequenceViewModel @Inject constructor(
     private val interactor: WeekSequenceInteractor
-) : BaseViewModel<WeekSequenceIntent, WeekSequenceAction, WeekSequenceState>() {
+) : BaseViewModel<WeekSequenceIntent, WeekSequenceAction, WeekSequenceState>(),
+    ViewModelLoadingSupport by ViewModelLoadingSupportBaseImpl() {
 
     var router: WeekSequenceRouter? = null
-
-    private val showLoadingFlow = mutableSharedFlow<Unit>()
 
     init {
         viewModelScope.launch {
             val initFlow = intentFlow
                 .filterIsInstance<WeekSequenceIntent.InitData>()
                 .take(1)
-                .onEach { showLoadingFlow.emit(Unit) }
+                .onEach { showLoading() }
                 .share(this)
 
             val loadWeekSequenceFlow = initFlow
@@ -54,13 +48,14 @@ class WeekSequenceViewModel @Inject constructor(
             val firstCreateDayForEditWindowsFlow = intentFlow
                 .filterIsInstance<WeekSequenceIntent.EditWindows>()
                 .flatMapConcat {
-                    val selectedDay = getLastState().selectedDay
+                    showLoading()
+                    val selectedDay = state.selectedDay
                         ?: return@flatMapConcat emptyFlow()
-                    val sequence = getLastState().weekSequence
+                    val sequence = state.weekSequence
                     val oldDayVersion = sequence
                         .find { it.day == selectedDay.day }
                         ?: return@flatMapConcat emptyFlow()
-
+                    hideLoading()
                     if (
                         oldDayVersion.startAt != selectedDay.startAt ||
                         oldDayVersion.finishAt != selectedDay.finishAt
@@ -89,7 +84,7 @@ class WeekSequenceViewModel @Inject constructor(
                 else flowOf(
                     WeekSequenceAction.UpdateWeekSequence(it),
                     WeekSequenceAction.UpdateSelectedDay(null)
-                )
+                ).also { hideLoading() }
             }
 
             val openWorkDaySequenceEditBottomSheetAction = intentFlow
@@ -132,11 +127,7 @@ class WeekSequenceViewModel @Inject constructor(
                     flowOf(WeekSequenceAction.UpdateSelectedDay(updatedDay))
                 }
 
-            val slowLoadingAction = showLoadingFlow
-                .map { WeekSequenceAction.ShowLoading }
-
             merge(
-                slowLoadingAction,
                 showTimePickerAction,
                 updateHolidayDayAction,
                 updateWeekSequenceAction,
@@ -159,7 +150,6 @@ class WeekSequenceViewModel @Inject constructor(
         )
         is WeekSequenceAction.UpdateWeekSequence -> state.copy(
             weekSequence = action.sequenceWeek,
-            loading = false,
         )
         is WeekSequenceAction.UpdateSelectedDay -> state.copy(
             selectedDay = action.day
@@ -167,15 +157,12 @@ class WeekSequenceViewModel @Inject constructor(
         is WeekSequenceAction.ShowTimePicker -> state.copy(
             timeForShowTimePicker = action.time
         )
-        WeekSequenceAction.ShowLoading -> state.copy(
-            loading = true
-        )
     }
 
     private fun <T> Flow<T>.updateDay(showLoading: Boolean = true) = this
         .flatMapConcat { getLastState().selectedDay?.let(::flowOf) ?: emptyFlow() }
         .flatMapConcat { dayToUpdate ->
-            if (showLoading) showLoadingFlow.emit(Unit)
+            if (showLoading)showLoading()
             interactor.updateWorkDaySequence(dayToUpdate)
                 ?.let { flowOf(it) }
                 ?: emptyFlow()

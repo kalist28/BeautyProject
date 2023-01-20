@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.os.SystemClock
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -27,9 +28,13 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
+import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.entity.OnBackPressedCallbackWrapper
 import ru.kalistratov.template.beauty.presentation.feature.main.view.MainActivity
 import ru.kalistratov.template.beauty.presentation.view.TextFieldDrawableBundle
+import java.util.*
+import kotlin.math.abs
+
 
 fun TextView.textChanges(): Flow<CharSequence> = callbackFlow {
     val listener = object : TextWatcher {
@@ -79,7 +84,7 @@ val Int.px: Int
 
 fun Activity.showLoading(show: Boolean) {
     if (this is MainActivity) {
-        loadingDialog.show(show)
+        loadingDialog?.show(show)
     }
 }
 
@@ -88,8 +93,7 @@ fun Fragment.showLoading(show: Boolean) {
 }
 
 fun RecyclerView.connect(
-    controller: EpoxyController,
-    layoutManager: LayoutManager = LinearLayoutManager(this.context)
+    controller: EpoxyController, layoutManager: LayoutManager = LinearLayoutManager(this.context)
 ) {
     this.adapter = controller.adapter
     this.layoutManager = layoutManager
@@ -105,8 +109,7 @@ fun EditText.setTextWithChecking(text: String?) {
     if (this.text?.toString() != text) setText(text)
 }
 
-fun Int?.toDrawable(context: Context) =
-    this?.let { ContextCompat.getDrawable(context, it) }
+fun Int?.toDrawable(context: Context) = this?.let { ContextCompat.getDrawable(context, it) }
 
 fun TextView.setDrawable(bundle: TextFieldDrawableBundle) = with(bundle) {
     setCompoundDrawablesWithIntrinsicBounds(
@@ -116,3 +119,18 @@ fun TextView.setDrawable(bundle: TextFieldDrawableBundle) = with(bundle) {
         bottom.toDrawable(context)
     )
 }
+
+fun View.setDebouncedOnClickListener(
+    minimumIntervalMillis: Long = 300, block: () -> Unit
+) = setOnClickListener(object : View.OnClickListener {
+    private var timestamp = 0L
+    override fun onClick(clickedView: View) {
+        val previousClickTimestamp = timestamp
+        val currentTimestamp = SystemClock.uptimeMillis()
+        timestamp = currentTimestamp
+        if (abs(currentTimestamp - previousClickTimestamp) > minimumIntervalMillis) {
+            loge(111111111)
+            block.invoke()
+        }
+    }
+})

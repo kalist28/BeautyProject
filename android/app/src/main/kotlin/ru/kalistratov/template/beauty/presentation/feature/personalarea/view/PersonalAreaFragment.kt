@@ -51,8 +51,6 @@ class PersonalAreaFragment : BaseFragment(),
                 selectedItemId = R.id.menu_personal_area
                 setOnItemSelectedListener {
                     when (it.itemId) {
-                        R.id.menu_profile -> profileRouter.openProfile()
-                        R.id.menu_calendar -> profileRouter.openCalendar()
                         R.id.menu_timetable -> profileRouter.openTimetable()
                     }
                     return@setOnItemSelectedListener true

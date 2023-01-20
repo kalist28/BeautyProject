@@ -11,7 +11,6 @@ import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.soywiz.klock.DateTime
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -70,6 +69,10 @@ class EditReservationFragment : BaseFragment(),
 
     private val intentsMutableFlow = mutableSharedFlow<EditReservationIntent>()
 
+    private val saveClicksMutableFlow = mutableSharedFlow<Unit>()
+
+    private var datePickerIsHide = true
+
     override fun injectUserComponent(userComponent: UserComponent) =
         userComponent.plus(EditReservationModule(this)).inject(this)
 
@@ -83,30 +86,32 @@ class EditReservationFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setAppBar(R.string.timetable)
+        setAppBar(R.string.reservation)
 
         binding.recycler.connect(controller)
+
+        binding.save.setOnClickListener { saveClicksMutableFlow.tryEmit(Unit) }
 
         with(viewModel) {
             router = editReservationRouter
             connectDialogLoadingDisplay()
-            connectInto(this@EditReservationFragment)
             viewModelScope.launch {
                 setSingleActionProcessor(::processSingleAction, this)
             }.addTo(jobComposite)
+            connectInto(this@EditReservationFragment)
         }
     }
 
     override fun intents(): Flow<EditReservationIntent> = merge(
         intentsMutableFlow,
         flowOf(EditReservationIntent.InitData),
-        controller.saveClicks().map { EditReservationIntent.SaveClick },
+        saveClicksMutableFlow.map { EditReservationIntent.SaveClick },
         controller.dateClicks().map { EditReservationIntent.ShowDatePicker },
         controller.clientClicks().map { EditReservationIntent.ShowClientPicker },
         controller.offerClicks().map { EditReservationIntent.ShowOfferItemPicker },
         controller.windowClicks().map(EditReservationIntent::SequenceDayWindowSelected)
-            .onEach { loge(it) },
-    )
+
+    ).onEach { loge(it) }
 
     override fun render(state: EditReservationState) {
         with(controller) {
@@ -114,17 +119,29 @@ class EditReservationFragment : BaseFragment(),
             client = state.client
             category = state.offerItemCategory
             offerItem = state.offerItem
-            window = state.window
+            selectedWindow = state.window
             windows = state.freeWindows
-            if(category != null && offerItem != null) loge("*******")
             requestModelBuild()
         }
+
+        val isSaveEnable = state.run {
+            date != null && window != null && offerItem != null && client != null
+        }
+        binding.save.apply {
+            isClickable = isSaveEnable
+            setBackgroundColor(
+                requireContext().getColor(
+                    if (isSaveEnable) R.color.saveButton else R.color.subtitle
+                )
+            )
+        }
+
     }
 
-    private fun processSingleAction(action: EditReservationSingleAction){
+    private fun processSingleAction(action: EditReservationSingleAction) {
         when (action) {
             is EditReservationSingleAction.ShowDatePicker ->
-                showDatePicker(action.week)
+                if (datePickerIsHide) showDatePicker(action.week)
         }
     }
 
@@ -144,11 +161,13 @@ class EditReservationFragment : BaseFragment(),
         .setCalendarConstraints(getDateValidator(week))
         .build()
         .apply {
+            addOnDismissListener { datePickerIsHide = true }
             addOnPositiveButtonClickListener {
                 intentsMutableFlow.tryEmit(
                     EditReservationIntent.DateSelected(it)
                 )
             }
+            datePickerIsHide = false
         }
         .show(childFragmentManager, "date_picker")
 
@@ -160,9 +179,8 @@ class EditReservationFragment : BaseFragment(),
 
             override fun isValid(timestamp: Long): Boolean {
                 val dateTime = DateTime(timestamp)
-                val isFuture = dateTime.date >= today.date
+                val isFuture = dateTime >= today.copyDayOfMonth(hours = 0)
                 val sequenceDay = week.find { it.day == dateTime.weekDay }
-                loge("${dateTime.format(DateTimeFormat.DATE_STANDART)} (${dateTime.weekDay}) (${dateTime.dayOfWeekInt})-- $sequenceDay ")
                 val isNotHoliday = sequenceDay?.isHoliday?.not() ?: false
                 val isExist = sequenceDay?.isNotExist()?.not() ?: false
                 return isFuture && isNotHoliday && isExist

@@ -1,21 +1,19 @@
 package ru.kalistratov.template.beauty.presentation.feature.weeksequence.view
 
 import android.content.res.Resources
-import android.view.View
 import com.airbnb.epoxy.EpoxyController
-import ru.kalistratov.template.beauty.R
-import ru.kalistratov.template.beauty.divider
+import ru.kalistratov.template.beauty.*
 import ru.kalistratov.template.beauty.domain.entity.SequenceDay
 import ru.kalistratov.template.beauty.domain.entity.SequenceWeek
 import ru.kalistratov.template.beauty.domain.entity.TimeSourceType
 import ru.kalistratov.template.beauty.infrastructure.coroutines.mutableSharedFlow
 import ru.kalistratov.template.beauty.infrastructure.extensions.toMilliseconds
+import ru.kalistratov.template.beauty.presentation.extension.setDebouncedOnClickListener
 import ru.kalistratov.template.beauty.presentation.view.MarginsBundle
 import ru.kalistratov.template.beauty.presentation.view.epoxy.SwitchModel
 import ru.kalistratov.template.beauty.presentation.view.epoxy.TimeRangeViewModel
 import ru.kalistratov.template.beauty.presentation.view.epoxy.sequence.WeekSequenceDayModel
-import ru.kalistratov.template.beauty.presentation.view.epoxy.setBaseMargins
-import ru.kalistratov.template.beauty.titleWithArrow
+import ru.kalistratov.template.beauty.presentation.view.epoxy.setMargins
 
 class WeekSequenceController(
     private val resources: Resources
@@ -36,11 +34,6 @@ class WeekSequenceController(
         } else {
             createTimeRangeViewModel(selectedDay).addTo(this)
 
-            divider {
-                id("divider_1")
-                onBind { _, holder, _ -> holder.setBaseMargins() }
-            }
-
             SwitchModel(
                 selectedDay.day.index.toString(),
                 resources.getString(R.string.workday_holiday),
@@ -49,27 +42,20 @@ class WeekSequenceController(
                 marginsBundle = MarginsBundle.baseHorizontal
             ).addTo(this)
 
-            divider {
-                id("divider_2")
-                onBind { _, holder, _ -> holder.setBaseMargins() }
+            indentSmall {
+                id("indentSmall_1")
             }
 
-            val clickListener = View.OnClickListener {
+            val titleForTitleWithArrow = resources.getString(R.string.edit_work_windows)
+            val clickListener: () -> Unit = {
                 editWindowsClicks.tryEmit(selectedDay.day.index)
             }
-            val titleForTitleWithArrow = resources.getString(R.string.edit_work_windows)
             titleWithArrow {
                 id("windows")
                 text(titleForTitleWithArrow)
                 onBind { _, holder, _ ->
-                    holder.setBaseMargins()
-                    holder.dataBinding.root.setOnClickListener(clickListener)
+                    holder.dataBinding.root.setDebouncedOnClickListener(block = clickListener)
                 }
-            }
-
-            divider {
-                id("divider_3")
-                onBind { _, holder, _ -> holder.setBaseMargins() }
             }
         }
     }
@@ -90,7 +76,7 @@ class WeekSequenceController(
             startTime,
             finishTime,
             dayTimeClicks::tryEmit,
-            marginsBundle = MarginsBundle.baseHorizontal,
+            marginsBundle = MarginsBundle.smallVertical,
             errorMessageChecker = errorMessageChecker,
             startHintId = R.string.workday_start,
             finishHintId = R.string.workday_finish

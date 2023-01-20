@@ -26,19 +26,22 @@ data class SwitchModel(
 
     override fun createNewHolder(parent: ViewParent) = Holder()
 
-    override fun bind(holder: Holder) = holder.binding.root.run {
+    override fun bind(holder: Holder) = holder.binding.materialSwitch.run {
         text = title
         isChecked = checked
-        marginsBundle?.let(::setMargins)
-        setOnCheckedChangeListener { _, checked ->
-            changeAction.invoke(checked)
-        }
     }
 
-    class Holder : EpoxyHolder() {
+    inner class Holder : EpoxyHolder() {
         lateinit var binding: ListItemSwitchBinding
         override fun bindView(itemView: View) {
-            binding = ListItemSwitchBinding.bind(itemView)
+            binding = ListItemSwitchBinding.bind(itemView).apply {
+                with(materialSwitch) {
+                    marginsBundle?.let(::setMargins)
+                    setOnCheckedChangeListener { _, checked ->
+                        changeAction.invoke(checked)
+                    }
+                }
+            }
         }
     }
 }

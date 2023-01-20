@@ -42,12 +42,11 @@ class ProfileFragment : BaseFragment(),
     override fun findViews() {
 
         find<BottomNavigationView>(R.id.bottom_nav_view).apply {
-            selectedItemId = R.id.menu_profile
+            selectedItemId = R.id.menu_personal_area
             setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.menu_timetable -> profileRouter.openTimetable()
                     R.id.menu_personal_area -> profileRouter.openPersonalArea()
-                    R.id.menu_calendar -> profileRouter.openCalendar()
                 }
                 return@setOnItemSelectedListener true
             }

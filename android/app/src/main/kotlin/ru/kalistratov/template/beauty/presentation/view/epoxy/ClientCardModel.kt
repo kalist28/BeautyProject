@@ -14,11 +14,12 @@ import ru.kalistratov.template.beauty.presentation.view.setMargins
 data class ClientCardModel(
     private val client: Client?,
     private val clickAction: () -> Unit = { },
-    private val marginsBundle: MarginsBundle? = null
+    private val marginsBundle: MarginsBundle? = null,
+    private val idByClient: Boolean = false
 ) : EpoxyModelWithHolder<ClientCardModel.Holder>() {
 
     init {
-        id("client_card")
+        id("client_card" + if (idByClient) client?.id else "")
     }
 
     override fun getDefaultLayout() = R.layout.view_client_card
@@ -34,6 +35,12 @@ data class ClientCardModel(
 
         number.text = client?.number
         number.isVisible = client != null
+
+        title.text = client?.run {
+            "${name.firstOrNull() ?: ""}${surname?.firstOrNull() ?: ""}"
+        }
+        title.isVisible = client != null
+        icContainer.isVisible = client != null
 
         notSelectedMessage.isVisible = client == null
     }

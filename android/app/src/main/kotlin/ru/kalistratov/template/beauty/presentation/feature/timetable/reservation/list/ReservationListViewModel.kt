@@ -16,6 +16,7 @@ import ru.kalistratov.template.beauty.infrastructure.extensions.loge
 import ru.kalistratov.template.beauty.presentation.feature.timetable.reservation.list.view.ReservationListIntent
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 data class ReservationListState(
@@ -52,9 +53,8 @@ class ReservationListViewModel @Inject constructor(
                 .share(this)
 
             val updateReservationsAction = daySelectedFlow.map {
-                val millis = it.date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
                 val reservations = interactor.getReservations(
-                    DateTime(millis).format(DateTimeFormat.DATE_STANDART)
+                    DateTimeFormatter.ofPattern(DateTimeFormat.DATE_STANDART).format(it.date)
                 )
                 ReservationListAction.UpdateReservations(reservations)
             }

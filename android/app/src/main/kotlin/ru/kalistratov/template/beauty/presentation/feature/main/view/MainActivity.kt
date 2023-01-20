@@ -60,7 +60,7 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
 
     val fragmentBackPress: () -> Boolean = { true }
 
-    val loadingDialog by lazy { LoadingAlertDialog(this@MainActivity) }
+    var loadingDialog: LoadingAlertDialog? = null
 
     private val requestPermissionsResults = mutableSharedFlow<RequestPermissionsResult>()
 
@@ -68,7 +68,7 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initNavController()
-
+        loadingDialog = LoadingAlertDialog(this)
         (applicationContext as Application).activity = this
 
         with(viewModel) {
@@ -108,7 +108,7 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
     override fun injectComponent() = appComponent.plus(MainModule()).inject(this)
 
     override fun onBackPressed() {
-        if (fragmentBackPress.invoke()) return
+        // if (fragmentBackPress.invoke()) return TODO
         if (confirmBackPress) return super.onBackPressed()
         if (additionalCallback?.isEnabled == true) return additionalCallback!!.handleOnBackPressed()
         val popBackStackResult = navController.popBackStack()
@@ -120,6 +120,16 @@ class MainActivity : BaseActivity(), BaseView<MainIntent, MainState>,
             ).show()
             onBackPressedCallbackWrapper.callback?.handleOnBackPressed()
         }
+    }
+
+    override fun onPause() {
+        loadingDialog?.show(false)
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        loadingDialog?.cancel()
+        super.onDestroy()
     }
 
     override fun intents(): Flow<MainIntent> = merge(

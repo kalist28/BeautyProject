@@ -33,13 +33,14 @@
             style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/surfaceMy" />
+            android:background="@color/primary" />
 
         <com.kizitonwose.calendar.view.WeekCalendarView
             android:id="@+id/calendar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_xsmall"
+            android:background="@color/white"
             app:cv_daySize="seventhWidth"
             app:cv_dayViewResource="@layout/calendar_day"
             app:cv_orientation="horizontal" />
@@ -50,8 +51,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/text_xsmall"
             android:layout_marginTop="@dimen/text_xsmall"
-            android:text="Понедельник"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_default"
+            android:gravity="center"
             android:textStyle="bold"
             android:theme="@style/DefaultText" />
 
@@ -60,9 +62,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/text_xsmall"
-            android:text="Понедельник"
-            android:textSize="@dimen/text_small"
-            android:theme="@style/SubTitleText" />
+            android:gravity="center"
+            android:textColor="@color/subtitle"
+            android:textSize="@dimen/text_small" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -72,7 +74,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_small"
         android:src="@drawable/ic_add_work_window"
-        android:theme="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
         app:layout_constraintEnd_toEndOf="parent" />
 

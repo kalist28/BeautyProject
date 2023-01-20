@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#B12062</color>
     <color name="primary10">#0DB12062</color>
-    <color name="onPrimary">#FFFFFF</color>
     <color name="primaryContainer">#FFD9E2</color>
     <color name="onPrimaryContainer">#3E001D</color>
     <color name="secondary">#74565F</color>
@@ -17,7 +15,6 @@
     <color name="errorContainer">#FFDAD6</color>
     <color name="onError">#FFFFFF</color>
     <color name="onErrorContainer">#410002</color>
-    <color name="background">#FFFBFF</color>
     <color name="onBackground">#201A1B</color>
     <color name="surface">#FFFBFF</color>
     <color name="surfaceMy">#F7E7F1</color>

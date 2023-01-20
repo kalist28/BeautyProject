@@ -35,10 +35,11 @@
         android:id="@+id/dot"
         android:layout_width="7dp"
         android:layout_height="7dp"
-        android:layout_marginTop="@dimen/margin_xsmall"
+        android:layout_marginVertical="@dimen/margin_xsmall"
         android:background="@drawable/background_calendar_indicator"
         android:backgroundTint="@color/colorGreen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/number" />
+        app:layout_constraintTop_toBottomOf="@id/number"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
